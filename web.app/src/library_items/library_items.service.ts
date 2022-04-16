@@ -9,7 +9,7 @@ export class LibraryItemsService {
   create(libraryItem: CreateLibraryItemDto) {
     this.libraryItems.push({
       ...libraryItem,
-      id: this.libraryItems.length + 1,
+      id: this.libraryItems.length,
     });
   }
 

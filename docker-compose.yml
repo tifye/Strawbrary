@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  wab.app:
+    build:
+      context: ./web.app
+      target: development
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./web.app:/app
+    command: npm run start:dev
+    env_file: 
+      - ./web.app/.env
+
