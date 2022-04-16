@@ -1,6 +1,6 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { LibraryItem } from '@prisma/client';
-import { LibraryItemsService } from './library_items.service';
+import { LibraryItemsService } from '../services/library_items.service';
 
 @Controller('items')
 export class LibraryItemsController {
@@ -9,10 +9,5 @@ export class LibraryItemsController {
   @Get()
   async findAll(): Promise<LibraryItem[]> {
     return this.libraryItemsService.findAll();
-  }
-
-  @Get(':id')
-  async findOne(@Param('id') id: string): Promise<LibraryItem> {
-    return this.libraryItemsService.findOne(Number(id));
   }
 }

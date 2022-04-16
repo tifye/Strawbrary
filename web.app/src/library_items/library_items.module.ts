@@ -4,10 +4,16 @@ import { LibraryItemsController } from './controllers/library_items.controller';
 import { LibraryItemsService } from './services/library_items.service';
 import { BooksService } from './services/books.service';
 import { LibraryItemsRepository } from './repositories/library_items.repository';
+import { PrismaService } from 'src/prisma.service';
 
 @Module({
   imports: [],
   controllers: [LibraryItemsController, BooksController],
-  providers: [LibraryItemsService, BooksService, LibraryItemsRepository],
+  providers: [
+    LibraryItemsService,
+    BooksService,
+    LibraryItemsRepository,
+    PrismaService,
+  ],
 })
 export class LibraryItemsModule {}

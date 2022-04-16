@@ -8,6 +8,7 @@ export class BooksController {
 
   @Post()
   async create(@Body() createBookDto: CreateBookDto) {
-    this.bookService.create(createBookDto);
+    const book = await this.bookService.create(createBookDto);
+    return book;
   }
 }

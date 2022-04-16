@@ -1,5 +1,4 @@
-import { IsBoolean, IsNumber, IsString, Length, Min } from 'class-validator';
-import { LibraryItemType } from '../enums/library_item_type.enum';
+import { IsNumber, IsString, Length, Min } from 'class-validator';
 
 export class CreateBookDto {
   @IsString()
@@ -13,13 +12,7 @@ export class CreateBookDto {
   @IsNumber()
   pages: number;
 
-  @IsString()
-  type: LibraryItemType;
-
   @IsNumber()
   @Min(0)
   categoryId: number;
-
-  @IsBoolean()
-  isBorrowable: boolean;
 }
