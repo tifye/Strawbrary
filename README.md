@@ -2,7 +2,13 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+A web stack app for managing a smol library.
+
+[Nest](https://github.com/nestjs/nest) framework with TypeScript.
+
+## Requirements
+* Docker
+* Node
 
 ## Installation
 
@@ -11,15 +17,15 @@ $ cd web.app
 $ npm install
 ```
 
-## Running the app
+## Running with Docker
 
 ```bash
 # development
-$ npm run start
+$ docker compose up --build
+```
 
-# watch mode
-$ npm run start:dev
-
+## Building to dist/ for Production
+```bash
 # production mode
 $ npm run start:prod
 ```
@@ -37,3 +43,10 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+## Environment variables
+* **DATABASE_URL**
+
+  The Url used by Prisma to establish a connection with the postgres database.
+
+  Example:
+  `postgresql://<username>:<password>@<host>:<port>/strawbrary?schema=public`
