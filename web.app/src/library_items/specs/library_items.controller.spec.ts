@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { LibraryItemsController } from './library_items.controller';
+import { LibraryItemsController } from '../library_items.controller';
 
 describe('LibraryItemsController', () => {
   let controller: LibraryItemsController;
