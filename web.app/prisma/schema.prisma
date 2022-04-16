@@ -11,21 +11,21 @@ datasource db {
 }
 
 model LibraryItem {
-  Id              Int  @default(autoincrement()) @id
-  Title           String
-  Author          String
-  Pages           Int?
-  RunTimeMinutes  Int?
-  IsBorrowable    Boolean @default(value: true)
-  Borrower        String?
-  BorrowDate      DateTime?
-  Type            String
-  CategoryId      Int
-  Category        Category  @relation(fields: [CategoryId], references: [Id])
+  id              Int  @default(autoincrement()) @id
+  title           String
+  author          String
+  pages           Int?
+  runTimeMinutes  Int?
+  isBorrowable    Boolean @default(value: true)
+  borrower        String?
+  borrowDate      DateTime?
+  type            String
+  categoryId      Int
+  category        Category  @relation(fields: [categoryId], references: [id])
 }
 
 model Category {
-  Id            Int @default(autoincrement()) @id
-  CategoryName  String @unique
-  LibraryItems  LibraryItem[]
+  id            Int @default(autoincrement()) @id
+  categoryName  String @unique
+  libraryItems  LibraryItem[]
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { LibraryItem } from '@prisma/client';
 import { CreateLibraryItemDto } from './dto/create-library_item.dto';
-import { LibraryItem } from './interfaces/library_item.interface';
 
 @Injectable()
 export class LibraryItemsService {
