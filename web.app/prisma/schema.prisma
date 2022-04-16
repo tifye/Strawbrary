@@ -1,0 +1,31 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model LibraryItem {
+  Id              Int  @default(autoincrement()) @id
+  Title           String
+  Author          String
+  Pages           Int?
+  RunTimeMinutes  Int?
+  IsBorrowable    Boolean @default(value: true)
+  Borrower        String?
+  BorrowDate      DateTime?
+  Type            String
+  CategoryId      Int
+  Category        Category  @relation(fields: [CategoryId], references: [Id])
+}
+
+model Category {
+  Id            Int @default(autoincrement()) @id
+  CategoryName  String @unique
+  LibraryItems  LibraryItem[]
+}
