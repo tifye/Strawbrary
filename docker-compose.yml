@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   wab.app:
+    container_name: wab.app
     build:
       context: ./web.app
       target: development
@@ -12,4 +13,17 @@ services:
     command: npm run start:dev
     env_file: 
       - ./web.app/.env
-
+    depends_on:
+      - postgres
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: strawbrary
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: qwerty
+    restart: always
