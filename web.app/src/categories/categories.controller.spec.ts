@@ -1,5 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { mock_category } from '../__mock-data__/categories.mock';
+import {
+  mock_category,
+  mock_categoryDto,
+} from '../__mock-data__/categories.mock';
 import { CategoriesController } from './categories.controller';
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
@@ -36,5 +39,16 @@ describe('CategoriesController', () => {
   it('should be defined', () => {
     expect(controller).toBeDefined();
     expect(service).toBeDefined();
+  });
+
+  it('Should create and return a new category', async () => {
+    // Given
+    const newCategoryDto = mock_categoryDto;
+
+    // When
+    const result = await controller.create(newCategoryDto);
+
+    // Then
+    expect(result).toEqual(mock_category);
   });
 });

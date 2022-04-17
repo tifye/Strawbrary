@@ -16,8 +16,13 @@ export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
 
   @Post()
-  create(@Body() createCategoryDto: CreateCategoryDto) {
-    return this.categoriesService.create(createCategoryDto);
+  async create(@Body() createCategoryDto: CreateCategoryDto) {
+    const result = await this.categoriesService.create(createCategoryDto);
+    if (result[1]) {
+      throw new Error(result[1]);
+    }
+
+    return result[1];
   }
 
   @Get()
