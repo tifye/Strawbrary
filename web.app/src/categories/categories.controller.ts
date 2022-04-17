@@ -22,7 +22,7 @@ export class CategoriesController {
       throw new Error(result[1]);
     }
 
-    return result[1];
+    return result[0];
   }
 
   @Get()

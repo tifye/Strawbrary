@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import {
+  mock_categories,
   mock_category,
   mock_categoryDto,
 } from '../__mock-data__/categories.mock';
@@ -19,6 +20,7 @@ describe('CategoriesRepository', () => {
           useFactory: () => ({
             category: {
               create: jest.fn().mockReturnValue(mock_category),
+              findUnique: jest.fn().mockReturnValue(mock_categories[0]),
             },
           }),
         },
@@ -63,6 +65,19 @@ describe('CategoriesRepository', () => {
       expect(createSpy).toHaveBeenCalledWith({
         data: newCategoryDto,
       });
+    });
+  });
+
+  describe('Find', () => {
+    it('Should find a category by name', async () => {
+      // Given
+      const categoryName = mock_categories[0].categoryName;
+
+      // When
+      const result = await repository.findByName(categoryName);
+
+      // Then
+      expect(result[0]).toEqual(mock_categories[0]);
     });
   });
 });

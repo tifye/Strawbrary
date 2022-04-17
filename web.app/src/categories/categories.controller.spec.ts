@@ -9,10 +9,13 @@ import { CreateCategoryDto } from './dto/create-category.dto';
 
 const mockService = {
   create: jest.fn().mockImplementation((category: CreateCategoryDto) => {
-    return {
-      ...category,
-      ...mock_category,
-    };
+    return [
+      {
+        ...category,
+        ...mock_category,
+      },
+      undefined,
+    ];
   }),
 };
 
