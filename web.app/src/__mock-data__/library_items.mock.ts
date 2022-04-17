@@ -1,5 +1,5 @@
 import { LibraryItem } from '@prisma/client';
-import { CreateBookDto } from '../dto/create_book.dto';
+import { CreateBookDto } from '../library_items/dto/create_book.dto';
 
 export const mock_bookDto: CreateBookDto = {
   title: 'A Girl Has Her Thorns',

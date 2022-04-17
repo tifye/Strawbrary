@@ -1,7 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CreateBookDto } from '../dto/create_book.dto';
 import { BooksService } from '../services/books.service';
-import { mock_book, mock_bookDto } from '../__mock-data__/library_items.mock';
+import {
+  mock_book,
+  mock_bookDto,
+} from '../../__mock-data__/library_items.mock';
 import { BooksController } from './books.controller';
 
 const mockService = {

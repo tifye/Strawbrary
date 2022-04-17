@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Prisma } from '@prisma/client';
 import { LibraryItemsRepository } from '../repositories/library_items.repository';
-import { mock_libraryItems } from '../__mock-data__/library_items.mock';
+import { mock_libraryItems } from '../../__mock-data__/library_items.mock';
 import { LibraryItemsService } from './library_items.service';
 
 const mockRepository = {
