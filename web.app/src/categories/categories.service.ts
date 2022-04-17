@@ -30,8 +30,20 @@ export class CategoriesService {
     return `This action returns a #${id} category`;
   }
 
-  update(id: number, updateCategoryDto: UpdateCategoryDto) {
-    return `This action updates a #${id} category`;
+  async update(
+    id: number,
+    updateCategoryDto: UpdateCategoryDto,
+  ): Promise<[Category?, string?]> {
+    const result = await this.categoriesRepository.update(
+      id,
+      updateCategoryDto,
+    );
+
+    if (result[1]) {
+      return [undefined, result[1].message];
+    }
+
+    return [result[0], undefined];
   }
 
   remove(id: number) {

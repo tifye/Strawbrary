@@ -16,6 +16,7 @@ const mockRepository = {
         undefined,
       ]);
     }),
+  update: jest.fn().mockResolvedValue([mock_category, undefined]),
 };
 
 describe('CategoriesService', () => {
@@ -67,6 +68,18 @@ describe('CategoriesService', () => {
       // Then
       expect(result[1]).toEqual('Category name not unique');
       expect(createSpy).toHaveBeenCalledWith(newCategoryDto);
+    });
+  });
+
+  describe('Update', () => {
+    it('Should call the update method correctly', async () => {
+      const result = await service.update(mock_category.id, {
+        categoryName: mock_category.categoryName,
+      });
+      expect(result[0]).toEqual(mock_category);
+      expect(repository.update).toHaveBeenCalledWith(mock_category.id, {
+        categoryName: mock_category.categoryName,
+      });
     });
   });
 });

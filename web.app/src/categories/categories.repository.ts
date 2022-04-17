@@ -35,4 +35,21 @@ export class CategoriesRepository {
       else return [undefined, e];
     }
   }
+
+  async update(
+    id: number,
+    category: Prisma.CategoryUpdateInput,
+  ): Promise<[Category?, Error?]> {
+    try {
+      const updatedCategory = await this.prisma.category.update({
+        where: {
+          id,
+        },
+        data: category,
+      });
+      return [updatedCategory, undefined];
+    } catch (e: any) {
+      return [undefined, e];
+    }
+  }
 }
