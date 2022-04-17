@@ -3,20 +3,16 @@ import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
 } from 'class-validator';
-import { PrismaService } from '../../prisma.service';
+import { CategoriesRepository } from '../categories.repository';
 
 @ValidatorConstraint({ name: 'UniqueCategoryNameRule', async: true })
 @Injectable()
 export class UniqueCategoryNameRule implements ValidatorConstraintInterface {
-  constructor(private primsa: PrismaService) {}
+  constructor(private categoryRepository: CategoriesRepository) {}
 
   async validate(categoryName: string): Promise<boolean> {
-    const category = await this.primsa.category.findFirst({
-      where: {
-        categoryName,
-      },
-    });
-    if (category) {
+    const result = await this.categoryRepository.findByName(categoryName);
+    if (result[0]) {
       return false;
     }
 
