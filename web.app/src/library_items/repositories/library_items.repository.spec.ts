@@ -5,7 +5,7 @@ import {
   mock_book,
   mock_bookDto,
   mock_libraryItems,
-} from '../__mock-data__/library_items.mock';
+} from '../../__mock-data__/library_items.mock';
 import { LibraryItemsRepository } from './library_items.repository';
 
 describe('LibraryItemsRepository Unit Tests', () => {
@@ -34,6 +34,7 @@ describe('LibraryItemsRepository Unit Tests', () => {
 
   it('Should be defined', () => {
     expect(repository).toBeDefined();
+    expect(prisma).toBeDefined();
   });
 
   describe('Find all', () => {

@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { LibraryItemsService } from '../services/library_items.service';
-import { mock_categories } from '../__mock-data__/categories.mock';
+import { mock_categories } from '../../__mock-data__/categories.mock';
 import { LibraryItemsController } from './library_items.controller';
 
 describe('LibraryItemsController Unit Tests', () => {

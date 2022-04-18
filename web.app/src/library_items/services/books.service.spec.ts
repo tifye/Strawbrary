@@ -6,7 +6,7 @@ import {
   mock_book,
   mock_bookDto,
   mock_libraryItems,
-} from '../__mock-data__/library_items.mock';
+} from '../../__mock-data__/library_items.mock';
 import { BooksService } from './books.service';
 
 const mockRepository = {
