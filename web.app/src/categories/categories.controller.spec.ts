@@ -17,6 +17,7 @@ const mockService = {
       undefined,
     ];
   }),
+  findOne: jest.fn().mockResolvedValue([mock_category, undefined]),
 };
 
 describe('CategoriesController', () => {
@@ -44,14 +45,29 @@ describe('CategoriesController', () => {
     expect(service).toBeDefined();
   });
 
-  it('Should create and return a new category', async () => {
-    // Given
-    const newCategoryDto = mock_categoryDto;
+  describe('Create', () => {
+    it('Should create and return a new category', async () => {
+      // Given
+      const newCategoryDto = mock_categoryDto;
 
-    // When
-    const result = await controller.create(newCategoryDto);
+      // When
+      const result = await controller.create(newCategoryDto);
 
-    // Then
-    expect(result).toEqual(mock_category);
+      // Then
+      expect(result).toEqual(mock_category);
+    });
+  });
+
+  describe('Find', () => {
+    it('Should return a category', async () => {
+      // Given
+      const id = mock_category.id;
+
+      // When
+      const result = await controller.findOne(id);
+
+      // Then
+      expect(result).toEqual(mock_category);
+    });
   });
 });

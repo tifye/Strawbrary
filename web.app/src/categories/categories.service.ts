@@ -26,8 +26,12 @@ export class CategoriesService {
     return await this.categoriesRepository.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} category`;
+  async findOne(id: number): Promise<[Category?, string?]> {
+    const result = await this.categoriesRepository.findOne(id);
+    if (result[1]) {
+      return [undefined, result[1].message];
+    }
+    return [result[0], undefined];
   }
 
   async update(

@@ -79,5 +79,16 @@ describe('CategoriesRepository', () => {
       // Then
       expect(result[0]).toEqual(mock_categories[0]);
     });
+
+    it('Should find a category by id', async () => {
+      // Given
+      const id = mock_categories[0].id;
+
+      // When
+      const result = await repository.findOne(id);
+
+      // Then
+      expect(result[0]).toEqual(mock_categories[0]);
+    });
   });
 });

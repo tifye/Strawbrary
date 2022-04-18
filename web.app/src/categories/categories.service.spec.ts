@@ -17,6 +17,7 @@ const mockRepository = {
       ]);
     }),
   update: jest.fn().mockResolvedValue([mock_category, undefined]),
+  findOne: jest.fn().mockResolvedValue([mock_category, undefined]),
 };
 
 describe('CategoriesService', () => {
@@ -80,6 +81,19 @@ describe('CategoriesService', () => {
       expect(repository.update).toHaveBeenCalledWith(mock_category.id, {
         categoryName: mock_category.categoryName,
       });
+    });
+  });
+
+  describe('Find', () => {
+    it('Should find a category by id', async () => {
+      // Given
+      const categoryId = mock_category.id;
+
+      // When
+      const result = await service.findOne(categoryId);
+
+      // Then
+      expect(result[0]).toEqual(mock_category);
     });
   });
 });

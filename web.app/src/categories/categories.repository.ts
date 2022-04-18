@@ -40,6 +40,19 @@ export class CategoriesRepository {
     return await this.prisma.category.findMany();
   }
 
+  async findOne(id: number): Promise<[Category?, Error?]> {
+    try {
+      const category = await this.prisma.category.findUnique({
+        where: {
+          id,
+        },
+      });
+      return [category, undefined];
+    } catch (e: any) {
+      return [undefined, e];
+    }
+  }
+
   async update(
     id: number,
     category: Prisma.CategoryUpdateInput,
