@@ -36,6 +36,10 @@ export class CategoriesRepository {
     }
   }
 
+  async findAll(): Promise<Category[]> {
+    return await this.prisma.category.findMany();
+  }
+
   async update(
     id: number,
     category: Prisma.CategoryUpdateInput,
