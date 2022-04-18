@@ -28,10 +28,10 @@ export class LibraryItemsRepository {
 
   async updateItem(
     id: number,
+    type: string,
     item: Prisma.LibraryItemUpdateInput,
   ): Promise<[number, Error?]> {
     try {
-      const type = item.type as string;
       const numUpdated = await this.prisma.libraryItem.updateMany({
         where: {
           AND: [
@@ -39,7 +39,7 @@ export class LibraryItemsRepository {
               id,
             },
             {
-              type: type ? type : undefined,
+              type: type,
             },
             ,
           ],

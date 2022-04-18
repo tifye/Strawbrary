@@ -74,7 +74,11 @@ describe('LibraryItemsRepository Unit Tests', () => {
       const item = mock_updateBookDto;
 
       // When
-      const result = await repository.updateItem(mock_book.id, item);
+      const result = await repository.updateItem(
+        mock_book.id,
+        mock_book.type,
+        item,
+      );
 
       // Then
       expect(result[0]).toEqual(1);
