@@ -4,6 +4,7 @@ import {
   mock_categoryDto,
 } from '../__mock-data__/categories.mock';
 import { CategoriesController } from './categories.controller';
+import { CategoriesRepository } from './categories.repository';
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 
@@ -18,11 +19,15 @@ const mockService = {
     ];
   }),
   findOne: jest.fn().mockResolvedValue([mock_category, undefined]),
+  remove: jest.fn().mockResolvedValue([false, undefined]),
 };
+
+const mockRepository = {};
 
 describe('CategoriesController', () => {
   let controller: CategoriesController;
   let service: CategoriesService;
+  let repository: CategoriesRepository;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -33,11 +38,16 @@ describe('CategoriesController', () => {
           provide: CategoriesService,
           useValue: mockService,
         },
+        {
+          provide: CategoriesRepository,
+          useValue: mockRepository,
+        },
       ],
     }).compile();
 
     controller = module.get<CategoriesController>(CategoriesController);
     service = module.get<CategoriesService>(CategoriesService);
+    repository = module.get<CategoriesRepository>(CategoriesRepository);
   });
 
   it('should be defined', () => {

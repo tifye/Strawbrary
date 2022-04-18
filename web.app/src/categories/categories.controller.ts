@@ -55,7 +55,7 @@ export class CategoriesController {
   }
 
   @Delete(':id')
-  remove(@Param('id', NotReferencedByAnyRule) id: string) {
-    return this.categoriesService.remove(+id);
+  remove(@Param('id', ParseIntPipe, NotReferencedByAnyRule) id: number) {
+    return this.categoriesService.remove(id);
   }
 }

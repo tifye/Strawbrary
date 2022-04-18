@@ -40,11 +40,14 @@ export class CategoriesRepository {
     return await this.prisma.category.findMany();
   }
 
-  async findOne(id: number): Promise<[Category?, Error?]> {
+  async findOne(id: number, withItems = false): Promise<[Category?, Error?]> {
     try {
       const category = await this.prisma.category.findUnique({
         where: {
           id,
+        },
+        include: {
+          libraryItems: withItems,
         },
       });
       return [category, undefined];
@@ -67,6 +70,19 @@ export class CategoriesRepository {
       return [updatedCategory, undefined];
     } catch (e: any) {
       return [undefined, e];
+    }
+  }
+
+  async delete(id: number): Promise<[boolean, Error?]> {
+    try {
+      await this.prisma.category.delete({
+        where: {
+          id,
+        },
+      });
+      return [true, undefined];
+    } catch (e: any) {
+      return [false, e];
     }
   }
 }

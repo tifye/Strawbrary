@@ -19,8 +19,9 @@ describe('CategoriesRepository', () => {
           provide: PrismaService,
           useFactory: () => ({
             category: {
-              create: jest.fn().mockReturnValue(mock_category),
-              findUnique: jest.fn().mockReturnValue(mock_categories[0]),
+              create: jest.fn().mockResolvedValue(mock_category),
+              findUnique: jest.fn().mockResolvedValue(mock_categories[0]),
+              delete: jest.fn().mockResolvedValue(mock_categories[0]),
             },
           }),
         },
@@ -89,6 +90,19 @@ describe('CategoriesRepository', () => {
 
       // Then
       expect(result[0]).toEqual(mock_categories[0]);
+    });
+  });
+
+  describe('Delete', () => {
+    it('Should delete a category', async () => {
+      // Given
+      const id = mock_categories[0].id;
+
+      // When
+      const result = await repository.delete(id);
+
+      // Then
+      expect(result[0]).toBeTruthy();
     });
   });
 });
