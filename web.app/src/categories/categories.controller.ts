@@ -11,6 +11,7 @@ import {
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
+import { NotReferencedByAnyRule } from './rules/not_referenced_by_any.rule';
 
 @Controller('categories')
 export class CategoriesController {
@@ -54,7 +55,7 @@ export class CategoriesController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id', NotReferencedByAnyRule) id: string) {
     return this.categoriesService.remove(+id);
   }
 }
