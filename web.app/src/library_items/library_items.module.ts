@@ -7,14 +7,22 @@ import { LibraryItemsRepository } from './repositories/library_items.repository'
 import { PrismaService } from 'src/prisma.service';
 import { DvdsController } from './controllers/dvds.controller';
 import { DvdsService } from './services/dvds.service';
+import { AudioBookService } from './services/audio_book.service';
+import { AudioBookController } from './controllers/audio_book.controller';
 
 @Module({
   imports: [],
-  controllers: [LibraryItemsController, BooksController, DvdsController],
+  controllers: [
+    LibraryItemsController,
+    AudioBookController,
+    BooksController,
+    DvdsController,
+  ],
   providers: [
     LibraryItemsService,
     BooksService,
     DvdsService,
+    AudioBookService,
     LibraryItemsRepository,
     PrismaService,
   ],

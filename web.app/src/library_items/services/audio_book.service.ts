@@ -5,7 +5,7 @@ import { LibraryItemType } from '../enums/library_item_type.enum';
 import { LibraryItemsRepository } from '../repositories/library_items.repository';
 
 @Injectable()
-export class LibraryItemsService {
+export class AudioBookService {
   constructor(private libraryItemsRepository: LibraryItemsRepository) {}
   async create(
     audioBook: CreateAudioBookDto,

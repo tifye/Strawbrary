@@ -15,7 +15,7 @@ export class BooksController {
   async create(@Body() createBookDto: CreateBookDto) {
     const result = await this.bookService.create(createBookDto);
     if (result[1]) {
-      throw new InternalServerErrorException(result[1]);
+      throw new InternalServerErrorException();
     }
 
     return result[0];
