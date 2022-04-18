@@ -1,4 +1,9 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  InternalServerErrorException,
+  Post,
+} from '@nestjs/common';
 import { CreateDvdDto } from '../dto/create_dvd.dto';
 import { DvdsService } from '../services/dvds.service';
 
@@ -8,8 +13,11 @@ export class DvdsController {
 
   @Post()
   async create(@Body() createDvdDto: CreateDvdDto) {
-    return {
-      message: 'Hello World',
-    };
+    const result = await this.dvdsService.create(createDvdDto);
+    if (result[1]) {
+      throw new InternalServerErrorException(result[1]);
+    }
+
+    return result[0];
   }
 }

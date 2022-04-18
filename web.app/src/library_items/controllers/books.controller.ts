@@ -1,4 +1,9 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  InternalServerErrorException,
+  Post,
+} from '@nestjs/common';
 import { CreateBookDto } from '../dto/create_book.dto';
 import { BooksService } from '../services/books.service';
 
@@ -8,7 +13,11 @@ export class BooksController {
 
   @Post()
   async create(@Body() createBookDto: CreateBookDto) {
-    const book = await this.bookService.create(createBookDto);
-    return book;
+    const result = await this.bookService.create(createBookDto);
+    if (result[1]) {
+      throw new InternalServerErrorException(result[1]);
+    }
+
+    return result[0];
   }
 }
