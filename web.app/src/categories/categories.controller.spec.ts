@@ -27,7 +27,6 @@ const mockRepository = {};
 describe('CategoriesController', () => {
   let controller: CategoriesController;
   let service: CategoriesService;
-  let repository: CategoriesRepository;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -47,7 +46,6 @@ describe('CategoriesController', () => {
 
     controller = module.get<CategoriesController>(CategoriesController);
     service = module.get<CategoriesService>(CategoriesService);
-    repository = module.get<CategoriesRepository>(CategoriesRepository);
   });
 
   it('should be defined', () => {

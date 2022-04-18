@@ -55,7 +55,14 @@ export class CategoriesController {
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe, NotReferencedByAnyRule) id: number) {
-    return this.categoriesService.remove(id);
+  async remove(@Param('id', ParseIntPipe, NotReferencedByAnyRule) id: number) {
+    const result = await this.categoriesService.remove(id);
+    if (result[1]) {
+      throw new Error(result[1]);
+    }
+
+    return {
+      wasSuccessful: true,
+    };
   }
 }

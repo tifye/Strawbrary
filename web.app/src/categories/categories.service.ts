@@ -51,6 +51,12 @@ export class CategoriesService {
   }
 
   remove(id: number) {
-    return `This action removes a #${id} category`;
+    const result = this.categoriesRepository.delete(id);
+
+    if (result[1]) {
+      return [undefined, result[1].message];
+    }
+
+    return [result[0], undefined];
   }
 }
