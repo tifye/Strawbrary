@@ -6,11 +6,11 @@ import { LibraryItemsRepository } from '../repositories/library_items.repository
 @Injectable()
 export class BooksService {
   constructor(private libraryItemsRepository: LibraryItemsRepository) {}
-  create(book: CreateBookDto) {
+  async create(book: CreateBookDto) {
     const { categoryId } = book;
     delete book.categoryId;
     const bookData = JSON.parse(JSON.stringify(book));
-    return this.libraryItemsRepository.createItem({
+    const result = await this.libraryItemsRepository.createItem({
       ...bookData,
       type: LibraryItemType.Book,
       isBorrowable: true,
@@ -20,5 +20,11 @@ export class BooksService {
         },
       },
     });
+
+    if (result[1]) {
+      return [undefined, result[1].message];
+    }
+
+    return [result[0], undefined];
   }
 }

@@ -57,7 +57,7 @@ describe('LibraryItemsRepository Unit Tests', () => {
       const result = await repository.createItem(args);
 
       // Then
-      expect(result).toEqual(mock_book);
+      expect(result[0]).toEqual(mock_book);
       expect(prisma.libraryItem.create).toHaveBeenCalledWith(
         expect.objectContaining({
           data: { ...args },
