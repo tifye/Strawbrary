@@ -15,7 +15,7 @@ export class DvdsController {
   async create(@Body() createDvdDto: CreateDvdDto) {
     const result = await this.dvdsService.create(createDvdDto);
     if (result[1]) {
-      throw new InternalServerErrorException(result[1]);
+      throw new InternalServerErrorException();
     }
 
     return result[0];
