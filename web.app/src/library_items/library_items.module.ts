@@ -9,6 +9,8 @@ import { DvdsController } from './controllers/dvds.controller';
 import { DvdsService } from './services/dvds.service';
 import { AudioBookService } from './services/audio_book.service';
 import { AudioBookController } from './controllers/audio_book.controller';
+import { ReferenceBooksController } from './controllers/reference_books.controller';
+import { ReferenceBooksService } from './services/reference_book.service';
 
 @Module({
   imports: [],
@@ -17,12 +19,14 @@ import { AudioBookController } from './controllers/audio_book.controller';
     AudioBookController,
     BooksController,
     DvdsController,
+    ReferenceBooksController,
   ],
   providers: [
     LibraryItemsService,
     BooksService,
     DvdsService,
     AudioBookService,
+    ReferenceBooksService,
     LibraryItemsRepository,
     PrismaService,
   ],
