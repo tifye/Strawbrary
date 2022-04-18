@@ -1,18 +1,18 @@
 import { Injectable } from '@nestjs/common';
-import { CreateBookDto } from '../dto/create_book.dto';
+import { CreateDvdDto } from '../dto/create_dvd.dto';
 import { LibraryItemType } from '../enums/library_item_type.enum';
 import { LibraryItemsRepository } from '../repositories/library_items.repository';
 
 @Injectable()
-export class BooksService {
+export class DvdsService {
   constructor(private libraryItemsRepository: LibraryItemsRepository) {}
-  create(book: CreateBookDto) {
-    const { categoryId } = book;
-    delete book.categoryId;
-    const bookData = JSON.parse(JSON.stringify(book));
+  create(dvd: CreateDvdDto) {
+    const { categoryId } = dvd;
+    delete dvd.categoryId;
+    const dvdData = JSON.parse(JSON.stringify(dvd));
     return this.libraryItemsRepository.createItem({
-      ...bookData,
-      type: LibraryItemType.Book,
+      ...dvdData,
+      type: LibraryItemType.Dvd,
       isBorrowable: true,
       category: {
         connect: {
