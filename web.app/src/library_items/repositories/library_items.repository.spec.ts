@@ -5,6 +5,7 @@ import {
   mock_book,
   mock_bookDto,
   mock_libraryItems,
+  mock_updateBookDto,
 } from '../../__mock-data__/library_items.mock';
 import { LibraryItemsRepository } from './library_items.repository';
 
@@ -22,6 +23,7 @@ describe('LibraryItemsRepository Unit Tests', () => {
             libraryItem: {
               findMany: jest.fn().mockResolvedValue(mock_libraryItems),
               create: jest.fn().mockReturnValue(mock_book),
+              updateMany: jest.fn().mockResolvedValue({ count: 1 }),
             },
           }),
         },
@@ -63,6 +65,19 @@ describe('LibraryItemsRepository Unit Tests', () => {
           data: { ...args },
         }),
       );
+    });
+  });
+
+  describe('Update', () => {
+    it('Should update a library item', async () => {
+      // Given
+      const item = mock_updateBookDto;
+
+      // When
+      const result = await repository.updateItem(mock_book.id, item);
+
+      // Then
+      expect(result[0]).toEqual(1);
     });
   });
 });

@@ -1,5 +1,13 @@
 import { LibraryItem } from '@prisma/client';
+import { UpdateBookDto } from 'src/library_items/dto/update_book.dto';
 import { CreateBookDto } from '../library_items/dto/create_book.dto';
+
+export const mock_updateBookDto: UpdateBookDto = {
+  title: 'A Girl Has Her Thorns',
+  author: 'Hisasi',
+  pages: 214,
+  categoryId: 1,
+};
 
 export const mock_bookDto: CreateBookDto = {
   title: 'A Girl Has Her Thorns',
