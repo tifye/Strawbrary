@@ -16,13 +16,16 @@ export class ValidationPipe implements PipeTransform<any> {
       return value;
     }
 
-    const object = await plainToClass(metatype, value);
+    const object = await plainToClass(metatype, value, {
+      excludeExtraneousValues: true,
+      exposeUnsetFields: false,
+    });
     const errors = await validate(object);
     if (errors.length > 0) {
       throw new BadRequestException('Validation failed');
     }
 
-    return value;
+    return object;
   }
 
   private needToValidate(metatype: Function): boolean {

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { LibraryItem } from '@prisma/client';
 import { CreateReferenceBookDto } from '../dto/create_reference_book.dto';
+import { UpdateReferenceBookDto } from '../dto/update_reference_book.dto';
 import { LibraryItemType } from '../enums/library_item_type.enum';
 import { LibraryItemsRepository } from '../repositories/library_items.repository';
 
@@ -26,6 +27,23 @@ export class ReferenceBooksService {
 
     if (result[1]) {
       return [undefined, result[1].message];
+    }
+
+    return [result[0], undefined];
+  }
+
+  async update(
+    id: number,
+    referenceBook: UpdateReferenceBookDto,
+  ): Promise<[number?, string?]> {
+    const result = await this.libraryItemsRepository.updateItem(
+      id,
+      LibraryItemType.ReferenceBook,
+      referenceBook,
+    );
+
+    if (result[1]) {
+      return [undefined, 'Database Error'];
     }
 
     return [result[0], undefined];

@@ -11,6 +11,7 @@ import { BooksService } from './books.service';
 const mockRepository = {
   createItem: jest.fn().mockResolvedValue([mock_book, undefined]),
   findAll: jest.fn().mockResolvedValue(mock_libraryItems),
+  updateItem: jest.fn().mockResolvedValue([1, undefined]),
 };
 
 describe('BooksService', () => {
@@ -58,6 +59,28 @@ describe('BooksService', () => {
         },
       };
       expect(repository.createItem).toHaveBeenCalledWith(
+        expect.objectContaining(calledWith),
+      );
+    });
+  });
+
+  describe('Update Book', () => {
+    it('Should update a book', async () => {
+      // Given
+      const id = mock_book.id;
+      const updatedBookDto = JSON.parse(JSON.stringify(mock_bookDto));
+
+      // When
+      const result = await service.update(id, updatedBookDto);
+
+      // Then
+      expect(result[0]).toEqual(1);
+      const calledWith = {
+        ...updatedBookDto,
+      };
+      expect(repository.updateItem).toHaveBeenCalledWith(
+        id,
+        LibraryItemType.Book,
         expect.objectContaining(calledWith),
       );
     });
