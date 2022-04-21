@@ -1,10 +1,10 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { Expose } from 'class-transformer';
-import { IsOptional, IsString, Validate } from 'class-validator';
+import { IsString, IsOptional, Validate } from 'class-validator';
 import { ValidItemTypeRule } from '../rules/valid_item_type.rule';
-import { CreateBookDto } from './create_book.dto';
+import { CreateDvdDto } from './create_dvd.dto';
 
-export class UpdateBookDto extends PartialType(CreateBookDto) {
+export class UpdateDvdDto extends PartialType(CreateDvdDto) {
   @Expose()
   @IsString()
   @IsOptional()
