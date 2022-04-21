@@ -9,10 +9,13 @@ import { BooksController } from './books.controller';
 
 const mockService = {
   create: jest.fn().mockImplementation((item: CreateBookDto) => {
-    return {
-      ...item,
-      ...mock_book,
-    };
+    return [
+      {
+        ...item,
+        ...mock_book,
+      },
+      undefined,
+    ];
   }),
 };
 

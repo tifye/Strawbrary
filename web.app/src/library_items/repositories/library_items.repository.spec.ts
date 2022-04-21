@@ -5,6 +5,7 @@ import {
   mock_book,
   mock_bookDto,
   mock_libraryItems,
+  mock_updateBookDto,
 } from '../../__mock-data__/library_items.mock';
 import { LibraryItemsRepository } from './library_items.repository';
 
@@ -22,6 +23,7 @@ describe('LibraryItemsRepository Unit Tests', () => {
             libraryItem: {
               findMany: jest.fn().mockResolvedValue(mock_libraryItems),
               create: jest.fn().mockReturnValue(mock_book),
+              updateMany: jest.fn().mockResolvedValue({ count: 1 }),
             },
           }),
         },
@@ -57,12 +59,29 @@ describe('LibraryItemsRepository Unit Tests', () => {
       const result = await repository.createItem(args);
 
       // Then
-      expect(result).toEqual(mock_book);
+      expect(result[0]).toEqual(mock_book);
       expect(prisma.libraryItem.create).toHaveBeenCalledWith(
         expect.objectContaining({
           data: { ...args },
         }),
       );
+    });
+  });
+
+  describe('Update', () => {
+    it('Should update a library item', async () => {
+      // Given
+      const item = mock_updateBookDto;
+
+      // When
+      const result = await repository.updateItem(
+        mock_book.id,
+        mock_book.type,
+        item,
+      );
+
+      // Then
+      expect(result[0]).toEqual(1);
     });
   });
 });

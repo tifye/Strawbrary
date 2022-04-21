@@ -1,5 +1,4 @@
 import { TestingModule, Test } from '@nestjs/testing';
-import { Prisma } from '@prisma/client';
 import { LibraryItemType } from '../enums/library_item_type.enum';
 import { LibraryItemsRepository } from '../repositories/library_items.repository';
 import {
@@ -10,16 +9,7 @@ import {
 import { BooksService } from './books.service';
 
 const mockRepository = {
-  createItem: jest
-    .fn()
-    .mockImplementation((item: Prisma.LibraryItemCreateInput) => {
-      const itemCopy = JSON.parse(JSON.stringify(item));
-      delete itemCopy.category;
-      return Promise.resolve({
-        ...mock_book,
-        ...itemCopy,
-      });
-    }),
+  createItem: jest.fn().mockResolvedValue([mock_book, undefined]),
   findAll: jest.fn().mockResolvedValue(mock_libraryItems),
 };
 
@@ -55,7 +45,7 @@ describe('BooksService', () => {
       const result = await service.create(newBookDto);
 
       // Then
-      expect(result).toEqual(mock_book);
+      expect(result[0]).toEqual(mock_book);
       const { categoryId, ...rest } = mock_bookDto;
       const calledWith = {
         ...rest,

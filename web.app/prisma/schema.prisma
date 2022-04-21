@@ -14,7 +14,7 @@ datasource db {
 model LibraryItem {
   id              Int  @default(autoincrement()) @id
   title           String
-  author          String
+  author          String?
   pages           Int?
   runTimeMinutes  Int?
   isBorrowable    Boolean @default(value: true)
