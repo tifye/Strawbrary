@@ -15,6 +15,7 @@ const mockRepository = {
     ),
   findAll: jest.fn().mockResolvedValue(mock_libraryItems),
   deleteItem: jest.fn().mockResolvedValue([mock_book, undefined]),
+  checkOutItem: jest.fn().mockResolvedValue([mock_book, undefined]),
 };
 
 describe('LibraryItemsService', () => {
@@ -71,6 +72,31 @@ describe('LibraryItemsService', () => {
       // Then
       expect(result[0]).toEqual(false);
       expect(deleteSpy).toHaveBeenCalledWith(id);
+    });
+  });
+
+  describe('Check In/Out', () => {
+    it('Should check out an item', async () => {
+      // Given
+      const item = mock_book;
+      const borrower = 'John Doe';
+      jest.spyOn(repository, 'checkOutItem').mockResolvedValueOnce([
+        {
+          ...item,
+          borrower,
+          isBorrowable: false,
+        },
+        undefined,
+      ]);
+      // When
+      const result = await service.checkOut(item, borrower);
+
+      // Then
+      expect(result[0]).toEqual({
+        ...item,
+        borrower,
+        isBorrowable: false,
+      });
     });
   });
 });
