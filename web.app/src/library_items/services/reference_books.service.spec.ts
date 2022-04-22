@@ -61,7 +61,7 @@ describe('DvdsService', () => {
       const updateReferenceBook = JSON.parse(
         JSON.stringify(mock_updateReferenceBookDto),
       );
-      const updateItemSpy = jest
+      jest
         .spyOn(repository, 'updateItem')
         .mockResolvedValueOnce([0, undefined]);
 
