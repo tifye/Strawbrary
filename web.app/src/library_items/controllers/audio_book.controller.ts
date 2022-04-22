@@ -37,7 +37,7 @@ export class AudioBookController {
     }
 
     if (result[0] !== undefined && result[0] == 0) {
-      throw new BadRequestException('No book found with given id');
+      throw new BadRequestException('No audio book found with given id');
     }
 
     return {

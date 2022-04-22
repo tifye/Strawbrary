@@ -7,6 +7,7 @@ import {
   ParseIntPipe,
 } from '@nestjs/common';
 import { LibraryItem } from '@prisma/client';
+import { ParseItemPipe } from '../pipes/item_exists.pipe';
 import { LibraryItemsService } from '../services/library_items.service';
 
 @Controller('items')
@@ -27,5 +28,12 @@ export class LibraryItemsController {
     }
 
     return true;
+  }
+
+  @Get(':id')
+  async findOne(
+    @Param('id', ParseIntPipe, ParseItemPipe) item: LibraryItem,
+  ): Promise<LibraryItem> {
+    return item;
   }
 }

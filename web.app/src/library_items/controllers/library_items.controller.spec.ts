@@ -4,6 +4,12 @@ import { mock_categories } from '../../__mock-data__/categories.mock';
 import { LibraryItemsController } from './library_items.controller';
 import { InternalServerErrorException } from '@nestjs/common';
 import { mock_book } from '../../__mock-data__/library_items.mock';
+import { LibraryItemsRepository } from '../repositories/library_items.repository';
+
+const mockRepository = {
+  provide: LibraryItemsRepository,
+  useValue: {},
+};
 
 describe('LibraryItemsController Unit Tests', () => {
   let libraryItemsController: LibraryItemsController;
@@ -20,7 +26,7 @@ describe('LibraryItemsController Unit Tests', () => {
 
     const module: TestingModule = await Test.createTestingModule({
       controllers: [LibraryItemsController],
-      providers: [LibraryItemsService, spyLibraryItemsService],
+      providers: [LibraryItemsService, spyLibraryItemsService, mockRepository],
     }).compile();
 
     libraryItemsController = module.get<LibraryItemsController>(

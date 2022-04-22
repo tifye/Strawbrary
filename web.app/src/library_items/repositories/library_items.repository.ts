@@ -66,4 +66,17 @@ export class LibraryItemsRepository {
       return [undefined, e];
     }
   }
+
+  async findOne(id: number): Promise<LibraryItem | undefined> {
+    try {
+      const item = await this.prisma.libraryItem.findUnique({
+        where: {
+          id,
+        },
+      });
+      return item;
+    } catch (e: any) {
+      return undefined;
+    }
+  }
 }
