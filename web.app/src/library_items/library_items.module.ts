@@ -11,6 +11,7 @@ import { AudioBookService } from './services/audio_book.service';
 import { AudioBookController } from './controllers/audio_book.controller';
 import { ReferenceBooksController } from './controllers/reference_books.controller';
 import { ReferenceBooksService } from './services/reference_book.service';
+import { ParseItemPipe } from './pipes/item_exists.pipe';
 
 @Module({
   imports: [],
@@ -29,6 +30,7 @@ import { ReferenceBooksService } from './services/reference_book.service';
     ReferenceBooksService,
     LibraryItemsRepository,
     PrismaService,
+    ParseItemPipe,
   ],
 })
 export class LibraryItemsModule {}

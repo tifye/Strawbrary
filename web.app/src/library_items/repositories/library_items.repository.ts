@@ -53,4 +53,30 @@ export class LibraryItemsRepository {
       return [undefined, e];
     }
   }
+
+  async deleteItem(id: number): Promise<[LibraryItem, Error?]> {
+    try {
+      const deleteItem = await this.prisma.libraryItem.delete({
+        where: {
+          id,
+        },
+      });
+      return [deleteItem, undefined];
+    } catch (e: any) {
+      return [undefined, e];
+    }
+  }
+
+  async findOne(id: number): Promise<LibraryItem | undefined> {
+    try {
+      const item = await this.prisma.libraryItem.findUnique({
+        where: {
+          id,
+        },
+      });
+      return item;
+    } catch (e: any) {
+      return undefined;
+    }
+  }
 }

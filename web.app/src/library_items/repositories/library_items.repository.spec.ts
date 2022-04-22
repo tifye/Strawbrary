@@ -24,6 +24,7 @@ describe('LibraryItemsRepository Unit Tests', () => {
               findMany: jest.fn().mockResolvedValue(mock_libraryItems),
               create: jest.fn().mockReturnValue(mock_book),
               updateMany: jest.fn().mockResolvedValue({ count: 1 }),
+              delete: jest.fn().mockResolvedValue(mock_book),
             },
           }),
         },
@@ -82,6 +83,36 @@ describe('LibraryItemsRepository Unit Tests', () => {
 
       // Then
       expect(result[0]).toEqual(1);
+    });
+  });
+
+  describe('Delete', () => {
+    it('Should delete a library item and return which one was delete', async () => {
+      // Given
+      const id = mock_book.id;
+
+      // When
+      const result = await repository.deleteItem(id);
+
+      // Then
+      expect(result[0]).toEqual(mock_book);
+    });
+
+    it('Should return error if no item was found that matched id', async () => {
+      // Given
+      const id = NaN;
+      const deleteSpy = jest
+        .spyOn(prisma.libraryItem, 'delete')
+        .mockRejectedValueOnce(new Error('Not found'));
+      // When
+      const result = await repository.deleteItem(id);
+
+      // Then
+      expect(result[1]).toBeInstanceOf(Error);
+      expect(result[1].message).toEqual('Not found');
+      expect(deleteSpy).toHaveBeenCalledWith({
+        where: { id },
+      });
     });
   });
 });
