@@ -21,9 +21,27 @@ export class LibraryItemsRepository {
     }
   }
 
-  async findAll(): Promise<LibraryItem[]> {
-    const items = await this.prisma.libraryItem.findMany();
+  async findAll(params: {
+    skip?: number;
+    take?: number;
+    where?: Prisma.LibraryItemWhereInput;
+    orderBy?: Prisma.LibraryItemOrderByWithRelationAndSearchRelevanceInput;
+  }): Promise<LibraryItem[]> {
+    const { skip, take, where, orderBy } = params;
+    const items = await this.prisma.libraryItem.findMany({
+      skip,
+      take,
+      where,
+      orderBy,
+    });
     return items;
+  }
+
+  async count(where: Prisma.LibraryItemWhereInput) {
+    const count = await this.prisma.libraryItem.count({
+      where,
+    });
+    return count;
   }
 
   async updateItem(
@@ -77,6 +95,45 @@ export class LibraryItemsRepository {
       return item;
     } catch (e: any) {
       return undefined;
+    }
+  }
+
+  async checkOutItem(
+    id: number,
+    borrower: string,
+  ): Promise<[LibraryItem?, Error?]> {
+    try {
+      const updatedItem = await this.prisma.libraryItem.update({
+        where: {
+          id,
+        },
+        data: {
+          borrower,
+          isBorrowable: false,
+          borrowDate: new Date(),
+        },
+      });
+      return [updatedItem, undefined];
+    } catch (e: any) {
+      return [undefined, e];
+    }
+  }
+
+  async checkInItem(id: number): Promise<[LibraryItem?, Error?]> {
+    try {
+      const updatedItem = await this.prisma.libraryItem.update({
+        where: {
+          id,
+        },
+        data: {
+          borrower: null,
+          isBorrowable: true,
+          borrowDate: null,
+        },
+      });
+      return [updatedItem, undefined];
+    } catch (e: any) {
+      return [undefined, e];
     }
   }
 }

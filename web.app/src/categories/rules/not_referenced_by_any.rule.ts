@@ -1,5 +1,4 @@
 import {
-  ArgumentMetadata,
   BadRequestException,
   Injectable,
   InternalServerErrorException,
@@ -11,7 +10,7 @@ import { CategoriesRepository } from '../categories.repository';
 export class NotReferencedByAnyRule implements PipeTransform {
   constructor(private categoriesRepository: CategoriesRepository) {}
 
-  async transform(id: string, _metadata: ArgumentMetadata) {
+  async transform(id: string) {
     const result = await this.categoriesRepository.findOne(Number(id), true);
     if (result[1]) {
       throw new InternalServerErrorException();

@@ -11,7 +11,9 @@ import { AudioBookService } from './services/audio_book.service';
 import { AudioBookController } from './controllers/audio_book.controller';
 import { ReferenceBooksController } from './controllers/reference_books.controller';
 import { ReferenceBooksService } from './services/reference_book.service';
-import { ParseItemPipe } from './pipes/item_exists.pipe';
+import { ParseItemPipe } from './pipes/parse_item.pipe';
+import { LibraryItemsOrderByPipe } from './pipes/library_items_order_by.pipe';
+import { LibraryItemsOrderByRule } from './rules/library_items_order_by.rule';
 
 @Module({
   imports: [],
@@ -31,6 +33,8 @@ import { ParseItemPipe } from './pipes/item_exists.pipe';
     LibraryItemsRepository,
     PrismaService,
     ParseItemPipe,
+    LibraryItemsOrderByPipe,
+    LibraryItemsOrderByRule,
   ],
 })
 export class LibraryItemsModule {}

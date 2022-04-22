@@ -12,7 +12,7 @@ import { CreateReferenceBookDto } from '../dto/create_reference_book.dto';
 import { UpdateReferenceBookDto } from '../dto/update_reference_book.dto';
 import { ReferenceBooksService } from '../services/reference_book.service';
 
-@Controller('books/reference')
+@Controller('referencebooks')
 export class ReferenceBooksController {
   constructor(private referenceBooksService: ReferenceBooksService) {}
 
