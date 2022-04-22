@@ -12,7 +12,7 @@ import { CreateAudioBookDto } from '../dto/create_audio_book.dto';
 import { UpdateAudioBookDto } from '../dto/update_audio_book.dto';
 import { AudioBookService } from '../services/audio_book.service';
 
-@Controller('books/audio')
+@Controller('audiobooks')
 export class AudioBookController {
   constructor(private audioBookService: AudioBookService) {}
 
