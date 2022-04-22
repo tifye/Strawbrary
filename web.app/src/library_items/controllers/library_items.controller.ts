@@ -10,8 +10,10 @@ import {
 } from '@nestjs/common';
 import { LibraryItem } from '@prisma/client';
 import { CheckInItemDto } from '../dto/check_in_item.dto';
+import { LibraryItemType } from '../enums/library_item_type.enum';
 import { ItemCanCheckOutRule } from '../pipes/item_can_check_out.rule';
 import { ParseItemPipe } from '../pipes/parse_item.pipe';
+import { ValidItemTypePipe } from '../pipes/valid_item_type.pipe';
 import { LibraryItemsService } from '../services/library_items.service';
 
 @Controller('items')
@@ -60,6 +62,19 @@ export class LibraryItemsController {
   async checkIn(@Param('id', ParseIntPipe, ParseItemPipe) item: LibraryItem) {
     const result = await this.libraryItemsService.checkIn(item);
 
+    if (result[1]) {
+      throw new InternalServerErrorException(result[1]);
+    }
+
+    return result[0];
+  }
+
+  @Post(':id/type')
+  async changeItemType(
+    @Param('id', ParseIntPipe, ParseItemPipe) item: LibraryItem,
+    @Body('type', ValidItemTypePipe) type: LibraryItemType,
+  ) {
+    const result = await this.libraryItemsService.changeItemType(item, type);
     if (result[1]) {
       throw new InternalServerErrorException(result[1]);
     }

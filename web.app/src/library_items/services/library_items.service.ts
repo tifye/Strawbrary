@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { LibraryItem } from '@prisma/client';
+import { LibraryItemType } from '../enums/library_item_type.enum';
 import { LibraryItemsRepository } from '../repositories/library_items.repository';
 
 @Injectable()
@@ -51,5 +52,39 @@ export class LibraryItemsService {
     }
 
     return [result[0], undefined];
+  }
+
+  async changeItemType(
+    item: LibraryItem,
+    targetType: LibraryItemType,
+  ): Promise<[LibraryItem?, string?]> {
+    const updateData: any = {
+      type: targetType,
+    };
+
+    if (
+      item.type === LibraryItemType.ReferenceBook &&
+      targetType !== LibraryItemType.ReferenceBook
+    ) {
+      updateData.isBorrowable = true;
+    } else if (
+      item.type !== LibraryItemType.ReferenceBook &&
+      targetType === LibraryItemType.ReferenceBook
+    ) {
+      updateData.isBorrowable = false;
+    }
+
+    const result = await this.libraryItemsRepository.updateItem(
+      item.id,
+      item.type,
+      updateData,
+    );
+
+    if (result[1]) {
+      return [undefined, 'Could not change item type'];
+    }
+
+    const updatedItem = await this.libraryItemsRepository.findOne(item.id);
+    return [updatedItem, undefined];
   }
 }
