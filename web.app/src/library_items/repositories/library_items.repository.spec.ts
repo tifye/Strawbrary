@@ -25,6 +25,7 @@ describe('LibraryItemsRepository Unit Tests', () => {
               create: jest.fn().mockReturnValue(mock_book),
               updateMany: jest.fn().mockResolvedValue({ count: 1 }),
               delete: jest.fn().mockResolvedValue(mock_book),
+              update: jest.fn().mockResolvedValue(mock_book),
             },
           }),
         },
@@ -83,6 +84,54 @@ describe('LibraryItemsRepository Unit Tests', () => {
 
       // Then
       expect(result[0]).toEqual(1);
+    });
+
+    describe('Check in/out', () => {
+      it('Should check out a library item', async () => {
+        // Given
+        const id = mock_book.id;
+        const borrower = 'John Doe';
+        jest.spyOn(prisma.libraryItem, 'update').mockResolvedValueOnce({
+          ...mock_book,
+          borrower,
+          isBorrowable: false,
+        });
+
+        // When
+        const result = await repository.checkOutItem(id, borrower);
+
+        // Then
+        expect(result[0]).toEqual({
+          ...mock_book,
+          borrower,
+          isBorrowable: false,
+        });
+        expect(prisma.libraryItem.update).toHaveBeenCalledWith(
+          expect.objectContaining({
+            where: { id },
+            data: {
+              borrower,
+              isBorrowable: false,
+            },
+          }),
+        );
+      });
+
+      it('Should return false when trying to check out item with invalid id', async () => {
+        // Given
+        const id = NaN;
+        const borrower = 'John Doe';
+        jest
+          .spyOn(prisma.libraryItem, 'update')
+          .mockRejectedValueOnce(new Error());
+
+        // When
+        const result = await repository.checkOutItem(id, borrower);
+
+        // Then
+        expect(result[0]).toBeUndefined();
+        expect(result[1]).toEqual(new Error());
+      });
     });
   });
 
