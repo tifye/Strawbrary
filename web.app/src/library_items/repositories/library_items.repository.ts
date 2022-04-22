@@ -53,4 +53,17 @@ export class LibraryItemsRepository {
       return [undefined, e];
     }
   }
+
+  async deleteItem(id: number): Promise<[LibraryItem, Error?]> {
+    try {
+      const deleteItem = await this.prisma.libraryItem.delete({
+        where: {
+          id,
+        },
+      });
+      return [deleteItem, undefined];
+    } catch (e: any) {
+      return [undefined, e];
+    }
+  }
 }

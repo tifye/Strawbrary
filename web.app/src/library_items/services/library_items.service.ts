@@ -9,4 +9,14 @@ export class LibraryItemsService {
   async findAll(): Promise<LibraryItem[]> {
     return this.libraryItemsRepository.findAll();
   }
+
+  async delete(id: number): Promise<[boolean, string?]> {
+    const result = await this.libraryItemsRepository.deleteItem(id);
+
+    if (result[1]) {
+      return [false, result[1].message];
+    }
+
+    return [true, undefined];
+  }
 }
