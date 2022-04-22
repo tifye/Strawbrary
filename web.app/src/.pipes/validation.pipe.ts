@@ -9,7 +9,8 @@ import { plainToClass } from 'class-transformer';
 import { validate } from 'class-validator';
 
 @Injectable()
-export class ValidationPipe implements PipeTransform<any> {
+// @ts-ignore
+export class MyValidationPipe implements PipeTransform<any> {
   async transform(value: any, { metatype }: ArgumentMetadata) {
     // By pass native types
     if (!metatype || !this.needToValidate(metatype)) {
@@ -22,6 +23,7 @@ export class ValidationPipe implements PipeTransform<any> {
     });
     const errors = await validate(object);
     if (errors.length > 0) {
+      console.error(errors);
       throw new BadRequestException('Validation failed');
     }
 

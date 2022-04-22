@@ -6,6 +6,8 @@ import { LibraryItemsModule } from './library_items/library_items.module';
 import { PrismaService } from './prisma.service';
 import { CategoriesModule } from './categories/categories.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { OrderDirectionPipe } from './.pipes/order_direction.pipe';
+import { OrderDirectionRule } from './.rules/order_direction.rule';
 
 @Module({
   imports: [
@@ -15,7 +17,12 @@ import { PrismaModule } from './prisma/prisma.module';
     PrismaModule,
   ],
   controllers: [AppController],
-  providers: [AppService, PrismaService],
+  providers: [
+    AppService,
+    PrismaService,
+    OrderDirectionPipe,
+    OrderDirectionRule,
+  ],
   exports: [PrismaService],
 })
 export class AppModule {}

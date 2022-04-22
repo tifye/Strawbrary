@@ -7,9 +7,12 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  Query,
 } from '@nestjs/common';
 import { LibraryItem } from '@prisma/client';
 import { CheckInItemDto } from '../dto/check_in_item.dto';
+import { FindAllFilterDto } from '../dto/find_all_filter.dto';
+import { PaginationDataDto } from '../dto/pagination_data.dto';
 import { LibraryItemType } from '../enums/library_item_type.enum';
 import { ItemCanCheckOutRule } from '../pipes/item_can_check_out.rule';
 import { ParseItemPipe } from '../pipes/parse_item.pipe';
@@ -21,8 +24,24 @@ export class LibraryItemsController {
   constructor(private libraryItemsService: LibraryItemsService) {}
 
   @Get()
-  async findAll(): Promise<LibraryItem[]> {
-    return this.libraryItemsService.findAll();
+  async findAll(
+    @Query() filterData?: FindAllFilterDto,
+  ): Promise<PaginationDataDto & { data: LibraryItem[] }> {
+    const { page, perPage, orderBy, orderDirection, search } = filterData || {};
+    const result = await this.libraryItemsService.findAll({
+      ...(page && { page }),
+      ...(perPage && { perPage }),
+      ...(search && { search }),
+      ...(orderBy && { orderByData: orderBy as 'type' | 'categoryName' }),
+      ...(orderDirection && {
+        orderByDirection: orderDirection as 'asc' | 'desc',
+      }),
+    });
+
+    return {
+      ...result[0],
+      data: result[1],
+    };
   }
 
   @Delete(':id')

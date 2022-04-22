@@ -43,7 +43,7 @@ describe('LibraryItemsRepository Unit Tests', () => {
 
   describe('Find all', () => {
     it('Should return an array of library items', async () => {
-      await expect(repository.findAll()).resolves.toEqual(mock_libraryItems);
+      await expect(repository.findAll({})).resolves.toEqual(mock_libraryItems);
     });
   });
 

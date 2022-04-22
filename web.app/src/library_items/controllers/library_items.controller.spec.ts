@@ -1,9 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { LibraryItemsService } from '../services/library_items.service';
-import { mock_categories } from '../../__mock-data__/categories.mock';
 import { LibraryItemsController } from './library_items.controller';
 import { InternalServerErrorException } from '@nestjs/common';
-import { mock_book } from '../../__mock-data__/library_items.mock';
+import {
+  mock_book,
+  mock_libraryItems,
+} from '../../__mock-data__/library_items.mock';
 import { LibraryItemsRepository } from '../repositories/library_items.repository';
 import { ItemCanCheckOutRule } from '../pipes/item_can_check_out.rule';
 import { ParseItemPipe } from '../pipes/parse_item.pipe';
@@ -21,7 +23,17 @@ describe('LibraryItemsController Unit Tests', () => {
     const spyLibraryItemsService = {
       provide: LibraryItemsService,
       useFactory: () => ({
-        findAll: jest.fn(() => mock_categories),
+        findAll: jest.fn(() => {
+          return [
+            {
+              page: 1,
+              limit: mock_libraryItems.length,
+              total: mock_libraryItems.length,
+              lastPage: 1,
+            },
+            mock_libraryItems,
+          ];
+        }),
         delete: jest.fn(() => [true, undefined]),
         checkOut: jest.fn().mockImplementation((item, borrower) => [
           {
@@ -53,7 +65,14 @@ describe('LibraryItemsController Unit Tests', () => {
 
   describe('findAll', () => {
     it('Should return an array of library items', async () => {
-      expect(await libraryItemsController.findAll()).toBe(mock_categories);
+      const result = await libraryItemsController.findAll();
+      expect(result).toEqual({
+        page: 1,
+        limit: 4,
+        total: 4,
+        lastPage: 1,
+        data: mock_libraryItems,
+      });
       expect(spyService.findAll).toHaveBeenCalled();
     });
   });

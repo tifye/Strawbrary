@@ -21,9 +21,27 @@ export class LibraryItemsRepository {
     }
   }
 
-  async findAll(): Promise<LibraryItem[]> {
-    const items = await this.prisma.libraryItem.findMany();
+  async findAll(params: {
+    skip?: number;
+    take?: number;
+    where?: Prisma.LibraryItemWhereInput;
+    orderBy?: Prisma.LibraryItemOrderByWithRelationAndSearchRelevanceInput;
+  }): Promise<LibraryItem[]> {
+    const { skip, take, where, orderBy } = params;
+    const items = await this.prisma.libraryItem.findMany({
+      skip,
+      take,
+      where,
+      orderBy,
+    });
     return items;
+  }
+
+  async count(where: Prisma.LibraryItemWhereInput) {
+    const count = await this.prisma.libraryItem.count({
+      where,
+    });
+    return count;
   }
 
   async updateItem(

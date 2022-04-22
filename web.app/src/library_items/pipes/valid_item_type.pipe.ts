@@ -1,6 +1,7 @@
-import { BadRequestException, PipeTransform } from '@nestjs/common';
+import { BadRequestException, Injectable, PipeTransform } from '@nestjs/common';
 import { ValidItemTypeRule } from '../rules/valid_item_type.rule';
 
+@Injectable()
 export class ValidItemTypePipe
   extends ValidItemTypeRule
   implements PipeTransform

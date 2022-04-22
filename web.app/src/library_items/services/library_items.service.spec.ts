@@ -16,6 +16,7 @@ const mockRepository = {
   findAll: jest.fn().mockResolvedValue(mock_libraryItems),
   deleteItem: jest.fn().mockResolvedValue([mock_book, undefined]),
   checkOutItem: jest.fn().mockResolvedValue([mock_book, undefined]),
+  count: jest.fn().mockResolvedValue(mock_libraryItems.length),
 };
 
 describe('LibraryItemsService', () => {
@@ -37,14 +38,67 @@ describe('LibraryItemsService', () => {
     repository = module.get<LibraryItemsRepository>(LibraryItemsRepository);
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
 
   describe('Get Items', () => {
     it('Should get an array of library items', async () => {
-      await expect(service.findAll()).resolves.toEqual(mock_libraryItems);
+      await expect(service.findAll({})).resolves.toEqual([
+        {
+          page: 1,
+          limit: mock_libraryItems.length,
+          total: mock_libraryItems.length,
+          lastPage: 1,
+        },
+        mock_libraryItems,
+      ]);
       expect(repository.findAll).toHaveBeenCalled();
+    });
+
+    it('Should get an array in correct order according to sorting and filtering', async () => {
+      // Given
+      const args = {
+        matching: {
+          isBorrowable: true,
+        },
+        search: 'Izzy',
+        orderByData: 'categoryName',
+        orderByDirection: 'desc',
+      };
+
+      // When
+      await service.findAll({
+        matching: args.matching,
+        search: args.search,
+        orderByData: args.orderByData as 'categoryName' | 'type',
+        orderByDirection: args.orderByDirection as 'asc' | 'desc',
+      });
+
+      // Then
+      expect(repository.findAll).toHaveBeenCalledWith(
+        expect.objectContaining({
+          orderBy: {
+            _relevance: {
+              fields: ['title', 'author', 'type'],
+              search: args.search,
+              sort: 'desc',
+            },
+            category: {
+              categoryName: 'desc',
+            },
+          },
+          where: {
+            isBorrowable: true,
+          },
+          take: undefined,
+          skip: 0,
+        }),
+      );
     });
   });
 
