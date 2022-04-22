@@ -55,4 +55,15 @@ export class LibraryItemsController {
 
     return result[0];
   }
+
+  @Post('checkin/:id')
+  async checkIn(@Param('id', ParseIntPipe, ParseItemPipe) item: LibraryItem) {
+    const result = await this.libraryItemsService.checkIn(item);
+
+    if (result[1]) {
+      throw new InternalServerErrorException(result[1]);
+    }
+
+    return result[0];
+  }
 }

@@ -92,6 +92,7 @@ export class LibraryItemsRepository {
         data: {
           borrower,
           isBorrowable: false,
+          borrowDate: new Date(),
         },
       });
       return [updatedItem, undefined];
@@ -109,6 +110,7 @@ export class LibraryItemsRepository {
         data: {
           borrower: null,
           isBorrowable: true,
+          borrowDate: null,
         },
       });
       return [updatedItem, undefined];

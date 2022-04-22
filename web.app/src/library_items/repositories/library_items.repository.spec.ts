@@ -101,18 +101,11 @@ describe('LibraryItemsRepository Unit Tests', () => {
         const result = await repository.checkOutItem(id, borrower);
 
         // Then
-        expect(result[0]).toEqual({
-          ...mock_book,
-          borrower,
-          isBorrowable: false,
-        });
-        expect(prisma.libraryItem.update).toHaveBeenCalledWith(
+        expect(result[0]).toEqual(
           expect.objectContaining({
-            where: { id },
-            data: {
-              borrower,
-              isBorrowable: false,
-            },
+            ...mock_book,
+            borrower,
+            isBorrowable: false,
           }),
         );
       });
@@ -146,18 +139,11 @@ describe('LibraryItemsRepository Unit Tests', () => {
         const result = await repository.checkInItem(id);
 
         // Then
-        expect(result[0]).toEqual({
-          ...mock_book,
-          borrower: null,
-          isBorrowable: true,
-        });
-        expect(prisma.libraryItem.update).toHaveBeenCalledWith(
+        expect(result[0]).toEqual(
           expect.objectContaining({
-            where: { id },
-            data: {
-              borrower: null,
-              isBorrowable: true,
-            },
+            ...mock_book,
+            borrower: null,
+            isBorrowable: true,
           }),
         );
       });
