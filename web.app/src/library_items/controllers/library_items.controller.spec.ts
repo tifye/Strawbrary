@@ -44,21 +44,21 @@ describe('LibraryItemsController Unit Tests', () => {
 
   describe('Delete', () => {
     it('Should return true if successful', async () => {
-      const id = 1;
-      expect(await libraryItemsController.delete(id)).toEqual(true);
-      expect(spyService.delete).toHaveBeenCalledWith(id);
+      const item = mock_book;
+      expect(await libraryItemsController.delete(item)).toEqual(true);
+      expect(spyService.delete).toHaveBeenCalledWith(item.id);
     });
 
     it('Should reject with invalid id', async () => {
-      const id = mock_book.id;
+      const item = mock_book;
       const spyDelete = jest
         .spyOn(spyService, 'delete')
         .mockResolvedValueOnce([false, 'Invalid id']);
 
-      await expect(libraryItemsController.delete(id)).rejects.toEqual(
+      await expect(libraryItemsController.delete(item)).rejects.toEqual(
         new InternalServerErrorException('Invalid id'),
       );
-      expect(spyDelete).toHaveBeenCalledWith(id);
+      expect(spyDelete).toHaveBeenCalledWith(item.id);
     });
   });
 });

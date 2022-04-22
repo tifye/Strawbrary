@@ -20,8 +20,8 @@ export class LibraryItemsController {
   }
 
   @Delete(':id')
-  async delete(@Param('id', ParseIntPipe) id: number) {
-    const result = await this.libraryItemsService.delete(id);
+  async delete(@Param('id', ParseIntPipe, ParseItemPipe) item: LibraryItem) {
+    const result = await this.libraryItemsService.delete(item.id);
 
     if (result[1]) {
       throw new InternalServerErrorException(result[1]);
