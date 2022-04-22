@@ -99,4 +99,21 @@ export class LibraryItemsRepository {
       return [undefined, e];
     }
   }
+
+  async checkInItem(id: number): Promise<[LibraryItem?, Error?]> {
+    try {
+      const updatedItem = await this.prisma.libraryItem.update({
+        where: {
+          id,
+        },
+        data: {
+          borrower: null,
+          isBorrowable: true,
+        },
+      });
+      return [updatedItem, undefined];
+    } catch (e: any) {
+      return [undefined, e];
+    }
+  }
 }

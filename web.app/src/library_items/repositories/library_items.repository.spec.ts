@@ -132,6 +132,35 @@ describe('LibraryItemsRepository Unit Tests', () => {
         expect(result[0]).toBeUndefined();
         expect(result[1]).toEqual(new Error());
       });
+
+      it('Should check in an item', async () => {
+        // Given
+        const id = mock_book.id;
+        jest.spyOn(prisma.libraryItem, 'update').mockResolvedValueOnce({
+          ...mock_book,
+          borrower: null,
+          isBorrowable: true,
+        });
+
+        // When
+        const result = await repository.checkInItem(id);
+
+        // Then
+        expect(result[0]).toEqual({
+          ...mock_book,
+          borrower: null,
+          isBorrowable: true,
+        });
+        expect(prisma.libraryItem.update).toHaveBeenCalledWith(
+          expect.objectContaining({
+            where: { id },
+            data: {
+              borrower: null,
+              isBorrowable: true,
+            },
+          }),
+        );
+      });
     });
   });
 
