@@ -4,6 +4,7 @@ import { useRoutes } from 'react-router-dom';
 import { CategoriesPage, LibraryItemsPage } from './pages';
 import { Box } from '@mui/material';
 import Navbar from './Navbar';
+import Header from './Appbar';
 
 const AppRoutes = () => useRoutes([
   { path: '/', element: <LibraryItemsPage /> },
@@ -16,8 +17,11 @@ function App() {
     <div className="App">
       <Box sx ={{ display: 'flex', with: '100%'}}>
         <Navbar />
-        <Box component="main" style={{ width: '100% '}}>
-          <AppRoutes />
+        <Box style={{ display: 'flex', flex: 1, flexDirection: 'column' }}>
+          <Header />
+          <Box component="main" sx={{ flex: 1 }}>
+            <AppRoutes />
+          </Box>
         </Box>
       </Box>
     </div>

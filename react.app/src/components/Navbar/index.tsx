@@ -1,9 +1,9 @@
 import React from 'react-dom';
-import { Drawer, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import { List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import NavbarItem from './NavbarItem';
 
-const drawerWidth = 256;
+const drawerWidth = 200;
 
 const navItems = [
   {
@@ -18,16 +18,14 @@ const navItems = [
 
 export default function Navbar() {
   return (
-    <Drawer variant='permanent' style={{ width: drawerWidth }}>
-      <List>
-        <ListItem>
-        <ListItemIcon><MenuBookIcon /></ListItemIcon>
-        <ListItemText>Strawbrary</ListItemText>
-        </ListItem>
-      </List>
+    <List style={{ width: drawerWidth }}>
+      <ListItem>
+      <ListItemIcon><MenuBookIcon /></ListItemIcon>
+      <ListItemText>Strawbrary</ListItemText>
+      </ListItem>
       { navItems.map( (item) => (
         <NavbarItem key={item.id} {...item} />
       ))}
-    </Drawer>
+    </List>
   );
 }
