@@ -16,7 +16,7 @@ export default  function LibraryItemsPage() {
           <LibraryItemsTable />
         </Grid>
         <Grid item xs={3}>
-          <LibraryItemEditPanel item={data[0]} />
+          <LibraryItemEditPanel item={data[3]} />
         </Grid>
       </Grid>
     </>

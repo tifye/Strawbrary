@@ -1,15 +1,9 @@
 import { Box, Button, Divider, Paper, Stack, Typography } from '@mui/material';
 import React from 'react';
 import { LibraryItem } from '../../../../types';
-import CategoryEditField from './EditPanelControlFields/CategoryEditField';
 import LibraryItemDeleteDialog from './LibraryItemDeleteDialog';
 import LibraryItemEditPanelAppBar from './LibraryItemEditPanelAppBar';
-import categories from '../../../../__mock_data__/categories.json';
-import AuthorEditField from './EditPanelControlFields/AuthorEditField';
-import TitleEditField from './EditPanelControlFields/TitleEditField';
-import PagesEditField from './EditPanelControlFields/PagesEditField';
-import RunTimeMinutesEditField from './EditPanelControlFields/RunTimeMinutesEditField';
-import ItemTypeEditField from './EditPanelControlFields/ItemTypeEditField';
+import typeFieldFactory from './typeFieldFactory';
 
 interface LibraryItemEditPanelProps {
   item: LibraryItem;
@@ -33,12 +27,7 @@ export default function LibraryItemEditPanel(props: LibraryItemEditPanelProps) {
 
       <form>
         <Stack style={{ padding: 16 }} spacing={3}>
-          <TitleEditField title={item.title} handleFieldChange={handleFieldChange} />
-          <AuthorEditField author={item.author!} handleFieldChange={handleFieldChange}/>
-          <PagesEditField pages={item.pages!} handleFieldChange={handleFieldChange}/>
-          <RunTimeMinutesEditField runTimeMinutes={item.runTimeMinutes!} handleFieldChange={handleFieldChange}/>
-          <ItemTypeEditField itemType={item.type!} handleFieldChange={handleFieldChange} />
-          <CategoryEditField selectedValue={categories[0]} handleChange={handleFieldChange}/>
+          {typeFieldFactory(item.type, {handleFieldChange, item})}
         </Stack>
       </form>
       <Box display="flex" sx={{ flexDirection: 'row-reverse', py: 1 }}>
