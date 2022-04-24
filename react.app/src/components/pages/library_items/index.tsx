@@ -1,7 +1,9 @@
 import { Grid } from '@mui/material';
 import React from 'react';
+import LibraryItemEditPanel from './LibraryItemEditPanel';
 import LibraryItemsContentAppBar from './LibraryItemsContentAppBar';
 import LibraryItemsTable from './LibraryItemsTable';
+import data from './LibraryItemsTable/__mock_data__.json';
 
 export default  function LibraryItemsPage() {
   return (
@@ -14,7 +16,7 @@ export default  function LibraryItemsPage() {
           <LibraryItemsTable />
         </Grid>
         <Grid item xs={4}>
-          Content sidebar
+          <LibraryItemEditPanel item={data[0]} />
         </Grid>
       </Grid>
     </>
