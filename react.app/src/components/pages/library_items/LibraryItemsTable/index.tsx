@@ -2,7 +2,7 @@ import { Paper, Table, TableBody, TableContainer } from '@mui/material';
 import React from 'react';
 import { LibraryItem } from '../../../../types';
 import LibraryItemsTableHead from './LibraryItemsTableHead';
-import data from './__mock_data__.json';
+import data from '../../../../__mock_data__/items.json';
 import LibraryItemsTableRow from './LibraryItemsTableRow';
 
 export default function LibraryItemsTable() {

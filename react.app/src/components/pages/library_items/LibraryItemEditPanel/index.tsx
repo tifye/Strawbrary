@@ -1,15 +1,15 @@
 import { Box, Button, Divider, Paper, Stack, Typography } from '@mui/material';
 import React from 'react';
 import { LibraryItem } from '../../../../types';
-import BaseDropDownEditField from './EditPanelControlFields/BaseFieldTypes/BaseDropDownEditField';
-import BaseNumberEditField from './EditPanelControlFields/BaseFieldTypes/BaseNumberEditField';
-import BaseTextEditField from './EditPanelControlFields/BaseFieldTypes/BaseTextEditField';
 import CategoryEditField from './EditPanelControlFields/CategoryEditField';
 import LibraryItemDeleteDialog from './LibraryItemDeleteDialog';
 import LibraryItemEditPanelAppBar from './LibraryItemEditPanelAppBar';
 import categories from '../../../../__mock_data__/categories.json';
-
-const itemTypes = ['Book', 'AudioBook', 'ReferenceBook', 'Dvd'];
+import AuthorEditField from './EditPanelControlFields/AuthorEditField';
+import TitleEditField from './EditPanelControlFields/TitleEditField';
+import PagesEditField from './EditPanelControlFields/PagesEditField';
+import RunTimeMinutesEditField from './EditPanelControlFields/RunTimeMinutesEditField';
+import ItemTypeEditField from './EditPanelControlFields/ItemTypeEditField';
 
 interface LibraryItemEditPanelProps {
   item: LibraryItem;
@@ -33,12 +33,12 @@ export default function LibraryItemEditPanel(props: LibraryItemEditPanelProps) {
 
       <form>
         <Stack style={{ padding: 16 }} spacing={3}>
-          <BaseTextEditField label='Title' ariaLabel='title' value={item.title} handleChange={(value: any) => handleFieldChange('title', value)}/>
-          <BaseTextEditField label="Author" ariaLabel='author' value={item.author!} handleChange={(value: any) => handleFieldChange('author', value)}/>
-          <BaseNumberEditField label="Number of Pages" ariaLabel='number-of-pages' value={item.pages!} handleChange={(value: any) => handleFieldChange('pages', value)}/>
-          <BaseNumberEditField label="Run Time Minutes" ariaLabel="run-time-minutes" value={item.runTimeMinutes!} handleChange={(value: any) => handleFieldChange('runTimeMinutes', value)}/>
-          <BaseDropDownEditField label="Item Type" ariaLabel='item-type' selectedValue={item.type} values={itemTypes} handleChange={(value: any) => handleFieldChange('type', value)}/>
-          <CategoryEditField label="Category" ariaLabel='category' selectedValue={categories[0]} handleChange={(value: any) => handleFieldChange('categoryId', value)}/>
+          <TitleEditField title={item.title} handleFieldChange={handleFieldChange} />
+          <AuthorEditField author={item.author!} handleFieldChange={handleFieldChange}/>
+          <PagesEditField pages={item.pages!} handleFieldChange={handleFieldChange}/>
+          <RunTimeMinutesEditField runTimeMinutes={item.runTimeMinutes!} handleFieldChange={handleFieldChange}/>
+          <ItemTypeEditField itemType={item.type!} handleFieldChange={handleFieldChange} />
+          <CategoryEditField selectedValue={categories[0]} handleChange={handleFieldChange}/>
         </Stack>
       </form>
       <Box display="flex" sx={{ flexDirection: 'row-reverse', py: 1 }}>

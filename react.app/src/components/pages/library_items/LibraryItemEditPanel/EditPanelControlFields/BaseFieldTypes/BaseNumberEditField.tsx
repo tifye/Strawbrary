@@ -9,15 +9,19 @@ interface NumberEditFieldProps extends EditFieldProps {
 
 export default function NumberEditField (props: NumberEditFieldProps) {
   const { value, label, ariaLabel, handleChange } = props;
+  const [valueState, setValueState] = React.useState(value);
   return (
     <FormControl fullWidth variant="standard">
       <InputLabel htmlFor={`item-${ariaLabel}-input`}>{label}</InputLabel>
       <Input
         id={`item-${ariaLabel}-input`}
         aria-describedby={`item-${ariaLabel}-helper`}
-        value={value}
+        value={valueState}
         type="number"
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleChange(e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          setValueState(Number(e.target.value));
+          handleChange(e.target.value);
+        }}
       />
     </FormControl>
   );

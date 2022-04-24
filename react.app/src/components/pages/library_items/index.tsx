@@ -3,7 +3,7 @@ import React from 'react';
 import LibraryItemEditPanel from './LibraryItemEditPanel';
 import LibraryItemsContentAppBar from './LibraryItemsContentAppBar';
 import LibraryItemsTable from './LibraryItemsTable';
-import data from './LibraryItemsTable/__mock_data__.json';
+import data from '../../../__mock_data__/items.json';
 
 export default  function LibraryItemsPage() {
   return (
