@@ -12,10 +12,10 @@ export default  function LibraryItemsPage() {
         <Grid item xs={12}>
           <LibraryItemsContentAppBar />
         </Grid>
-        <Grid item xs={8}>
+        <Grid item xs={9}>
           <LibraryItemsTable />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={3}>
           <LibraryItemEditPanel item={data[0]} />
         </Grid>
       </Grid>

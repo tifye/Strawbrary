@@ -29,7 +29,8 @@ module.exports = {
 		'semi': [
 			'error',
 			'always'
-		]
+		],
+    '@typescript-eslint/no-explicit-any': 'off',
 	},
-  "ignorePatterns": ["*.config.[ts, js]", "./dist/"]
+  'ignorePatterns': ['*.config.[ts, js]', './dist/']
 };
