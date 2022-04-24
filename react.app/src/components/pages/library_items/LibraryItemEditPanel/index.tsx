@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Stack, Typography } from '@mui/material';
+import { Box, Button, Divider, Paper, Stack, Typography } from '@mui/material';
 import React from 'react';
 import { LibraryItem } from '../../../../types';
 import BaseDropDownEditField from './EditPanelControlFields/BaseFieldTypes/BaseDropDownEditField';
@@ -27,7 +27,7 @@ export default function LibraryItemEditPanel(props: LibraryItemEditPanelProps) {
   };
 
   return (
-    <Box component="aside">
+    <Paper component="aside" elevation={2}>
       <LibraryItemEditPanelAppBar />
       <Divider />
 
@@ -41,7 +41,14 @@ export default function LibraryItemEditPanel(props: LibraryItemEditPanelProps) {
           <CategoryEditField label="Category" ariaLabel='category' selectedValue={categories[0]} handleChange={(value: any) => handleFieldChange('categoryId', value)}/>
         </Stack>
       </form>
-
+      <Box display="flex" sx={{ flexDirection: 'row-reverse', py: 1 }}>
+        <Button variant="contained" color="success">
+          Save
+        </Button>
+        <Button color="primary">
+          Cancel
+        </Button>
+      </Box>
       <Divider />
       <Typography variant="caption">Delete this item</Typography>
       <Stack borderTop={1} borderColor="error.main" alignItems="center">
@@ -60,6 +67,6 @@ export default function LibraryItemEditPanel(props: LibraryItemEditPanelProps) {
           open={openDeleteDialog}
         />
       </Stack>
-    </Box>
+    </Paper>
   );
 }

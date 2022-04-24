@@ -14,7 +14,7 @@ export default function LibraryItemsContentAppBar() {
   };
   return (
     <>
-      <AppBar position="static" elevation={1}>
+      <AppBar position="static" elevation={3}>
         <Toolbar variant="dense">
           <Typography variant='h6' style={{ flexGrow: 1 }}>
             Items

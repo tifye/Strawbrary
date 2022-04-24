@@ -1,4 +1,4 @@
-import { Table, TableBody, TableContainer } from '@mui/material';
+import { Paper, Table, TableBody, TableContainer } from '@mui/material';
 import React from 'react';
 import { LibraryItem } from '../../../../types';
 import LibraryItemsTableHead from './LibraryItemsTableHead';
@@ -7,7 +7,7 @@ import LibraryItemsTableRow from './LibraryItemsTableRow';
 
 export default function LibraryItemsTable() {
   return (
-    <>
+    <Paper elevation={1}>
       <TableContainer>
         <Table stickyHeader aria-label="items table" style={{ marginTop: 4 }}>
           <LibraryItemsTableHead />
@@ -22,6 +22,6 @@ export default function LibraryItemsTable() {
           </TableBody>
         </Table>
       </TableContainer>
-    </>
+    </Paper>
   );
 }

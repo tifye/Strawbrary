@@ -4,7 +4,7 @@ import { Close } from '@mui/icons-material';
 
 export default function LibraryItemEditPanelAppBar () {
   return (
-    <AppBar position="static" elevation={0}>
+    <AppBar position="static" elevation={1}>
       <Toolbar variant="dense">
         <Typography variant='h6' style={{ flexGrow: 1 }}>
           Item information
