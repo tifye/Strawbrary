@@ -1,5 +1,5 @@
 import { Box, Button, Divider, Paper, Stack, Typography } from '@mui/material';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { LibraryItemsStore } from '../../../../remote_access';
 import { LibraryItem } from '../../../../types';
 import LibraryItemDeleteDialog from './LibraryItemDeleteDialog';
@@ -13,11 +13,15 @@ interface LibraryItemEditPanelProps {
 export default function LibraryItemEditPanel(props: LibraryItemEditPanelProps) {
   const { item } = props;
   const [openDeleteDialog, setDeleteDialogOpen] = React.useState(false);
-  const [newItem, setNewItem] = useState(JSON.parse(JSON.stringify(item)));
+  const [newItem, setNewItem] = useState<LibraryItem>(JSON.parse(JSON.stringify(item)));
   const libraryItemsStore = useRef(new LibraryItemsStore());
 
   const handleDeleteDialogOpen = () => setDeleteDialogOpen(true);
   const handleDeleteDialogClose = () => setDeleteDialogOpen(false);
+
+  useEffect(() => {
+    setNewItem(item);
+  }, [item]);
 
   const handleSave = useCallback(async () => {
     try {
@@ -25,7 +29,7 @@ export default function LibraryItemEditPanel(props: LibraryItemEditPanelProps) {
     } catch (error) {
       console.error(error);
     }
-  }, [libraryItemsStore, newItem]);
+  }, [item, newItem]);
 
   const handleFieldChange = useCallback((property: string, value: any) => {
     setNewItem({
@@ -33,7 +37,14 @@ export default function LibraryItemEditPanel(props: LibraryItemEditPanelProps) {
       [property]: value,
     });
     console.log(`handleFieldChange: ${property} = ${value}`);
-  }, [item]);
+  }, [newItem, item]);
+
+  const handleCancel = () => {
+    console.log(item);
+    console.log(newItem);
+    
+    setNewItem(item);
+  };
   return (
     <Paper component="aside" elevation={2}>
       <LibraryItemEditPanelAppBar />
@@ -41,14 +52,14 @@ export default function LibraryItemEditPanel(props: LibraryItemEditPanelProps) {
 
       <form>
         <Stack style={{ padding: 16 }} spacing={3}>
-          {typeFieldFactory(item.type, {handleFieldChange, item})}
+          {typeFieldFactory(newItem.type, {handleFieldChange, item: newItem})}
         </Stack>
       </form>
       <Box display="flex" sx={{ flexDirection: 'row-reverse', py: 1 }}>
         <Button variant="contained" color="success" onClick={() => handleSave()}>
           Save
         </Button>
-        <Button color="primary">
+        <Button color="primary" onClick={() => handleCancel()}>
           Cancel
         </Button>
       </Box>
