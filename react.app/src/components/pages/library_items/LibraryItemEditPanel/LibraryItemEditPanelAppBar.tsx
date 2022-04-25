@@ -2,7 +2,7 @@ import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
 import React from 'react';
 import { Close } from '@mui/icons-material';
 
-export default function LibraryItemEditPanelAppBar () {
+export default function LibraryItemEditPanelAppBar ({ closeEditPanel }: { closeEditPanel: () => void }) {
   return (
     <AppBar position="static" elevation={1}>
       <Toolbar variant="dense">
@@ -13,6 +13,7 @@ export default function LibraryItemEditPanelAppBar () {
           aria-label='deselect item'
           aria-controls='item-information'
           color='inherit'
+          onClick={() => closeEditPanel()}
         >
           <Close />
         </IconButton>

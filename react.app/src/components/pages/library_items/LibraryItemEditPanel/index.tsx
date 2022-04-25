@@ -8,10 +8,11 @@ import typeFieldFactory from './typeFieldFactory';
 
 interface LibraryItemEditPanelProps {
   item: LibraryItem;
+  closeEditPanel: () => void;
 }
 
 export default function LibraryItemEditPanel(props: LibraryItemEditPanelProps) {
-  const { item } = props;
+  const { item, closeEditPanel } = props;
   const [openDeleteDialog, setDeleteDialogOpen] = React.useState(false);
   const [newItem, setNewItem] = useState<LibraryItem>(JSON.parse(JSON.stringify(item)));
   const libraryItemsStore = useRef(new LibraryItemsStore());
@@ -63,7 +64,7 @@ export default function LibraryItemEditPanel(props: LibraryItemEditPanelProps) {
   };
   return (
     <Paper component="aside" elevation={2}>
-      <LibraryItemEditPanelAppBar />
+      <LibraryItemEditPanelAppBar closeEditPanel={closeEditPanel} />
       <Divider />
 
       <form>

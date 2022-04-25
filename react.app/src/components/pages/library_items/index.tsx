@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material';
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import LibraryItemEditPanel from './LibraryItemEditPanel';
 import LibraryItemsContentAppBar from './LibraryItemsContentAppBar';
 import LibraryItemsTable from './LibraryItemsTable';
@@ -12,6 +12,9 @@ export default  function LibraryItemsPage() {
   const [editingItem, setEditingItem] = React.useState<LibraryItem | null>(null);
 
   const contextValue = useMemo(() => ({ editingItem, setEditingItem }), [editingItem]);
+  const closeEditPanel = useCallback(() => {
+    setEditingItem(null);
+  }, []);
   return (
     <LibraryItemsContext.Provider value={contextValue}>
       <Grid container sx={{ p: 2, minHeight: '100%', minWidth: '100%'}}>
@@ -23,7 +26,7 @@ export default  function LibraryItemsPage() {
         </Grid>
         {editingItem && 
         <Grid item xs={3}>
-          <LibraryItemEditPanel item={editingItem} />
+          <LibraryItemEditPanel item={editingItem} closeEditPanel={closeEditPanel} />
         </Grid>}
       </Grid>
     </LibraryItemsContext.Provider>
