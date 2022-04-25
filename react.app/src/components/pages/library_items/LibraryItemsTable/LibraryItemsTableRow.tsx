@@ -1,4 +1,5 @@
 import {
+  Chip,
   ClickAwayListener,
   IconButton,
   Menu,
@@ -40,6 +41,9 @@ export default function LibraryItemsTableRow(props: LibraryItemsTableRowProps) {
   const handleEditClicked = () => {
     setEditingItem(item);
   };
+  const handleCheckout = () => {
+    alert('Checkout');
+  };
   const handleActionsClose = () => {
     setAnchorEl(null);
   };
@@ -63,7 +67,13 @@ export default function LibraryItemsTableRow(props: LibraryItemsTableRowProps) {
         <TextRowCell text={item.title} />
         <TextRowCell text={`${item.categoryId}`} />
         <TextRowCell text={item.type} />
-        <TextRowCell text={item.isBorrowable ? 'AVAILABLE' : 'UNAVAILABLE'} />
+        <TableCell>
+          <Chip
+            label={item.isBorrowable ? 'AVAILABLE' : 'UNAVAILABLE'}
+            color={item.isBorrowable ? 'success' : 'error'}
+            onClick={item.isBorrowable ? (e) => { handleCheckout(); e.stopPropagation(); } : () => {/* */}}
+          />
+        </TableCell>
         <ClickAwayListener onClickAway={handleActionsClose}>
           <TableCell align="right">
             <IconButton
