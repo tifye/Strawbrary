@@ -32,7 +32,6 @@ const TextRowCell = ({ text }: { text: string }) => (
 
 export default function LibraryItemsTableRow(props: LibraryItemsTableRowProps) {
   const { item } = props;
-  const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isAnchorMenuOpen = Boolean(anchorEl);
   const itemRow = useRef(null);
@@ -53,7 +52,7 @@ export default function LibraryItemsTableRow(props: LibraryItemsTableRowProps) {
         hover
         key={item.id}
         ref={itemRow}
-        onClick={() => setOpen(!open)}
+        onClick={() => handleEditClicked()}
       >
         <TableCell>
           <Typography variant="body1" noWrap>
