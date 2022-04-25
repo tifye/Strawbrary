@@ -13,9 +13,16 @@ const typePaths = {
 export class LibraryItemsStore {
   constructor(private axios: AxiosStatic = axio) {}
 
-  public async getLibraryItems(): Promise<PaginationData<LibraryItem>> {
+  public async getLibraryItems(pagination?: Omit<PaginationData<LibraryItem>, 'data'>): Promise<PaginationData<LibraryItem>> {
     try {
-      const response = await this.axios.get(`${url}/items`);
+      const response = await this.axios.get(`${url}/items`, {
+        ...(pagination && {
+          params: {
+            page: pagination.page,
+            perPage: pagination.limit,
+          },
+        })
+      });
       return response.data;
     } catch (error: any) {
       if (this.axios.isAxiosError(error) && error.response) {
