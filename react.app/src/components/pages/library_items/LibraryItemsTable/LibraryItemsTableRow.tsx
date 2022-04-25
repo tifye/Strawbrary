@@ -68,11 +68,26 @@ export default function LibraryItemsTableRow(props: LibraryItemsTableRowProps) {
         <TextRowCell text={`${item.categoryId}`} />
         <TextRowCell text={item.type} />
         <TableCell>
+          {item.isBorrowable &&
           <Chip
-            label={item.isBorrowable ? 'AVAILABLE' : 'UNAVAILABLE'}
-            color={item.isBorrowable ? 'success' : 'error'}
-            onClick={item.isBorrowable ? (e) => { handleCheckout(); e.stopPropagation(); } : () => {/* */}}
+            label="Available"
+            color="success"
+            onClick={(e) => { handleCheckout(); e.stopPropagation(); }}
           />
+          }
+          {!item.isBorrowable && item.borrower && 
+          <Chip
+            label="Checked out"
+            color="warning"
+            onClick={(e) => { handleCheckout(); e.stopPropagation(); }}
+          />
+          }
+          {!item.isBorrowable && !item.borrower && 
+          <Chip
+            label="Unavailable"
+            color="error"
+          />
+          }
         </TableCell>
         <ClickAwayListener onClickAway={handleActionsClose}>
           <TableCell align="right">
