@@ -72,7 +72,7 @@ export default function LibraryItemEditPanel(props: LibraryItemEditPanelProps) {
           {typeFieldFactory(newItem.type, {handleFieldChange, item: newItem})}
         </Stack>
       </form>
-      <Box display="flex" sx={{ flexDirection: 'row-reverse', py: 1 }}>
+      <Box display="flex" sx={{ flexDirection: 'row-reverse', p: 1 }}>
         <Button variant="contained" color="success" onClick={() => handleSave()}>
           Save
         </Button>
