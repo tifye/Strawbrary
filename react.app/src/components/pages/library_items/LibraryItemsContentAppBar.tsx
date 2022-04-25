@@ -1,6 +1,7 @@
 import {
   AppBar,
   Button,
+  Divider,
   IconButton,
   Toolbar,
   Typography,
@@ -19,9 +20,6 @@ export default function LibraryItemsContentAppBar() {
   return (
     <AppBar position="static" elevation={3}>
       <Toolbar variant="dense">
-        <Button variant="contained" color="success" startIcon={<AddIcon />}>
-          Create
-        </Button>
         <Typography variant='h6' style={{ flexGrow: 1, textAlign: 'left', marginLeft: 16 }}>
           Items
         </Typography>
@@ -41,6 +39,10 @@ export default function LibraryItemsContentAppBar() {
             value={search}
           />
         </SearchField>
+        <Divider orientation='vertical' sx={{ mx: 2 }}/>
+        <Button variant="contained" color="success" startIcon={<AddIcon />}>
+          Create
+        </Button>
       </Toolbar>
     </AppBar>
   );
