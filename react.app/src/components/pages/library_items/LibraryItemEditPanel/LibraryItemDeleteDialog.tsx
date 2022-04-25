@@ -1,7 +1,6 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { Button, Chip, Dialog, DialogActions, DialogContent, DialogTitle, Stack } from '@mui/material';
 import React from 'react';
 import { LibraryItem } from '../../../../types';
-import LibraryItemsTableRow from '../LibraryItemsTable/LibraryItemsTableRow';
 
 interface LibraryItemDeleteDialogProps {
   open: boolean;
@@ -21,7 +20,11 @@ export default function LibraryItemDeleteDialog(props: LibraryItemDeleteDialogPr
       <DialogTitle id="delete-item-dialog">Are you sure?</DialogTitle>
       <DialogContent>
         Are you sure you want to delete this item?
-        <LibraryItemsTableRow item={item} selected={false} />
+        <Stack direction="row" spacing={2} justifyContent="center" mt={2}>
+          <Chip label={item.title} color="error"/>
+          <Chip label={item.type} color="error"/>
+          <Chip label={item.isBorrowable ? 'Available' : 'Unavailable'} color="error"/>
+        </Stack>
       </DialogContent>
       <DialogActions>
         <Button autoFocus onClick={handleClose} color="primary">

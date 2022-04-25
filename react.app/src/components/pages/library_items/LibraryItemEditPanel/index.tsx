@@ -23,10 +23,26 @@ export default function LibraryItemEditPanel(props: LibraryItemEditPanelProps) {
     setNewItem(item);
   }, [item]);
 
+  const handleDelete = useCallback(async () => {
+    try {
+      const wasSuccessful = await libraryItemsStore.current.deleteLibraryItem(newItem);
+      if (wasSuccessful) {
+        setDeleteDialogOpen(false);
+        // TODO: Close update panel and refresh table
+      } else {
+        throw new Error('Failed to delete item');
+      }
+    } catch (error) {
+      // TODO: Display error message
+      console.error(error);
+    }
+  }, [newItem, item]);
+
   const handleSave = useCallback(async () => {
     try {
       await libraryItemsStore.current.updateLibraryItem(newItem);
     } catch (error) {
+      // TODO: Display error message
       console.error(error);
     }
   }, [item, newItem]);
@@ -77,7 +93,7 @@ export default function LibraryItemEditPanel(props: LibraryItemEditPanelProps) {
         <LibraryItemDeleteDialog
           item={item}
           handleClose={handleDeleteDialogClose}
-          handleDelete={handleDeleteDialogClose}
+          handleDelete={handleDelete}
           open={openDeleteDialog}
         />
       </Stack>
