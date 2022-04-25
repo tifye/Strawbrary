@@ -21,11 +21,11 @@ export default  function LibraryItemsPage() {
         <Grid item xs={12}>
           <LibraryItemsContentAppBar />
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={12} md={editingItem ? 9 : 12}>
           <LibraryItemsTable />
         </Grid>
         {editingItem && 
-        <Grid item xs={3}>
+        <Grid item xs={12} md={3}>
           <LibraryItemEditPanel item={editingItem} closeEditPanel={closeEditPanel} />
         </Grid>}
       </Grid>
