@@ -23,8 +23,9 @@ export default function CategoryEditField(props: CategoryEditFieldProps) {
       value={value}
       getOptionLabel={(option) => option.categoryName}
       onChange={(event: any, newValue: any) => {
+        const { id } = newValue;
         setValue(newValue);
-        handleChange('categoryId', value);
+        handleChange('categoryId', id);
       }}
       renderInput={(params) => (
         <TextField {...params} label="Category" variant="standard" />

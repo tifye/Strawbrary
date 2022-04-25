@@ -1,5 +1,6 @@
 import { Box, Button, Divider, Paper, Stack, Typography } from '@mui/material';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
+import { LibraryItemsStore } from '../../../../remote_access';
 import { LibraryItem } from '../../../../types';
 import LibraryItemDeleteDialog from './LibraryItemDeleteDialog';
 import LibraryItemEditPanelAppBar from './LibraryItemEditPanelAppBar';
@@ -13,10 +14,18 @@ export default function LibraryItemEditPanel(props: LibraryItemEditPanelProps) {
   const { item } = props;
   const [openDeleteDialog, setDeleteDialogOpen] = React.useState(false);
   const [newItem, setNewItem] = useState(JSON.parse(JSON.stringify(item)));
-  
+  const libraryItemsStore = useRef(new LibraryItemsStore());
+
   const handleDeleteDialogOpen = () => setDeleteDialogOpen(true);
   const handleDeleteDialogClose = () => setDeleteDialogOpen(false);
 
+  const handleSave = useCallback(async () => {
+    try {
+      await libraryItemsStore.current.updateLibraryItem(newItem);
+    } catch (error) {
+      console.error(error);
+    }
+  }, [libraryItemsStore, newItem]);
 
   const handleFieldChange = useCallback((property: string, value: any) => {
     setNewItem({
@@ -36,7 +45,7 @@ export default function LibraryItemEditPanel(props: LibraryItemEditPanelProps) {
         </Stack>
       </form>
       <Box display="flex" sx={{ flexDirection: 'row-reverse', py: 1 }}>
-        <Button variant="contained" color="success">
+        <Button variant="contained" color="success" onClick={() => handleSave()}>
           Save
         </Button>
         <Button color="primary">
