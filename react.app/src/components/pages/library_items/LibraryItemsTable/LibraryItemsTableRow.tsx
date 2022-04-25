@@ -90,7 +90,12 @@ export default function LibraryItemsTableRow(props: LibraryItemsTableRowProps) {
         open={isAnchorMenuOpen}
         MenuListProps={{ 'aria-labelledby': 'actions-button' }}
       >
-        <MenuItem onClick={handleActionsClose}>Checkout item</MenuItem>
+        {item.isBorrowable &&
+           <MenuItem onClick={handleActionsClose}>Check Out</MenuItem>   
+        }
+        {!item.isBorrowable && item.borrower &&
+          <MenuItem onClick={handleActionsClose}>Check In</MenuItem>
+        }
         <MenuItem onClick={handleEditClicked}>Edit</MenuItem>
       </Menu>
     </>
