@@ -69,8 +69,7 @@ export default function typeFieldFactory (type: string, props: FieldFactoryProps
         <CategoryEditField selectedValue={categories[0]} handleChange={handleFieldChange} {...rest}/>
       </React.Fragment>
     );
-  }
-
+  }  
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   /* @ts-ignore */
   return requireFields[type](props);

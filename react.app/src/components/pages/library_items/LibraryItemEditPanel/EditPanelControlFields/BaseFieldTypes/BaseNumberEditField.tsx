@@ -1,5 +1,5 @@
 import { FormControl, Input, InputLabel } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
 import EditFieldProps from '../BaseEditFieldPropInterface';
 
 interface NumberEditFieldProps extends EditFieldProps {
@@ -10,6 +10,9 @@ interface NumberEditFieldProps extends EditFieldProps {
 export default function NumberEditField (props: NumberEditFieldProps) {
   const { value, label, ariaLabel, handleChange } = props;
   const [valueState, setValueState] = React.useState(value);
+  useEffect(() => {
+    setValueState(value);
+  }, [value]);
   return (
     <FormControl fullWidth variant="standard">
       <InputLabel htmlFor={`item-${ariaLabel}-input`}>{label}</InputLabel>

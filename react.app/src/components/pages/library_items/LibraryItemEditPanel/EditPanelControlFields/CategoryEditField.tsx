@@ -1,5 +1,5 @@
 import { Autocomplete, TextField } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
 import categories from '../../../../../__mock_data__/categories.json';
 import { Category } from '../../../../../types';
 
@@ -11,6 +11,9 @@ interface CategoryEditFieldProps {
 export default function CategoryEditField(props: CategoryEditFieldProps) {
   const {selectedValue, handleChange} = props;
   const [value, setValue] = React.useState(selectedValue);
+  useEffect(() => {
+    setValue(selectedValue);
+  }, [selectedValue]);
   return (
     <Autocomplete
       disablePortal

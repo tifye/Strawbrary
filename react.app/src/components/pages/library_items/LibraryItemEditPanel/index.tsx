@@ -1,5 +1,5 @@
 import { Box, Button, Divider, Paper, Stack, Typography } from '@mui/material';
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { LibraryItem } from '../../../../types';
 import LibraryItemDeleteDialog from './LibraryItemDeleteDialog';
 import LibraryItemEditPanelAppBar from './LibraryItemEditPanelAppBar';
@@ -12,14 +12,19 @@ interface LibraryItemEditPanelProps {
 export default function LibraryItemEditPanel(props: LibraryItemEditPanelProps) {
   const { item } = props;
   const [openDeleteDialog, setDeleteDialogOpen] = React.useState(false);
+  const [newItem, setNewItem] = useState(JSON.parse(JSON.stringify(item)));
   
   const handleDeleteDialogOpen = () => setDeleteDialogOpen(true);
   const handleDeleteDialogClose = () => setDeleteDialogOpen(false);
 
-  const handleFieldChange = (property: string, value: any) => {
-    console.log(`${property} changed to ${value}`);
-  };
 
+  const handleFieldChange = useCallback((property: string, value: any) => {
+    setNewItem({
+      ...newItem,
+      [property]: value,
+    });
+    console.log(`handleFieldChange: ${property} = ${value}`);
+  }, [item]);
   return (
     <Paper component="aside" elevation={2}>
       <LibraryItemEditPanelAppBar />

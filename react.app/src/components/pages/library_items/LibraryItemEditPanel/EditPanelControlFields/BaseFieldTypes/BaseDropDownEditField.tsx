@@ -1,5 +1,5 @@
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
 import EditFieldProps from '../BaseEditFieldPropInterface';
 
 interface DropDownEditFieldProps extends EditFieldProps {
@@ -14,6 +14,9 @@ export default function BaseDropDownEditField (props: DropDownEditFieldProps) {
     setValue(event.target.value as string);
     handleChange(event.target.value);
   };
+  useEffect(() => {
+    setValue(selectedValue);
+  }, [selectedValue]);
   return (
     <FormControl fullWidth variant="standard">
       <InputLabel id={`${ariaLabel}-select-label`}>{label}</InputLabel>

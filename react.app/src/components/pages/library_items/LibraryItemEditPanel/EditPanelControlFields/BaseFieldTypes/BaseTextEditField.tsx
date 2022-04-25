@@ -1,5 +1,5 @@
 import { FormControl, Input, InputLabel } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
 import EditFieldProps from '../BaseEditFieldPropInterface';
 
 interface TextEditFieldProps extends EditFieldProps {
@@ -10,6 +10,9 @@ interface TextEditFieldProps extends EditFieldProps {
 export default function TextEditField (props: TextEditFieldProps) {
   const { label, value, ariaLabel, handleChange } = props;
   const [valueState, setValueState] = React.useState(value);
+  useEffect(() => {
+    setValueState(value);
+  }, [value]);
   return (
     <FormControl fullWidth variant="standard">
       <InputLabel htmlFor={`item-${ariaLabel}-input`}>{label}</InputLabel>

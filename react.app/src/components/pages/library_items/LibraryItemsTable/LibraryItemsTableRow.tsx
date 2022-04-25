@@ -7,9 +7,10 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { LibraryItem } from '../../../../types';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import LibraryItemsContext from '../LibraryItemsContext';
 
 interface LibraryItemsTableRowProps {
   item: LibraryItem;
@@ -36,6 +37,10 @@ export default function LibraryItemsTableRow(props: LibraryItemsTableRowProps) {
   const isAnchorMenuOpen = Boolean(anchorEl);
   const itemRow = useRef(null);
 
+  const { setEditingItem } = useContext(LibraryItemsContext);
+  const handleEditClicked = () => {
+    setEditingItem(item);
+  };
   const handleActionsClose = () => {
     setAnchorEl(null);
   };
@@ -87,7 +92,7 @@ export default function LibraryItemsTableRow(props: LibraryItemsTableRowProps) {
         MenuListProps={{ 'aria-labelledby': 'actions-button' }}
       >
         <MenuItem onClick={handleActionsClose}>Checkout item</MenuItem>
-        <MenuItem onClick={handleActionsClose}>Edit</MenuItem>
+        <MenuItem onClick={handleEditClicked}>Edit</MenuItem>
       </Menu>
     </>
   );

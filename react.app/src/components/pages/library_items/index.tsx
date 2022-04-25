@@ -1,13 +1,19 @@
 import { Grid } from '@mui/material';
-import React from 'react';
+import React, { useMemo } from 'react';
 import LibraryItemEditPanel from './LibraryItemEditPanel';
 import LibraryItemsContentAppBar from './LibraryItemsContentAppBar';
 import LibraryItemsTable from './LibraryItemsTable';
-import data from '../../../__mock_data__/items.json';
+import { LibraryItem } from '../../../types';
+import LibraryItemsContext from './LibraryItemsContext';
+
+
 
 export default  function LibraryItemsPage() {
+  const [editingItem, setEditingItem] = React.useState<LibraryItem | null>(null);
+
+  const contextValue = useMemo(() => ({ editingItem, setEditingItem }), [editingItem]);
   return (
-    <>
+    <LibraryItemsContext.Provider value={contextValue}>
       <Grid container sx={{ p: 2, minHeight: '100%', minWidth: '100%'}}>
         <Grid item xs={12}>
           <LibraryItemsContentAppBar />
@@ -15,10 +21,11 @@ export default  function LibraryItemsPage() {
         <Grid item xs={9}>
           <LibraryItemsTable />
         </Grid>
+        {editingItem && 
         <Grid item xs={3}>
-          <LibraryItemEditPanel item={data[3]} />
-        </Grid>
+          <LibraryItemEditPanel item={editingItem} />
+        </Grid>}
       </Grid>
-    </>
+    </LibraryItemsContext.Provider>
   );
 }
