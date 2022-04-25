@@ -5,6 +5,11 @@ const config = {
     alias: {
       '@': path.resolve(__dirname, 'src'),
     },
+    resolve: {
+      fallback: {
+        url: require.resolve('url/')
+      },
+    },
   },
   devServer: {
     port: 3001,
