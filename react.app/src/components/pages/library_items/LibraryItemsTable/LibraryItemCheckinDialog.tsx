@@ -1,15 +1,14 @@
 import {
   Button,
-  Chip,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Stack,
 } from '@mui/material';
 import React from 'react';
 import { LibraryItem } from '../../../../types';
+import { ItemInformationBox } from '../../../sub_components/ItemInformationBox';
 
 interface LibraryItemCheckinDialogProps {
   open: boolean;
@@ -32,15 +31,7 @@ export default function LibraryItemCheckinDialog(
         <DialogContentText>
           Are you sure you want to checkin this item?
         </DialogContentText>
-        <Stack direction="row" spacing={2} justifyContent="center" mt={2}>
-          <Chip label={item.id} color="info" />
-          <Chip label={item.title} color="info" />
-          <Chip label={item.type} color="info" />
-          <Chip
-            label={item.isBorrowable ? 'Available' : 'Unavailable'}
-            color="info"
-          />
-        </Stack>
+        <ItemInformationBox item={item} />
       </DialogContent>
       <DialogActions>
         <Button autoFocus onClick={handleClose} color="primary">

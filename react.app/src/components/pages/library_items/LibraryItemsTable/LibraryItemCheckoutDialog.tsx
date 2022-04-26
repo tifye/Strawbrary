@@ -1,6 +1,15 @@
-import { Button, Chip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Stack, TextField } from '@mui/material';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  TextField,
+} from '@mui/material';
 import React from 'react';
 import { LibraryItem } from '../../../../types';
+import { ItemInformationBox } from '../../../sub_components/ItemInformationBox';
 
 interface LibraryItemCheckoutDialogProps {
   open: boolean;
@@ -8,7 +17,9 @@ interface LibraryItemCheckoutDialogProps {
   item: LibraryItem;
 }
 
-export default function LibraryItemCheckoutDialog (props: LibraryItemCheckoutDialogProps) {
+export default function LibraryItemCheckoutDialog(
+  props: LibraryItemCheckoutDialogProps
+) {
   const { open, handleClose, item } = props;
   return (
     <Dialog
@@ -21,19 +32,14 @@ export default function LibraryItemCheckoutDialog (props: LibraryItemCheckoutDia
         <DialogContentText>
           Are you sure you want to checkout this item?
         </DialogContentText>
-        <Stack direction="row" spacing={2} justifyContent="center" mt={2}>
-          <Chip label={item.id} color="info"/>
-          <Chip label={item.title} color="info"/>
-          <Chip label={item.type} color="info"/>
-          <Chip label={item.isBorrowable ? 'Available' : 'Unavailable'} color="info"/>
-        </Stack>
+        <ItemInformationBox item={item} />
         <TextField
           autoFocus
           margin="dense"
           id="checkout-item-borrower"
           label="Borrower's name"
           fullWidth
-          variant='standard'
+          variant="standard"
         />
       </DialogContent>
       <DialogActions>
@@ -46,4 +52,4 @@ export default function LibraryItemCheckoutDialog (props: LibraryItemCheckoutDia
       </DialogActions>
     </Dialog>
   );
-} 
+}

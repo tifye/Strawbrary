@@ -1,6 +1,14 @@
-import { Button, Chip, Dialog, DialogActions, DialogContent, DialogTitle, Stack } from '@mui/material';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from '@mui/material';
 import React from 'react';
 import { LibraryItem } from '../../../../types';
+import { ItemInformationBox } from '../../../sub_components/ItemInformationBox';
 
 interface LibraryItemDeleteDialogProps {
   open: boolean;
@@ -9,7 +17,9 @@ interface LibraryItemDeleteDialogProps {
   item: LibraryItem;
 }
 
-export default function LibraryItemDeleteDialog(props: LibraryItemDeleteDialogProps) {
+export default function LibraryItemDeleteDialog(
+  props: LibraryItemDeleteDialogProps
+) {
   const { open, handleClose, handleDelete, item } = props;
   return (
     <Dialog
@@ -19,12 +29,10 @@ export default function LibraryItemDeleteDialog(props: LibraryItemDeleteDialogPr
     >
       <DialogTitle id="delete-item-dialog">Are you sure?</DialogTitle>
       <DialogContent>
-        Are you sure you want to delete this item?
-        <Stack direction="row" spacing={2} justifyContent="center" mt={2}>
-          <Chip label={item.title} color="error"/>
-          <Chip label={item.type} color="error"/>
-          <Chip label={item.isBorrowable ? 'Available' : 'Unavailable'} color="error"/>
-        </Stack>
+        <DialogContentText>
+          Are you sure you want to delete this item?
+        </DialogContentText>
+        <ItemInformationBox item={item} />
       </DialogContent>
       <DialogActions>
         <Button autoFocus onClick={handleClose} color="primary">
