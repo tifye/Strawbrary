@@ -1,5 +1,5 @@
 import { Paper, Table, TableBody, TableContainer, TablePagination } from '@mui/material';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { LibraryItem } from '../../../../types';
 import LibraryItemsTableHead from './LibraryItemsTableHead';
 // import data from '../../../../__mock_data__/items.json';
@@ -33,12 +33,13 @@ export default function LibraryItemsTable() {
 
   const handleRowsPerPageChange = (event: any) => {
     setRowsPerPage(Number(event.target.value));
+    setPage(0);
   };
 
   return (
     <Paper elevation={1}>
       <TableContainer>
-        <Table stickyHeader aria-label="items table" style={{ marginTop: 4 }}>
+        <Table stickyHeader aria-label="items table" style={{ marginTop: 4 }} size='small'>
           <LibraryItemsTableHead />
           <TableBody>
             {(data as LibraryItem[]).map((item) => (
