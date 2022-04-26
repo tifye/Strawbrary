@@ -7,17 +7,24 @@ const url = 'http://localhost:3000';
 export class CategoriesStore {
   constructor(private axios: AxiosStatic = axio) {}
 
+  private static _categories?: Category[];
+
   public async getCategories(): Promise<Category[]> {
-    try {
-      const response = await this.axios.get(`${url}/categories`);
-      const categories = plainToInstance(Category, response.data) as unknown as Category[];
-      return categories;
-    } catch (error: any) {
-      if (this.axios.isAxiosError(error) && error.response) {
-        const { response } = error;
-        throw new SafeError(response.data as string || 'Unknown error');
-      } else {
-        throw error;
+    if (CategoriesStore._categories) {
+      return CategoriesStore._categories;
+    } else {
+      try {
+        const response = await this.axios.get(`${url}/categories`);
+        const categories = plainToInstance(Category, response.data) as unknown as Category[];
+        CategoriesStore._categories = categories;
+        return categories;
+      } catch (error: any) {
+        if (this.axios.isAxiosError(error) && error.response) {
+          const { response } = error;
+          throw new SafeError(response.data as string || 'Unknown error');
+        } else {
+          throw error;
+        }
       }
     }
   }

@@ -1,10 +1,14 @@
 import { Paper, Table, TableBody, TableContainer, TablePagination } from '@mui/material';
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { LibraryItem } from '../../../../types';
+import { Category, LibraryItem } from '../../../../types';
 import LibraryItemsTableHead from './LibraryItemsTableHead';
 import LibraryItemsTableRow from './LibraryItemsTableRow';
-import { LibraryItemsStore } from '../../../../remote_access/';
+import { CategoriesStore, LibraryItemsStore } from '../../../../remote_access/';
 import LibraryItemsContext from '../LibraryItemsContext';
+
+const findCategory = (categories: Category[], categoryId: number) => {
+  return categories.find((category) => category.id === categoryId);
+};
 
 export default function LibraryItemsTable() {
   const libraryItemsStore = useRef(new LibraryItemsStore());
@@ -12,8 +16,15 @@ export default function LibraryItemsTable() {
   const [page, setPage] = useState(0);
   const [total, setTotal] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(20);
-
+  const [categories, setCategories] = useState<Category[]>([]);
   const { searchText, orderBy, shouldUpdate } = useContext(LibraryItemsContext);
+
+  useEffect(() => {
+    const categoriesStore = new CategoriesStore();
+    categoriesStore.getCategories().then(categories => {
+      setCategories(categories);
+    });
+  }, []);
 
   useEffect(() => {
     libraryItemsStore.current.getLibraryItems({
@@ -49,6 +60,7 @@ export default function LibraryItemsTable() {
               <LibraryItemsTableRow
                 key={item.id}
                 item={item}
+                category={findCategory(categories, item.categoryId)}
                 selected={false}
               />
             ))}

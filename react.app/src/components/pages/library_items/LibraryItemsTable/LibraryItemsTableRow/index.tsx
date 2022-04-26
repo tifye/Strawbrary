@@ -9,7 +9,7 @@ import {
   Typography,
 } from '@mui/material';
 import React, { useContext, useRef, useState } from 'react';
-import { LibraryItem } from '../../../../../types';
+import { Category, LibraryItem } from '../../../../../types';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import LibraryItemsContext from '../../LibraryItemsContext';
 import LibraryItemCheckoutDialog from '../LibraryItemsTableRow/LibraryItemCheckoutDialog';
@@ -17,6 +17,7 @@ import LibraryItemCheckinDialog from '../LibraryItemsTableRow/LibraryItemCheckin
 
 interface LibraryItemsTableRowProps {
   item: LibraryItem;
+  category: Category;
   selected: boolean;
 }
 
@@ -34,7 +35,7 @@ const TextRowCell = ({ text }: { text: string }) => (
 );
 
 export default function LibraryItemsTableRow(props: LibraryItemsTableRowProps) {
-  const { item } = props;
+  const { item, category } = props;
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [isCheckoutDialogOpen, setIsCheckoutDialogOpen] = useState(false);
   const [isCheckinDialogOpen, setIsCheckinDialogOpen] = useState(false);
@@ -79,7 +80,7 @@ export default function LibraryItemsTableRow(props: LibraryItemsTableRowProps) {
         </TableCell>
 
         <TextRowCell text={item.title} />
-        <TextRowCell text={`${item.categoryId}`} />
+        <TextRowCell text={category.categoryName} />
         <TextRowCell text={item.type} />
         <TableCell>
           {item.isBorrowable &&
