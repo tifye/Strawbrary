@@ -9,11 +9,11 @@ import {
   Typography,
 } from '@mui/material';
 import React, { useContext, useRef, useState } from 'react';
-import { LibraryItem } from '../../../../types';
+import { LibraryItem } from '../../../../../types';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import LibraryItemsContext from '../LibraryItemsContext';
-import LibraryItemCheckoutDialog from './LibraryItemCheckoutDialog';
-import LibraryItemCheckinDialog from './LibraryItemCheckinDialog';
+import LibraryItemsContext from '../../LibraryItemsContext';
+import LibraryItemCheckoutDialog from '../LibraryItemsTableRow/LibraryItemCheckoutDialog';
+import LibraryItemCheckinDialog from '../LibraryItemsTableRow/LibraryItemCheckinDialog';
 
 interface LibraryItemsTableRowProps {
   item: LibraryItem;
