@@ -5,7 +5,7 @@ import { LibraryItem } from '../../../../types';
 import LibraryItemDeleteDialog from './LibraryItemDeleteDialog';
 import LibraryItemEditPanelAppBar from './LibraryItemEditPanelAppBar';
 import typeFieldFactory from './typeFieldFactory';
-import { validate } from 'class-validator';
+import { collectErrors } from '../../../../collect_validation_errors';
 
 interface LibraryItemEditPanelProps {
   item: LibraryItem;
@@ -66,18 +66,7 @@ export default function LibraryItemEditPanel(props: LibraryItemEditPanelProps) {
 
   const handleFieldChange = useCallback(async (property: string, value: any) => {
     newItem[property] = value;
-    const errors = await validate(newItem);
-    console.log(errors);
-    
-    if (errors.length > 0) {
-      const errorPropertyMap = {};
-      errors.forEach((error) => {
-        errorPropertyMap[error.property] = Object.values(error.constraints);
-      });
-      setErrors(errorPropertyMap);
-    } else {
-      setErrors({});
-    }
+    setErrors(await collectErrors(newItem));
     setNewItem(newItem);
     console.log(`handleFieldChange: ${property} = ${value}`);
   }, [newItem, item]);
@@ -94,7 +83,12 @@ export default function LibraryItemEditPanel(props: LibraryItemEditPanelProps) {
         </form>
       }
       <Box display="flex" sx={{ flexDirection: 'row-reverse', p: 1 }}>
-        <Button variant="contained" color="success" onClick={() => handleSave()}>
+        <Button
+          variant="contained"
+          color="success"
+          onClick={() => handleSave()}
+          disabled={Object.keys(errors).length > 0}
+        >
           Save
         </Button>
         <Button color="primary" onClick={() => handleCancel()}>
