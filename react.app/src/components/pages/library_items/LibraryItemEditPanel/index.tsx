@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Paper, Stack, Typography } from '@mui/material';
+import { Alert, Box, Button, Divider, Paper, Stack, Typography } from '@mui/material';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { LibraryItemsStore } from '../../../../remote_access';
 import { LibraryItem } from '../../../../types';
@@ -18,6 +18,7 @@ export default function LibraryItemEditPanel(props: LibraryItemEditPanelProps) {
   const [newItem, setNewItem] = useState<LibraryItem>(item);
   const [onCancel, setOnCancel] = useState(false);
   const [errors, setErrors] = useState<any>({});
+  const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(true);
   const libraryItemsStore = useRef(new LibraryItemsStore());
 
@@ -32,6 +33,7 @@ export default function LibraryItemEditPanel(props: LibraryItemEditPanelProps) {
       setLoading(false);
     });
     setOnCancel(false);
+    setSuccess(false);
   }, [item, onCancel]);
 
   const handleDelete = useCallback(async () => {
@@ -53,6 +55,7 @@ export default function LibraryItemEditPanel(props: LibraryItemEditPanelProps) {
   const handleSave = useCallback(async () => {
     try {
       await libraryItemsStore.current.updateLibraryItem(newItem);
+      setSuccess(true);
     } catch (error) {
       // TODO: Display error message
       console.error(error);
@@ -74,6 +77,11 @@ export default function LibraryItemEditPanel(props: LibraryItemEditPanelProps) {
   return (
     <Paper component="aside" elevation={2}>
       <LibraryItemEditPanelAppBar closeEditPanel={closeEditPanel} />
+      {success && 
+        <Alert severity='success'>
+          Success
+        </Alert>
+      }
       <Divider />
       {!loading && 
         <form>

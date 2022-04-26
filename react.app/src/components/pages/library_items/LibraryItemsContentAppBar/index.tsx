@@ -2,7 +2,6 @@ import {
   AppBar,
   Button,
   Divider,
-  IconButton,
   Toolbar,
   Typography,
 } from '@mui/material';
@@ -29,9 +28,9 @@ export default function LibraryItemsContentAppBar({ update }: { update: () => vo
           <Typography variant='h6' style={{ flexGrow: 1, textAlign: 'left', marginLeft: 16 }}>
             Items
           </Typography>
-          <IconButton onClick={() => update()} style={{ color: 'white' }}>
-            <Replay />
-          </IconButton>
+          <Button variant="contained" startIcon={<Replay />} onClick={update} color="secondary">
+            Reload Table
+          </Button>
           <OrderBySelect orderBy={orderBy} setOrderBy={setOrderBy} />
           <SearchField color="primary">
             <SearchIconWrapper>
