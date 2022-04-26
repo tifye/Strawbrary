@@ -6,6 +6,8 @@ const LibraryItemsContext = React.createContext({
   setEditingItem: (() => { /* do nothing */ } ) as any,
   searchText: 'string' as string,
   setSearchText: (() => { /* do nothing */ } ) as any,
+  orderBy: 'type' as string,
+  setOrderBy: (() => { /* do nothing */ } ) as any,
 });
 
 export default LibraryItemsContext;

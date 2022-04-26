@@ -11,12 +11,15 @@ import LibraryItemsContext from './LibraryItemsContext';
 export default function LibraryItemsPage() {
   const [editingItem, setEditingItem] = React.useState<LibraryItem | null>(null);
   const [searchText, setSearchText] = React.useState<string>('');
+  const [orderBy, setOrderBy] = React.useState<string>('categoryName');
   const contextValue = useMemo(() => ({
     editingItem,
     setEditingItem,
     searchText,
     setSearchText,
-  }), [editingItem, searchText]);
+    orderBy,
+    setOrderBy,
+  }), [editingItem, searchText, orderBy]);
   const closeEditPanel = useCallback(() => {
     setEditingItem(null);
   }, []);

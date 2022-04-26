@@ -13,7 +13,7 @@ export default function LibraryItemsTable() {
   const [total, setTotal] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(20);
 
-  const { searchText } = useContext(LibraryItemsContext);
+  const { searchText, orderBy } = useContext(LibraryItemsContext);
 
   useEffect(() => {
     console.log(searchText);
@@ -21,14 +21,15 @@ export default function LibraryItemsTable() {
       page: page + 1,
       perPage: rowsPerPage,
       search: searchText || undefined,
-      orderDirection: 'desc'
+      orderDirection: 'desc',
+      orderBy,
     }).then((paginationData) => {
       setData(paginationData.data);
       setPage(paginationData.page - 1);
       setTotal(paginationData.total);
       setRowsPerPage(paginationData.limit);     
     });
-  }, [page, rowsPerPage, searchText]);
+  }, [page, rowsPerPage, searchText, orderBy]);
 
   const handlePageChange = (event: any, newPage: number) => {
     setPage(newPage);
