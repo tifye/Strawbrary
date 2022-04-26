@@ -1,31 +1,34 @@
 import { Paper, Table, TableBody, TableContainer, TablePagination } from '@mui/material';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { LibraryItem } from '../../../../types';
 import LibraryItemsTableHead from './LibraryItemsTableHead';
-// import data from '../../../../__mock_data__/items.json';
 import LibraryItemsTableRow from './LibraryItemsTableRow';
 import { LibraryItemsStore } from '../../../../remote_access/';
+import LibraryItemsContext from '../LibraryItemsContext';
 
 export default function LibraryItemsTable() {
   const libraryItemsStore = useRef(new LibraryItemsStore());
   const [data, setData] = useState<LibraryItem[]>([]);
   const [page, setPage] = useState(0);
-  const [total, setTotal] = useState(10);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [total, setTotal] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(20);
+
+  const { searchText } = useContext(LibraryItemsContext);
 
   useEffect(() => {
+    console.log(searchText);
     libraryItemsStore.current.getLibraryItems({
       page: page + 1,
-      limit: rowsPerPage,
-      total,
-      lastPage: 0,
+      perPage: rowsPerPage,
+      search: searchText || undefined,
+      orderDirection: 'desc'
     }).then((paginationData) => {
       setData(paginationData.data);
       setPage(paginationData.page - 1);
       setTotal(paginationData.total);
       setRowsPerPage(paginationData.limit);     
     });
-  }, [page, rowsPerPage]);
+  }, [page, rowsPerPage, searchText]);
 
   const handlePageChange = (event: any, newPage: number) => {
     setPage(newPage);
