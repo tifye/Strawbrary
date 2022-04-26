@@ -1,4 +1,5 @@
 import {
+  Alert,
   Button,
   Dialog,
   DialogActions,
@@ -6,7 +7,8 @@ import {
   DialogContentText,
   DialogTitle,
 } from '@mui/material';
-import React from 'react';
+import React, { useCallback, useRef, useState } from 'react';
+import { LibraryItemsStore } from '../../../../../remote_access';
 import { LibraryItem } from '../../../../../types';
 import { ItemInformationBox } from '../../../../sub_components/ItemInformationBox';
 
@@ -20,12 +22,26 @@ export default function LibraryItemCheckinDialog(
   props: LibraryItemCheckinDialogProps
 ) {
   const { open, handleClose, item } = props;
+  const [isError, setIsError] = useState(false);
+
+  const libraryItemsStore = useRef(new LibraryItemsStore());
+
+  const handleCheckinClicked = useCallback(async () => {
+    setIsError(false);
+    try {
+      await libraryItemsStore.current.checkinLibraryItem(item);
+      handleClose();
+    } catch (e) {
+      setIsError(true);
+    }
+  }, [item]);
   return (
     <Dialog
       open={open}
       onClose={handleClose}
       aria-labelledby="checkin-item-dialog"
     >
+      {isError && <Alert severity='error'>Something went wrong. Please try again later.</Alert>}
       <DialogTitle id="checkin-item-dialog">Checkin Item</DialogTitle>
       <DialogContent>
         <DialogContentText>
@@ -37,7 +53,7 @@ export default function LibraryItemCheckinDialog(
         <Button autoFocus onClick={handleClose} color="primary">
           Cancel
         </Button>
-        <Button onClick={handleClose} variant="contained" color="success">
+        <Button onClick={handleCheckinClicked} variant="contained" color="success">
           Checkin
         </Button>
       </DialogActions>

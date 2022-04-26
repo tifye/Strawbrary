@@ -1,5 +1,5 @@
 import axio, { AxiosStatic } from 'axios';
-import { plainToClass } from 'class-transformer';
+import { plainToInstance } from 'class-transformer';
 import { Category, SafeError } from '../types';
 
 const url = 'http://localhost:3000';
@@ -10,7 +10,7 @@ export class CategoriesStore {
   public async getCategories(): Promise<Category[]> {
     try {
       const response = await this.axios.get(`${url}/categories`);
-      const categories = plainToClass(Category, response.data) as unknown as Category[];
+      const categories = plainToInstance(Category, response.data) as unknown as Category[];
       return categories;
     } catch (error: any) {
       if (this.axios.isAxiosError(error) && error.response) {
@@ -25,7 +25,7 @@ export class CategoriesStore {
   public async getCategory(id: number): Promise<Category> {
     try {
       const response = await this.axios.get(`${url}/categories/${id}`);
-      const category = plainToClass(Category, response.data);
+      const category = plainToInstance(Category, response.data);
       return category;
     } catch (error: any) {
       if (this.axios.isAxiosError(error) && error.response) {

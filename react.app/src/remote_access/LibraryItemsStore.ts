@@ -1,5 +1,5 @@
 import axio, { AxiosStatic } from 'axios';
-import { plainToClass } from 'class-transformer';
+import { plainToInstance } from 'class-transformer';
 import { LibraryItem, PaginationData, SafeError } from '../types';
 
 const url = 'http://localhost:3000';
@@ -9,7 +9,6 @@ const typePaths = {
   'AudioBook': 'audiobooks',
   'ReferenceBook': 'referencebooks',
 };
-
 
 export class LibraryItemsStore {
   constructor(private axios: AxiosStatic = axio) {}
@@ -31,7 +30,7 @@ export class LibraryItemsStore {
         })
       });
       const libraryItemObjects = response.data.data;
-      response.data.data = plainToClass(LibraryItem, libraryItemObjects);
+      response.data.data = plainToInstance(LibraryItem, libraryItemObjects);
       return response.data;
     } catch (error: any) {
       if (this.axios.isAxiosError(error) && error.response) {
@@ -76,7 +75,39 @@ export class LibraryItemsStore {
   public async getLibraryItem(id: number): Promise<LibraryItem> {
     try {
       const response = await this.axios.get(`${url}/items/${id}`);
-      const libraryItem = plainToClass(LibraryItem, response.data);
+      const libraryItem = plainToInstance(LibraryItem, response.data);
+      return libraryItem as unknown as LibraryItem;
+    } catch (error: any) {
+      if (this.axios.isAxiosError(error) && error.response) {
+        const { response } = error;
+        throw new SafeError(response.data as string || 'Unknown error');
+      } else {
+        throw error;
+      }
+    }
+  }
+
+  public async checkoutLibraryItem(item: LibraryItem): Promise<LibraryItem> {
+    try {
+      const response = await this.axios.post(`${url}/items/checkout/${item.id}`, {
+        borrower: item.borrower,
+      });
+      const libraryItem = plainToInstance(LibraryItem, response.data);
+      return libraryItem as unknown as LibraryItem;
+    } catch (error: any) {
+      if (this.axios.isAxiosError(error) && error.response) {
+        const { response } = error;
+        throw new SafeError(response.data as string || 'Unknown error');
+      } else {
+        throw error;
+      }
+    }
+  }
+
+  public async checkinLibraryItem(item: LibraryItem): Promise<LibraryItem> {
+    try {
+      const response = await this.axios.post(`${url}/items/checkin/${item.id}`);
+      const libraryItem = plainToInstance(LibraryItem, response.data);
       return libraryItem as unknown as LibraryItem;
     } catch (error: any) {
       if (this.axios.isAxiosError(error) && error.response) {
