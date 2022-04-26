@@ -13,6 +13,7 @@ import { LibraryItem } from '../../../../types';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import LibraryItemsContext from '../LibraryItemsContext';
 import LibraryItemCheckoutDialog from './LibraryItemCheckoutDialog';
+import LibraryItemCheckinDialog from './LibraryItemCheckinDialog';
 
 interface LibraryItemsTableRowProps {
   item: LibraryItem;
@@ -36,6 +37,7 @@ export default function LibraryItemsTableRow(props: LibraryItemsTableRowProps) {
   const { item } = props;
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [isCheckoutDialogOpen, setIsCheckoutDialogOpen] = useState(false);
+  const [isCheckinDialogOpen, setIsCheckinDialogOpen] = useState(false);
   const isAnchorMenuOpen = Boolean(anchorEl);
   const itemRow = useRef(null);
 
@@ -48,12 +50,17 @@ export default function LibraryItemsTableRow(props: LibraryItemsTableRowProps) {
     setIsCheckoutDialogOpen(true);
   };
 
-  const handleCheckinClicked = () => {
-    // TODO: Implement checkin
-  };
-  
   const handleCheckoutDialogClose = () => {
     setIsCheckoutDialogOpen(false);
+  };
+
+
+  const handleCheckinClicked = () => {
+    setIsCheckinDialogOpen(true);
+  };
+  
+  const handleCheckinDialogClose = () => {
+    setIsCheckinDialogOpen(false);
   };
 
 
@@ -134,6 +141,12 @@ export default function LibraryItemsTableRow(props: LibraryItemsTableRowProps) {
       <LibraryItemCheckoutDialog
         open={isCheckoutDialogOpen}
         handleClose={handleCheckoutDialogClose}
+        item={item}
+      />
+
+      <LibraryItemCheckinDialog
+        open={isCheckinDialogOpen}
+        handleClose={handleCheckinDialogClose}
         item={item}
       />
     </>
