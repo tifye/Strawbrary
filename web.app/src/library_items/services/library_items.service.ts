@@ -13,30 +13,56 @@ export class LibraryItemsService {
     perPage?: number;
     matching?: Exclude<Partial<LibraryItem>, 'title' | 'author' | 'type'>;
     search?: string;
-    orderByData?: 'type' | 'categoryName';
+    orderByData?: 'type' | 'categoryName' | 'relevance';
     orderByDirection?: 'asc' | 'desc';
   }): Promise<[PaginationDataDto, LibraryItem[]]> {
     // What kind of abomination have i created T-T
     const { page, perPage, matching, orderByData, orderByDirection, search } =
       params;
 
+    const searchText = (search || '').trim().split(' ').join(' | ');
+
     const orderBy: Prisma.LibraryItemOrderByWithRelationAndSearchRelevanceInput =
       {
-        ...(search && {
+        ...(orderByData === 'relevance' && {
           _relevance: {
             fields: ['title', 'author', 'type'],
-            search,
+            search: searchText,
             sort: orderByDirection ? orderByDirection : 'asc',
           },
         }),
-        ...(orderByData &&
-          (orderByData === 'type'
-            ? { type: orderByDirection }
-            : { category: { categoryName: orderByDirection } })),
+        ...(orderByData === 'type' && {
+          type: orderByDirection ? orderByDirection : 'asc',
+        }),
+        ...(orderByData === 'categoryName' && {
+          category: { categoryName: orderByDirection },
+        }),
+        ...(!orderByData && {
+          title: orderByDirection ? orderByDirection : 'desc',
+        }),
       };
 
     const where: Prisma.LibraryItemWhereInput = {
       ...(matching && { ...matching }),
+      ...(search && {
+        OR: [
+          {
+            title: {
+              contains: search,
+            },
+          },
+          {
+            type: {
+              contains: search,
+            },
+          },
+          {
+            author: {
+              contains: search,
+            },
+          },
+        ],
+      }),
     };
     let skip = 0;
     if (page && perPage) {
