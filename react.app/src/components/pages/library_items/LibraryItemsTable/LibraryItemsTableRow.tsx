@@ -12,6 +12,7 @@ import React, { useContext, useRef, useState } from 'react';
 import { LibraryItem } from '../../../../types';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import LibraryItemsContext from '../LibraryItemsContext';
+import LibraryItemCheckoutDialog from './LibraryItemCheckoutDialog';
 
 interface LibraryItemsTableRowProps {
   item: LibraryItem;
@@ -34,6 +35,7 @@ const TextRowCell = ({ text }: { text: string }) => (
 export default function LibraryItemsTableRow(props: LibraryItemsTableRowProps) {
   const { item } = props;
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [isCheckoutDialogOpen, setIsCheckoutDialogOpen] = useState(false);
   const isAnchorMenuOpen = Boolean(anchorEl);
   const itemRow = useRef(null);
 
@@ -41,15 +43,20 @@ export default function LibraryItemsTableRow(props: LibraryItemsTableRowProps) {
   const handleEditClicked = () => {
     setEditingItem(item);
   };
-  const handleCheckout = () => {
-    alert('Checkout');
+
+  const handleCheckoutClicked = () => {
+    setIsCheckoutDialogOpen(true);
   };
-  const handleActionsClose = () => {
-    setAnchorEl(null);
+
+  const handleCheckinClicked = () => {
+    // TODO: Implement checkin
   };
-  const handleActionsClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
+  
+  const handleCheckoutDialogClose = () => {
+    setIsCheckoutDialogOpen(false);
   };
+
+
   return (
     <>
       <TableRow
@@ -72,14 +79,14 @@ export default function LibraryItemsTableRow(props: LibraryItemsTableRowProps) {
           <Chip
             label="Available"
             color="success"
-            onClick={(e) => { handleCheckout(); e.stopPropagation(); }}
+            onClick={(e) => { handleCheckoutClicked(); e.stopPropagation(); }}
           />
           }
           {!item.isBorrowable && item.borrower && 
           <Chip
             label="Checked out"
             color="warning"
-            onClick={(e) => { handleCheckout(); e.stopPropagation(); }}
+            onClick={(e) => { handleCheckinClicked(); e.stopPropagation(); }}
           />
           }
           {!item.isBorrowable && !item.borrower && 
@@ -89,7 +96,7 @@ export default function LibraryItemsTableRow(props: LibraryItemsTableRowProps) {
           />
           }
         </TableCell>
-        <ClickAwayListener onClickAway={handleActionsClose}>
+        <ClickAwayListener onClickAway={()=> setAnchorEl(null)}>
           <TableCell align="right">
             <IconButton
               id="actions-button"
@@ -100,7 +107,7 @@ export default function LibraryItemsTableRow(props: LibraryItemsTableRowProps) {
               aria-expanded={isAnchorMenuOpen}
               onClick={(e) => {
                 e.stopPropagation();
-                handleActionsClick(e);
+                setAnchorEl(e.currentTarget);
               }}
             >
               <MoreVertIcon />
@@ -116,13 +123,19 @@ export default function LibraryItemsTableRow(props: LibraryItemsTableRowProps) {
         MenuListProps={{ 'aria-labelledby': 'actions-button' }}
       >
         {item.isBorrowable &&
-           <MenuItem onClick={handleActionsClose}>Check Out</MenuItem>   
+           <MenuItem onClick={()=> setAnchorEl(null)}>Check Out</MenuItem>   
         }
         {!item.isBorrowable && item.borrower &&
-          <MenuItem onClick={handleActionsClose}>Check In</MenuItem>
+          <MenuItem onClick={()=> setAnchorEl(null)}>Check In</MenuItem>
         }
         <MenuItem onClick={handleEditClicked}>Edit</MenuItem>
       </Menu>
+
+      <LibraryItemCheckoutDialog
+        open={isCheckoutDialogOpen}
+        handleClose={handleCheckoutDialogClose}
+        item={item}
+      />
     </>
   );
 }
