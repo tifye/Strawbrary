@@ -26,6 +26,7 @@ export default function BaseDropDownEditField (props: DropDownEditFieldProps) {
         value={value}
         onChange={handleSelectChange}
         label={label}
+        style={{ textAlign: 'left' }}
       >
         {values.map((value: any) => (
           <MenuItem key={value} value={value}>{value}</MenuItem>
