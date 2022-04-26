@@ -22,7 +22,7 @@ const requireFields = {
       <AuthorEditField author={item.author!} handleFieldChange={handleFieldChange} error={errors['author']} {...rest}/>
       <PagesEditField pages={item.pages!} handleFieldChange={handleFieldChange} error={errors['pages']} {...rest}/>
       <ItemTypeEditField itemType={item.type!} handleFieldChange={handleFieldChange} />
-      <CategoryEditField selectedValue={item.category!} handleChange={handleFieldChange}/>
+      <CategoryEditField selectedValue={item.category!} handleChange={handleFieldChange} error={errors['categoryId']}/>
     </React.Fragment>
   ),
   'AudioBook': ({ item, handleFieldChange, errors, ...rest}: FieldFactoryProps) => (
@@ -30,7 +30,7 @@ const requireFields = {
       <TitleEditField title={item.title} handleFieldChange={handleFieldChange} error={errors['title']} {...rest} />
       <RunTimeMinutesEditField runTimeMinutes={item.runTimeMinutes!} handleFieldChange={handleFieldChange} error={errors['runTimeMinutes']} {...rest}/>
       <ItemTypeEditField itemType={item.type!} handleFieldChange={handleFieldChange} />
-      <CategoryEditField selectedValue={item.category!} handleChange={handleFieldChange}/>
+      <CategoryEditField selectedValue={item.category!} handleChange={handleFieldChange} error={errors['categoryId']}/>
     </React.Fragment>
   ),
   'Dvd': ({ item, handleFieldChange, errors, ...rest}: FieldFactoryProps) => (
@@ -38,7 +38,7 @@ const requireFields = {
       <TitleEditField title={item.title} handleFieldChange={handleFieldChange} error={errors['title']} {...rest} />
       <RunTimeMinutesEditField runTimeMinutes={item.runTimeMinutes!} handleFieldChange={handleFieldChange} error={errors['runTimeMinutes']} {...rest}/>
       <ItemTypeEditField itemType={item.type!} handleFieldChange={handleFieldChange} />
-      <CategoryEditField selectedValue={item.category!} handleChange={handleFieldChange}/>
+      <CategoryEditField selectedValue={item.category!} handleChange={handleFieldChange} error={errors['categoryId']}/>
     </React.Fragment>
   ),
   'ReferenceBook': ({ item, handleFieldChange, errors, ...rest}: FieldFactoryProps) => (
@@ -47,7 +47,7 @@ const requireFields = {
       <AuthorEditField author={item.author!} handleFieldChange={handleFieldChange} error={errors['author']} {...rest}/>
       <PagesEditField pages={item.pages!} handleFieldChange={handleFieldChange} error={errors['pages']} {...rest}/>
       <ItemTypeEditField itemType={item.type!} handleFieldChange={handleFieldChange} />
-      <CategoryEditField selectedValue={item.category!} handleChange={handleFieldChange}/>
+      <CategoryEditField selectedValue={item.category!} handleChange={handleFieldChange} error={errors['categoryId']}/>
     </React.Fragment>
   ),
 };

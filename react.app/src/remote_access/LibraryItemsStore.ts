@@ -118,4 +118,20 @@ export class LibraryItemsStore {
       }
     }
   }
+
+  public async createLibraryItem(item: LibraryItem): Promise<LibraryItem> {
+    const typePath = (typePaths as any)[item.type];
+    try {
+      const response = await this.axios.post(`${url}/${typePath}`, item);
+      const libraryItem = plainToInstance(LibraryItem, response.data);
+      return libraryItem as unknown as LibraryItem;
+    } catch (error: any) {
+      if (this.axios.isAxiosError(error) && error.response) {
+        const { response } = error;
+        throw new SafeError(response.data as string || 'Unknown error');
+      } else {
+        throw error;
+      }
+    }
+  }
 }

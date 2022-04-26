@@ -12,13 +12,16 @@ import { SearchField, SearchIconWrapper, StyledInputBase } from '../../../sub_co
 import AddIcon from '@mui/icons-material/Add';
 import LibraryItemsContext from '../LibraryItemsContext';
 import OrderBySelect from './OrderBySelect';
+import { LibraryItemCreateDialog } from './LibraryItemCreateDialog';
 
 export default function LibraryItemsContentAppBar({ update }: { update: () => void }) {
   const { searchText, setSearchText, orderBy, setOrderBy } = useContext(LibraryItemsContext);
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = React.useState(false);
 
   const handleSearch = useCallback((search: string) => {
     setSearchText(search);
   }, [setSearchText]);
+
   return (
     <>
       <AppBar position="static" elevation={3}>
@@ -44,11 +47,12 @@ export default function LibraryItemsContentAppBar({ update }: { update: () => vo
             />
           </SearchField>
           <Divider orientation='vertical' sx={{ mx: 2 }}/>
-          <Button variant="contained" color="success" startIcon={<AddIcon />}>
+          <Button variant="contained" color="success" startIcon={<AddIcon />} onClick={() => setIsCreateDialogOpen(true)}>
             Create
           </Button>
         </Toolbar>
       </AppBar>
+      <LibraryItemCreateDialog open={isCreateDialogOpen} handleClose={() => setIsCreateDialogOpen(false)}/>
     </>
   );
 }
