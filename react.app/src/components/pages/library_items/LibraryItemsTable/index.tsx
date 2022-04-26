@@ -16,7 +16,6 @@ export default function LibraryItemsTable() {
   const { searchText, orderBy } = useContext(LibraryItemsContext);
 
   useEffect(() => {
-    console.log(searchText);
     libraryItemsStore.current.getLibraryItems({
       page: page + 1,
       perPage: rowsPerPage,

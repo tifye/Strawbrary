@@ -14,21 +14,30 @@ interface LibraryItemEditPanelProps {
 export default function LibraryItemEditPanel(props: LibraryItemEditPanelProps) {
   const { item, closeEditPanel } = props;
   const [openDeleteDialog, setDeleteDialogOpen] = React.useState(false);
-  const [newItem, setNewItem] = useState<LibraryItem>(JSON.parse(JSON.stringify(item)));
+  const [newItem, setNewItem] = useState<LibraryItem>(item);
+  const [onCancel, setOnCancel] = useState(false);
+  const [loading, setLoading] = useState(true);
   const libraryItemsStore = useRef(new LibraryItemsStore());
 
   const handleDeleteDialogOpen = () => setDeleteDialogOpen(true);
   const handleDeleteDialogClose = () => setDeleteDialogOpen(false);
 
   useEffect(() => {
-    setNewItem(item);
-  }, [item]);
+    setLoading(true);
+    libraryItemsStore.current.getLibraryItem(item.id).then(async (_item) => {
+      await _item.attachCategory();
+      setNewItem(_item);
+      setLoading(false);
+    });
+    setOnCancel(false);
+  }, [item, onCancel]);
 
   const handleDelete = useCallback(async () => {
     try {
       const wasSuccessful = await libraryItemsStore.current.deleteLibraryItem(newItem);
       if (wasSuccessful) {
         setDeleteDialogOpen(false);
+        closeEditPanel();
         // TODO: Close update panel and refresh table
       } else {
         throw new Error('Failed to delete item');
@@ -46,32 +55,29 @@ export default function LibraryItemEditPanel(props: LibraryItemEditPanelProps) {
       // TODO: Display error message
       console.error(error);
     }
+  }, [newItem]);
+
+  const handleCancel = useCallback(async () => {
+    setOnCancel(true);
   }, [item, newItem]);
 
   const handleFieldChange = useCallback((property: string, value: any) => {
-    setNewItem({
-      ...newItem,
-      [property]: value,
-    });
+    newItem[property] = value;
+    setNewItem(newItem);
     console.log(`handleFieldChange: ${property} = ${value}`);
   }, [newItem, item]);
 
-  const handleCancel = () => {
-    console.log(item);
-    console.log(newItem);
-    
-    setNewItem(item);
-  };
   return (
     <Paper component="aside" elevation={2}>
       <LibraryItemEditPanelAppBar closeEditPanel={closeEditPanel} />
       <Divider />
-
-      <form>
-        <Stack style={{ padding: 16 }} spacing={3}>
-          {typeFieldFactory(newItem.type, {handleFieldChange, item: newItem})}
-        </Stack>
-      </form>
+      {!loading && 
+        <form>
+          <Stack style={{ padding: 16 }} spacing={3}>
+            {typeFieldFactory(newItem.type, {handleFieldChange, item: newItem})}
+          </Stack>
+        </form>
+      }
       <Box display="flex" sx={{ flexDirection: 'row-reverse', p: 1 }}>
         <Button variant="contained" color="success" onClick={() => handleSave()}>
           Save

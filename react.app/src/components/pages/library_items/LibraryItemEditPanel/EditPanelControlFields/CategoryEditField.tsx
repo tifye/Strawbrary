@@ -1,7 +1,7 @@
 import { Autocomplete, TextField } from '@mui/material';
-import React, { useEffect } from 'react';
-import categories from '../../../../../__mock_data__/categories.json';
+import React, { useEffect, useRef } from 'react';
 import { Category } from '../../../../../types';
+import { CategoriesStore } from '../../../../../remote_access';
 
 interface CategoryEditFieldProps {
   selectedValue: Category;
@@ -9,11 +9,18 @@ interface CategoryEditFieldProps {
 }
 
 export default function CategoryEditField(props: CategoryEditFieldProps) {
+  const categoriesStore = useRef(new CategoriesStore());
   const {selectedValue, handleChange} = props;
   const [value, setValue] = React.useState(selectedValue);
+  const [categories, setCategories] = React.useState<Category[]>([]);
+  const [open, setOpen] = React.useState(false);
   useEffect(() => {
-    setValue(selectedValue);
+    categoriesStore.current.getCategory(selectedValue.id).then(setValue);
   }, [selectedValue]);
+
+  useEffect(() => {
+    categoriesStore.current.getCategories().then(setCategories);
+  }, [open]);
   return (
     <Autocomplete
       disablePortal
@@ -21,7 +28,9 @@ export default function CategoryEditField(props: CategoryEditFieldProps) {
       options={categories}
       autoComplete
       value={value}
-      getOptionLabel={(option) => option.categoryName}
+      onOpen={() => setOpen(true)}
+      onClose={() => setOpen(false)}
+      getOptionLabel={(option) => (option as Category).categoryName}
       onChange={(event: any, newValue: any) => {
         const { id } = newValue;
         setValue(newValue);

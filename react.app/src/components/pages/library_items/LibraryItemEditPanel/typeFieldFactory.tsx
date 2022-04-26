@@ -22,7 +22,7 @@ const requireFields = {
       <AuthorEditField author={item.author!} handleFieldChange={handleFieldChange} {...rest}/>
       <PagesEditField pages={item.pages!} handleFieldChange={handleFieldChange} {...rest}/>
       <ItemTypeEditField itemType={item.type!} handleFieldChange={handleFieldChange} />
-      <CategoryEditField selectedValue={categories[0]} handleChange={handleFieldChange}/>
+      <CategoryEditField selectedValue={item.category!} handleChange={handleFieldChange}/>
     </React.Fragment>
   ),
   'AudioBook': ({ item, handleFieldChange, ...rest}: FieldFactoryProps) => (
@@ -30,7 +30,7 @@ const requireFields = {
       <TitleEditField title={item.title} handleFieldChange={handleFieldChange} {...rest} />
       <RunTimeMinutesEditField runTimeMinutes={item.runTimeMinutes!} handleFieldChange={handleFieldChange}/>
       <ItemTypeEditField itemType={item.type!} handleFieldChange={handleFieldChange} />
-      <CategoryEditField selectedValue={categories[0]} handleChange={handleFieldChange}/>
+      <CategoryEditField selectedValue={item.category!} handleChange={handleFieldChange}/>
     </React.Fragment>
   ),
   'Dvd': ({ item, handleFieldChange, ...rest}: FieldFactoryProps) => (
@@ -38,7 +38,7 @@ const requireFields = {
       <TitleEditField title={item.title} handleFieldChange={handleFieldChange} {...rest} />
       <RunTimeMinutesEditField runTimeMinutes={item.runTimeMinutes!} handleFieldChange={handleFieldChange}/>
       <ItemTypeEditField itemType={item.type!} handleFieldChange={handleFieldChange} />
-      <CategoryEditField selectedValue={categories[0]} handleChange={handleFieldChange}/>
+      <CategoryEditField selectedValue={item.category!} handleChange={handleFieldChange}/>
     </React.Fragment>
   ),
   'ReferenceBook': ({ item, handleFieldChange, ...rest}: FieldFactoryProps) => (
@@ -46,7 +46,7 @@ const requireFields = {
       <TitleEditField title={item.title} handleFieldChange={handleFieldChange} {...rest} />
       <PagesEditField pages={item.pages!} handleFieldChange={handleFieldChange} {...rest}/>
       <ItemTypeEditField itemType={item.type!} handleFieldChange={handleFieldChange} />
-      <CategoryEditField selectedValue={categories[0]} handleChange={handleFieldChange}/>
+      <CategoryEditField selectedValue={item.category!} handleChange={handleFieldChange}/>
     </React.Fragment>
   ),
 };
@@ -66,7 +66,7 @@ export default function typeFieldFactory (type: string, props: FieldFactoryProps
         <PagesEditField pages={item.pages!} handleFieldChange={handleFieldChange} {...rest}/>
         <RunTimeMinutesEditField runTimeMinutes={item.runTimeMinutes!} handleFieldChange={handleFieldChange} {...rest}/>
         <ItemTypeEditField itemType={item.type!} handleFieldChange={handleFieldChange} {...rest}/>
-        <CategoryEditField selectedValue={categories[0]} handleChange={handleFieldChange} {...rest}/>
+        <CategoryEditField selectedValue={item.category!} handleChange={handleFieldChange} {...rest}/>
       </React.Fragment>
     );
   }  
