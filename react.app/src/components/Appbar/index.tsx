@@ -1,4 +1,5 @@
-import { AppBar, Button, Toolbar, Typography } from '@mui/material';
+import { AppBar, Chip, Toolbar, Typography } from '@mui/material';
+import GitHubIcon from '@mui/icons-material/GitHub';
 import React from 'react';
 
 export default function Header() {
@@ -14,7 +15,17 @@ export default function Header() {
           >
             Administration
           </Typography>
-          <Button color="inherit">Help</Button>
+          <Typography variant="caption">made by</Typography>
+          <Chip
+            component="a"
+            icon={<GitHubIcon />}
+            href="https://github.com/tifye/Strawbrary"
+            color="secondary"
+            label="tifye"
+            target="_blank"
+            style={{ margin: 8 }}
+            clickable
+          />
         </Toolbar>
       </AppBar>
     </>
