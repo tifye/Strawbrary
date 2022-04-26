@@ -1,5 +1,5 @@
 import { Grid } from '@mui/material';
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useReducer } from 'react';
 import LibraryItemEditPanel from './LibraryItemEditPanel';
 import LibraryItemsContentAppBar from './LibraryItemsContentAppBar';
 import LibraryItemsTable from './LibraryItemsTable';
@@ -12,6 +12,8 @@ export default function LibraryItemsPage() {
   const [editingItem, setEditingItem] = React.useState<LibraryItem | null>(null);
   const [searchText, setSearchText] = React.useState<string>('');
   const [orderBy, setOrderBy] = React.useState<string>('categoryName');
+  const [shouldUpdate, forceUpdate] = useReducer(x => x + 1, 0);
+
   const contextValue = useMemo(() => ({
     editingItem,
     setEditingItem,
@@ -19,7 +21,8 @@ export default function LibraryItemsPage() {
     setSearchText,
     orderBy,
     setOrderBy,
-  }), [editingItem, searchText, orderBy]);
+    shouldUpdate,
+  }), [editingItem, searchText, orderBy, shouldUpdate]);
   const closeEditPanel = useCallback(() => {
     setEditingItem(null);
   }, []);
@@ -27,7 +30,7 @@ export default function LibraryItemsPage() {
     <LibraryItemsContext.Provider value={contextValue}>
       <Grid container sx={{ p: 2, minHeight: '100%', minWidth: '100%'}}>
         <Grid item xs={12}>
-          <LibraryItemsContentAppBar />
+          <LibraryItemsContentAppBar update={forceUpdate}/>
         </Grid>
         <Grid item xs={12} md={editingItem ? 9 : 12}>
           <LibraryItemsTable />

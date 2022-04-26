@@ -8,6 +8,7 @@ const LibraryItemsContext = React.createContext({
   setSearchText: (() => { /* do nothing */ } ) as any,
   orderBy: 'type' as string,
   setOrderBy: (() => { /* do nothing */ } ) as any,
+  shouldUpdate: 0,
 });
 
 export default LibraryItemsContext;

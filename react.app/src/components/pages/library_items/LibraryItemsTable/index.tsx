@@ -13,7 +13,7 @@ export default function LibraryItemsTable() {
   const [total, setTotal] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(20);
 
-  const { searchText, orderBy } = useContext(LibraryItemsContext);
+  const { searchText, orderBy, shouldUpdate } = useContext(LibraryItemsContext);
 
   useEffect(() => {
     libraryItemsStore.current.getLibraryItems({
@@ -28,7 +28,7 @@ export default function LibraryItemsTable() {
       setTotal(paginationData.total);
       setRowsPerPage(paginationData.limit);     
     });
-  }, [page, rowsPerPage, searchText, orderBy]);
+  }, [page, rowsPerPage, searchText, orderBy, shouldUpdate]);
 
   const handlePageChange = (event: any, newPage: number) => {
     setPage(newPage);
