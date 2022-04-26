@@ -9,6 +9,7 @@ import {
   TextField,
 } from '@mui/material';
 import React, { useCallback, useRef, useState } from 'react';
+import { collectErrors } from '../../../../../collect_validation_errors';
 import { LibraryItemsStore } from '../../../../../remote_access';
 import { LibraryItem } from '../../../../../types';
 import { ItemInformationBox } from '../../../../sub_components/ItemInformationBox';
@@ -24,13 +25,14 @@ export default function LibraryItemCheckoutDialog(
 ) {
   const { open, handleClose, item } = props;
   const [isError, setIsError] = useState(false);
+  const [inputError, setInputError] = useState<string[] | null>(null);
   const [borrower, setBorrower] = useState('');
   const libraryItemsStore = useRef(new LibraryItemsStore());
 
   const handleCheckoutClicked = useCallback(async () => {
     setIsError(false);
     try {
-      item.borrower = borrower;
+      
       await libraryItemsStore.current.checkoutLibraryItem(item);
       handleClose();
     } catch (e) {
@@ -38,8 +40,12 @@ export default function LibraryItemCheckoutDialog(
     }
   }, [item, borrower]);
 
-  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    item.borrower = borrower;
     setBorrower(e.target.value);
+    const errors = await collectErrors(item);
+    if (errors['borrower']) setInputError(errors['borrower']);
+    else setInputError(null);
   };
   return (
     <Dialog
@@ -56,6 +62,7 @@ export default function LibraryItemCheckoutDialog(
         </DialogContentText>
         <ItemInformationBox item={item} />
         <TextField
+          error={inputError ? true : false}
           autoFocus
           margin="dense"
           id="checkout-item-borrower"
@@ -65,12 +72,19 @@ export default function LibraryItemCheckoutDialog(
           value={borrower}
           onChange={onInputChange}
         />
+      {inputError &&
+      <Alert severity='error'>
+        {inputError.map((errorMessage) => (
+          <><span key={errorMessage}>{errorMessage}</span><br /></>
+        ))}
+      </Alert>
+      }
       </DialogContent>
       <DialogActions>
         <Button autoFocus onClick={handleClose} color="primary">
           Cancel
         </Button>
-        <Button onClick={handleCheckoutClicked} variant="contained" color="success">
+        <Button disabled={inputError ? true: false} onClick={handleCheckoutClicked} variant="contained" color="success">
           Checkout
         </Button>
       </DialogActions>

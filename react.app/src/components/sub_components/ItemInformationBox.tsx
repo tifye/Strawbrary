@@ -16,6 +16,11 @@ export function ItemInformationBox(props: ItemInformationBoxProps) {
         <Chip label={item.type} color="info"/>
         <Chip label={item.isBorrowable ? 'Available' : 'Unavailable'} color="info"/>
       </Stack>
+        {item.borrower &&
+          <>
+            {`Checked out by ${item.borrower}`}
+          </>
+        }
     </Paper>
   );
 }
