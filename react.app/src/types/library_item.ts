@@ -1,9 +1,20 @@
 import { plainToClass } from 'class-transformer';
-import { IsBoolean, IsDate, IsNumber, IsOptional, IsString, Length, Min } from 'class-validator';
+import { IsBoolean, IsDate, IsNumber, IsOptional, IsString, Length, Min, ValidateIf } from 'class-validator';
 import { CategoriesStore } from '../remote_access';
-import { Category } from './category';
+import { Category } from './';
+
+const validationGroups = {
+  'author': ['Book', 'ReferenceBook'],
+  'pages': ['Book', 'ReferenceBook'],
+  'runTimeMinutes': ['Dvd', 'AudioBook'],
+};
+
 export class LibraryItem {
   constructor(private categoriesStore: CategoriesStore = new CategoriesStore()) {}
+
+  private static toValidate(field: string, type: string) {
+    return (validationGroups as any)[field].includes(type);
+  }
 
   @IsNumber()
   @Min(0)
@@ -13,16 +24,19 @@ export class LibraryItem {
   @Length(4, 255)
   title: string;
 
+  @ValidateIf(o => LibraryItem.toValidate('author', o.type))  
   @IsString()
   @Length(4, 255)
   @IsOptional()
   author?: string | null;
 
+  @ValidateIf(o => LibraryItem.toValidate('pages', o.type)) 
   @IsNumber()
   @Min(1)
   @IsOptional()
   pages?: number | null;
 
+  @ValidateIf(o => LibraryItem.toValidate('runTimeMinutes', o.type)) 
   @IsNumber()
   @Min(0)
   @IsOptional()

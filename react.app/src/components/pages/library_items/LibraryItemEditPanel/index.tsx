@@ -5,6 +5,7 @@ import { LibraryItem } from '../../../../types';
 import LibraryItemDeleteDialog from './LibraryItemDeleteDialog';
 import LibraryItemEditPanelAppBar from './LibraryItemEditPanelAppBar';
 import typeFieldFactory from './typeFieldFactory';
+import { validate } from 'class-validator';
 
 interface LibraryItemEditPanelProps {
   item: LibraryItem;
@@ -16,6 +17,7 @@ export default function LibraryItemEditPanel(props: LibraryItemEditPanelProps) {
   const [openDeleteDialog, setDeleteDialogOpen] = React.useState(false);
   const [newItem, setNewItem] = useState<LibraryItem>(item);
   const [onCancel, setOnCancel] = useState(false);
+  const [errors, setErrors] = useState<any>({});
   const [loading, setLoading] = useState(true);
   const libraryItemsStore = useRef(new LibraryItemsStore());
 
@@ -59,10 +61,23 @@ export default function LibraryItemEditPanel(props: LibraryItemEditPanelProps) {
 
   const handleCancel = useCallback(async () => {
     setOnCancel(true);
+    setErrors({});
   }, [item, newItem]);
 
-  const handleFieldChange = useCallback((property: string, value: any) => {
+  const handleFieldChange = useCallback(async (property: string, value: any) => {
     newItem[property] = value;
+    const errors = await validate(newItem);
+    console.log(errors);
+    
+    if (errors.length > 0) {
+      const errorPropertyMap = {};
+      errors.forEach((error) => {
+        errorPropertyMap[error.property] = Object.values(error.constraints);
+      });
+      setErrors(errorPropertyMap);
+    } else {
+      setErrors({});
+    }
     setNewItem(newItem);
     console.log(`handleFieldChange: ${property} = ${value}`);
   }, [newItem, item]);
@@ -74,7 +89,7 @@ export default function LibraryItemEditPanel(props: LibraryItemEditPanelProps) {
       {!loading && 
         <form>
           <Stack style={{ padding: 16 }} spacing={3}>
-            {typeFieldFactory(newItem.type, {handleFieldChange, item: newItem})}
+            {typeFieldFactory(newItem.type, {handleFieldChange, item: newItem, errors})}
           </Stack>
         </form>
       }

@@ -6,45 +6,46 @@ import PagesEditField from './EditPanelControlFields/PagesEditField';
 import TitleEditField from './EditPanelControlFields/TitleEditField';
 import ItemTypeEditField from './EditPanelControlFields/ItemTypeEditField';
 import CategoryEditField from './EditPanelControlFields/CategoryEditField';
-import categories from '../../../../__mock_data__/categories.json';
 import RunTimeMinutesEditField from './EditPanelControlFields/RunTimeMinutesEditField';
 
 interface FieldFactoryProps {
   item: LibraryItem;
   handleFieldChange: (property: string, value: any) => void;
+  errors: any;
   [key: string]: any;
 }
 
 const requireFields = {
-  'Book': ({ item, handleFieldChange, ...rest}: FieldFactoryProps) => (
+  'Book': ({ item, handleFieldChange, errors, ...rest}: FieldFactoryProps) => (
     <React.Fragment>
-      <TitleEditField title={item.title} handleFieldChange={handleFieldChange} {...rest} />
-      <AuthorEditField author={item.author!} handleFieldChange={handleFieldChange} {...rest}/>
-      <PagesEditField pages={item.pages!} handleFieldChange={handleFieldChange} {...rest}/>
+      <TitleEditField title={item.title} handleFieldChange={handleFieldChange} error={errors['title']} {...rest} />
+      <AuthorEditField author={item.author!} handleFieldChange={handleFieldChange} error={errors['author']} {...rest}/>
+      <PagesEditField pages={item.pages!} handleFieldChange={handleFieldChange} error={errors['pages']} {...rest}/>
       <ItemTypeEditField itemType={item.type!} handleFieldChange={handleFieldChange} />
       <CategoryEditField selectedValue={item.category!} handleChange={handleFieldChange}/>
     </React.Fragment>
   ),
-  'AudioBook': ({ item, handleFieldChange, ...rest}: FieldFactoryProps) => (
+  'AudioBook': ({ item, handleFieldChange, errors, ...rest}: FieldFactoryProps) => (
     <React.Fragment>
-      <TitleEditField title={item.title} handleFieldChange={handleFieldChange} {...rest} />
-      <RunTimeMinutesEditField runTimeMinutes={item.runTimeMinutes!} handleFieldChange={handleFieldChange}/>
+      <TitleEditField title={item.title} handleFieldChange={handleFieldChange} error={errors['title']} {...rest} />
+      <RunTimeMinutesEditField runTimeMinutes={item.runTimeMinutes!} handleFieldChange={handleFieldChange} error={errors['runTimeMinutes']} {...rest}/>
       <ItemTypeEditField itemType={item.type!} handleFieldChange={handleFieldChange} />
       <CategoryEditField selectedValue={item.category!} handleChange={handleFieldChange}/>
     </React.Fragment>
   ),
-  'Dvd': ({ item, handleFieldChange, ...rest}: FieldFactoryProps) => (
+  'Dvd': ({ item, handleFieldChange, errors, ...rest}: FieldFactoryProps) => (
     <React.Fragment>
-      <TitleEditField title={item.title} handleFieldChange={handleFieldChange} {...rest} />
-      <RunTimeMinutesEditField runTimeMinutes={item.runTimeMinutes!} handleFieldChange={handleFieldChange}/>
+      <TitleEditField title={item.title} handleFieldChange={handleFieldChange} error={errors['title']} {...rest} />
+      <RunTimeMinutesEditField runTimeMinutes={item.runTimeMinutes!} handleFieldChange={handleFieldChange} error={errors['runTimeMinutes']} {...rest}/>
       <ItemTypeEditField itemType={item.type!} handleFieldChange={handleFieldChange} />
       <CategoryEditField selectedValue={item.category!} handleChange={handleFieldChange}/>
     </React.Fragment>
   ),
-  'ReferenceBook': ({ item, handleFieldChange, ...rest}: FieldFactoryProps) => (
+  'ReferenceBook': ({ item, handleFieldChange, errors, ...rest}: FieldFactoryProps) => (
     <React.Fragment>
-      <TitleEditField title={item.title} handleFieldChange={handleFieldChange} {...rest} />
-      <PagesEditField pages={item.pages!} handleFieldChange={handleFieldChange} {...rest}/>
+      <TitleEditField title={item.title} handleFieldChange={handleFieldChange} error={errors['title']} {...rest} />
+      <AuthorEditField author={item.author!} handleFieldChange={handleFieldChange} error={errors['author']} {...rest}/>
+      <PagesEditField pages={item.pages!} handleFieldChange={handleFieldChange} error={errors['pages']} {...rest}/>
       <ItemTypeEditField itemType={item.type!} handleFieldChange={handleFieldChange} />
       <CategoryEditField selectedValue={item.category!} handleChange={handleFieldChange}/>
     </React.Fragment>
