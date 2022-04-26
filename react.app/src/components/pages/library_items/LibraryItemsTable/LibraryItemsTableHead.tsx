@@ -19,6 +19,11 @@ const headCells: HeadCell[] = [
     alignment: 'left',
   },
   {
+    id: 'author',
+    label: 'Author',
+    alignment: 'left',
+  },
+  {
     id: 'category',
     label: 'Category',
     alignment: 'left',

@@ -74,6 +74,8 @@ export default function LibraryItemEditPanel(props: LibraryItemEditPanelProps) {
     console.log(`handleFieldChange: ${property} = ${value}`);
   }, [newItem, item]);
 
+  console.log(errors);
+
   return (
     <Paper component="aside" elevation={2}>
       <LibraryItemEditPanelAppBar closeEditPanel={closeEditPanel} />

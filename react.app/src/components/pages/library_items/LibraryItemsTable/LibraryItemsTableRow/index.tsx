@@ -79,7 +79,8 @@ export default function LibraryItemsTableRow(props: LibraryItemsTableRowProps) {
           </Typography>
         </TableCell>
 
-        <TextRowCell text={item.title} />
+        <TextRowCell text={item.titleWithAcronym} />
+        <TextRowCell text={item.author || ''} />
         <TextRowCell text={category.categoryName} />
         <TextRowCell text={item.type} />
         <TableCell>
@@ -131,10 +132,10 @@ export default function LibraryItemsTableRow(props: LibraryItemsTableRowProps) {
         MenuListProps={{ 'aria-labelledby': 'actions-button' }}
       >
         {item.isBorrowable &&
-           <MenuItem onClick={()=> setAnchorEl(null)}>Check Out</MenuItem>   
+           <MenuItem onClick={handleCheckoutClicked}>Check Out</MenuItem>   
         }
         {!item.isBorrowable && item.borrower &&
-          <MenuItem onClick={()=> setAnchorEl(null)}>Check In</MenuItem>
+          <MenuItem onClick={handleCheckinClicked}>Check In</MenuItem>
         }
         <MenuItem onClick={handleEditClicked}>Edit</MenuItem>
       </Menu>

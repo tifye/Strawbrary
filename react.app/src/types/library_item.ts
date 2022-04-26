@@ -1,5 +1,5 @@
 import { plainToClass } from 'class-transformer';
-import { IsBoolean, IsDate, IsNumber, IsOptional, IsString, Length, Min, ValidateIf } from 'class-validator';
+import { IsBoolean, IsNumber, IsOptional, IsString, Length, Min, ValidateIf } from 'class-validator';
 import { CategoriesStore } from '../remote_access';
 import { Category } from './';
 
@@ -50,7 +50,6 @@ export class LibraryItem {
   @IsOptional()
   borrower?: string | null;
 
-  @IsDate()
   @IsOptional()
   borrowDate?: Date | null;
 
@@ -73,5 +72,11 @@ export class LibraryItem {
 
   public async attachCategory(): Promise<void> {
     this.category = await this.getCategoryAsync();
+  }
+
+  public get titleWithAcronym(): string {
+    const words = this.title.split(' ');
+    const acronym = words.map(word => word[0]).join('');
+    return `${this.title} (${acronym})`;
   }
 }
