@@ -45,7 +45,9 @@ export class LibraryItemsStore {
   public async updateLibraryItem(item: LibraryItem): Promise<boolean> {
     const typePath = (typePaths as any)[item.type];
     try {
-      const response = await this.axios.patch(`${url}/${typePath}/${item.id}`, item);
+      const changeTypeResponse = await this.axios.post(`${url}/items/${item.id}/type`, { type: item.type });
+      const updateItemTypeItem = plainToInstance(LibraryItem, changeTypeResponse.data);
+      const response = await this.axios.patch(`${url}/${typePath}/${item.id}`, updateItemTypeItem);
       return Boolean(response.data.wasSuccessful);
     } catch (error: any) {
       if (this.axios.isAxiosError(error) && error.response) {
