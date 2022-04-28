@@ -54,6 +54,7 @@ export default function LibraryItemEditPanel(props: LibraryItemEditPanelProps) {
 
   const handleSave = useCallback(async () => {
     try {
+      console.log('Updating item', newItem);
       await libraryItemsStore.current.updateLibraryItem(newItem);
       setSuccess(true);
     } catch (error) {
@@ -67,14 +68,14 @@ export default function LibraryItemEditPanel(props: LibraryItemEditPanelProps) {
     setErrors({});
   }, [item, newItem]);
 
+  // TODO: Issue #19
   const handleFieldChange = useCallback(async (property: string, value: any) => {
     newItem[property] = value;
+    console.log(newItem);
     setErrors(await collectErrors(newItem));
     setNewItem(newItem);
     console.log(`handleFieldChange: ${property} = ${value}`);
   }, [newItem, item]);
-
-  console.log(errors);
 
   return (
     <Paper component="aside" elevation={2}>
