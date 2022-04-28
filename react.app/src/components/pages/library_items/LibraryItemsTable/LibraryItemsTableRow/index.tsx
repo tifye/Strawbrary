@@ -93,7 +93,7 @@ export default function LibraryItemsTableRow(props: LibraryItemsTableRowProps) {
           }
           {!item.isBorrowable && item.borrower && 
           <Chip
-            label="Checked out"
+            label={item.borrower}
             color="warning"
             onClick={(e) => { handleCheckinClicked(); e.stopPropagation(); }}
           />
