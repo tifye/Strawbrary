@@ -48,7 +48,7 @@ export default  function CategoriesPage() {
             <Grid container spacing={2}>
               {categories.map(category => (
               <Grid item key={category.id}>
-                <Badge color="secondary" badgeContent="2222" max={999}>
+                <Badge color="secondary" badgeContent={category._count?.libraryItems} max={999}>
                   <Chip
                     color="primary"
                     key={category.id}

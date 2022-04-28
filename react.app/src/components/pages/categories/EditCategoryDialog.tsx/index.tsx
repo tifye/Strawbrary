@@ -5,6 +5,7 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
+  DialogContentText,
   DialogTitle,
   TextField,
   Typography,
@@ -79,12 +80,20 @@ export default function EditCategoryDialog(props: EditCategoryDialogProps) {
     <Dialog open={open} onClose={close} fullWidth maxWidth="xs">
       <DialogTitle style={{ display: 'flex' }}>
         <Typography style={{ flexGrow: 1 }}>Edit Category</Typography>
-        <Button variant="contained" color="error" onClick={onDelete}>
+        <Button
+          variant="contained"
+          color="error"
+          onClick={onDelete}
+          disabled={(category._count && category._count.libraryItems > 0)}
+        >
           <DeleteForever />
           Delete
         </Button>
       </DialogTitle>
       <DialogContent>
+        {(category._count && category._count.libraryItems > 0) &&
+        <DialogContentText>Reference {category._count.libraryItems} items</DialogContentText>
+        }
         <TextField
           fullWidth
           autoFocus

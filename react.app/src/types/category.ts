@@ -8,4 +8,6 @@ export class Category {
   @IsString()
   @Length(4, 255)
   categoryName: string;
+
+  _count?: any;
 } 
