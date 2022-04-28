@@ -8,9 +8,9 @@ export class LibraryItemsOrderByPipe
 {
   transform(value: any): any {
     if (super.validate(value)) {
-      throw new BadRequestException(
+      throw new BadRequestException([
         'Can only order by item type or category name',
-      );
+      ]);
     }
     return value;
   }

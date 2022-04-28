@@ -6,7 +6,7 @@ import { LibraryItemType } from '../enums/library_item_type.enum';
 export class ItemCanCheckOutRule implements PipeTransform<LibraryItem> {
   async transform(item: LibraryItem): Promise<LibraryItem> {
     if (this.nonCheckableItemType(item) || !item.isBorrowable) {
-      throw new BadRequestException('Item cannot be checked out.');
+      throw new BadRequestException(['Item cannot be checked out.']);
     }
     return item;
   }

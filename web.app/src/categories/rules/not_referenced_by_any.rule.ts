@@ -21,12 +21,12 @@ export class NotReferencedByAnyRule implements PipeTransform {
         (result[0] as any).libraryItems &&
         (result[0] as any).libraryItems.length > 0
       ) {
-        throw new BadRequestException(
+        throw new BadRequestException([
           'Category is referenced by one or more library items.',
-        );
+        ]);
       }
     } else {
-      throw new BadRequestException('Category does not exist.');
+      throw new BadRequestException(['Category does not exist.']);
     }
 
     return id;

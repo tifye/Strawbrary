@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import {
+  ValidationArguments,
   ValidatorConstraint,
   ValidatorConstraintInterface,
 } from 'class-validator';
@@ -10,5 +11,9 @@ import { LibraryItemType } from '../enums/library_item_type.enum';
 export class ValidItemTypeRule implements ValidatorConstraintInterface {
   validate(type: string): boolean {
     return Object.values(LibraryItemType).includes(type as LibraryItemType);
+  }
+
+  defaultMessage(validationArguments?: ValidationArguments): string {
+    return 'Not a valid library item type';
   }
 }

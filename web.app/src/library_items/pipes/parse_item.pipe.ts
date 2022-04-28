@@ -9,7 +9,7 @@ export class ParseItemPipe implements PipeTransform<number> {
   async transform(id: number): Promise<LibraryItem> {
     const item = await this.repository.findOne(Number(id));
     if (!item) {
-      throw new BadRequestException('Item does not exist.');
+      throw new BadRequestException(['Item does not exist.']);
     }
 
     return item;
