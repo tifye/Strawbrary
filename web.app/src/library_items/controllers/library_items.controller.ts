@@ -32,7 +32,9 @@ export class LibraryItemsController {
       ...(page && { page }),
       ...(perPage && { perPage }),
       ...(search && { search }),
-      ...(orderBy && { orderByData: orderBy as 'type' | 'categoryName' }),
+      ...(orderBy && {
+        orderByData: orderBy as 'type' | 'categoryName' | 'relevance',
+      }),
       ...(orderDirection && {
         orderByDirection: orderDirection as 'asc' | 'desc',
       }),

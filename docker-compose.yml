@@ -1,8 +1,8 @@
 version: '3.8'
 
 services:
-  wab.app:
-    container_name: wab.app
+  web.app:
+    container_name: web.app
     build:
       context: ./web.app
       target: development
@@ -29,3 +29,21 @@ services:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: qwerty
     restart: always
+  react.app:
+    profiles: ["full"]
+    container_name: react.app
+    build:
+      context: ./react.app
+      target: development
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./react.app:/app
+    command: npm run start
+    depends_on:
+      - web.app
+    tty: true
+    stdin_open: true
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+

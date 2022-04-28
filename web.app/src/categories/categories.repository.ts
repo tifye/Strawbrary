@@ -37,7 +37,18 @@ export class CategoriesRepository {
   }
 
   async findAll(): Promise<Category[]> {
-    return await this.prisma.category.findMany();
+    return await this.prisma.category.findMany({
+      orderBy: {
+        categoryName: 'asc',
+      },
+      include: {
+        _count: {
+          select: {
+            libraryItems: true,
+          },
+        },
+      },
+    });
   }
 
   async findOne(id: number, withItems = false): Promise<[Category?, Error?]> {

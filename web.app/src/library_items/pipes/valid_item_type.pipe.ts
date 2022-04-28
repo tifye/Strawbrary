@@ -8,7 +8,7 @@ export class ValidItemTypePipe
 {
   async transform(type: string): Promise<string> {
     if (!super.validate(type)) {
-      throw new BadRequestException('Invalid item type.');
+      throw new BadRequestException(['Invalid item type.']);
     }
 
     return type;

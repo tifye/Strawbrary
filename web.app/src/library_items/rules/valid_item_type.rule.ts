@@ -11,4 +11,8 @@ export class ValidItemTypeRule implements ValidatorConstraintInterface {
   validate(type: string): boolean {
     return Object.values(LibraryItemType).includes(type as LibraryItemType);
   }
+
+  defaultMessage(): string {
+    return 'Not a valid library item type';
+  }
 }

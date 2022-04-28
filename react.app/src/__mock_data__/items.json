@@ -1,0 +1,74 @@
+[
+  {
+    "id": 6,
+    "title": "Luscious Lusty Ladies",
+    "author": "Ushinomiya",
+    "pages": 254,
+    "runTimeMinutes": null,
+    "isBorrowable": true,
+    "borrower": null,
+    "borrowDate": null,
+    "type": "Book",
+    "categoryId": 1
+  },
+  {
+    "id": 2,
+    "title": "meep",
+    "author": "Izzy",
+    "pages": 4,
+    "runTimeMinutes": null,
+    "isBorrowable": true,
+    "borrower": null,
+    "borrowDate": null,
+    "type": "Book",
+    "categoryId": 1
+  },
+  {
+    "id": 4,
+    "title": "meep",
+    "author": "Izzy",
+    "pages": 4,
+    "runTimeMinutes": null,
+    "isBorrowable": true,
+    "borrower": null,
+    "borrowDate": null,
+    "type": "Book",
+    "categoryId": 1
+  },
+  {
+    "id": 7,
+    "title": "Some dvd title",
+    "author": null,
+    "pages": null,
+    "runTimeMinutes": 50,
+    "isBorrowable": true,
+    "borrower": null,
+    "borrowDate": null,
+    "type": "Dvd",
+    "categoryId": 4
+  },
+  {
+    "id": 1,
+    "title": "meep",
+    "author": "Izzy",
+    "pages": 4,
+    "runTimeMinutes": null,
+    "isBorrowable": true,
+    "borrower": null,
+    "borrowDate": null,
+    "type": "Book",
+    "categoryId": 1
+  },
+  {
+    "id": 3,
+    "title": "meep",
+    "author": "Izzy",
+    "pages": 4,
+    "runTimeMinutes": null,
+    "isBorrowable": false,
+    "borrower": null,
+    "borrowDate": null,
+    "type": "ReferenceBook",
+    "categoryId": 1
+  }
+]
