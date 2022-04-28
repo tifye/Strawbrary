@@ -10,6 +10,7 @@ import {
 import { plainToInstance } from 'class-transformer';
 import React, { useCallback, useRef, useState } from 'react';
 import { collectErrors } from '../../../../collect_validation_errors';
+import { CategoriesStore } from '../../../../remote_access';
 import { Category } from '../../../../types';
 
 interface CreateCategoriesDialogProps {
@@ -27,21 +28,26 @@ export default function CreateCategoriesDialog(
     id: 0,
     categoryName,
   }));
+  const categoriesStore = useRef(new CategoriesStore());
+
 
   const onInputChange = useCallback(
     async (e: React.ChangeEvent<HTMLInputElement>) => {
       category.current.categoryName = e.target.value;
       setCategoryName(e.target.value);
       const errors = await collectErrors(category.current);
-      console.log(errors);
       if (errors['categoryName']) setInputError(errors['categoryName']);
       else setInputError(null);
     }, []);
 
-  const onSaveClicked = useCallback(() => {
-    /* TODO: Implement */
-    close();
-    setInputError(null);
+  const onSaveClicked = useCallback(async () => {
+    try {
+      await categoriesStore.current.addCategory(category.current);     
+      close();
+      setInputError(null);
+    } catch (e: any) {
+      setInputError([e.message]);
+    }
   }, [categoryName]);
 
   const close = useCallback(() => {
@@ -72,7 +78,10 @@ export default function CreateCategoriesDialog(
         <Button onClick={close} color="primary">
           Cancel
         </Button>
-        <Button onClick={onSaveClicked} color="success" variant="contained">
+        <Button
+          onClick={onSaveClicked}
+          color="success"
+          variant="contained">
           Create
         </Button>
       </DialogActions>

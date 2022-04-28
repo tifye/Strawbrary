@@ -10,7 +10,7 @@ import {
   Typography,
 } from '@mui/material';
 import { instanceToInstance } from 'class-transformer';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { collectErrors } from '../../../../collect_validation_errors';
 import { CategoriesStore } from '../../../../remote_access';
 import { Category } from '../../../../types';
@@ -25,16 +25,17 @@ export default function EditCategoryDialog(props: EditCategoryDialogProps) {
   const { open, handleClose, category } = props;
   const [categoryName, setCategoryName] = useState(category.categoryName);
   const [inputErrors, setInputErrors] = useState<string[] | null>(null);
-  const editingCategory = useRef(instanceToInstance(category));
   const categoriesStore = useRef(new CategoriesStore());
+  const editingCategory = useMemo(() => {
+    return instanceToInstance(category);
+  }, [category]);
 
 
   const onInputChange = useCallback(
     async (e: React.ChangeEvent<HTMLInputElement>) => {
       setCategoryName(e.target.value);
-      editingCategory.current.categoryName = e.target.value;
-      const errors = await collectErrors(editingCategory.current);
-      console.log(errors);
+      editingCategory.categoryName = e.target.value;
+      const errors = await collectErrors(editingCategory);
       if (errors['categoryName']) setInputErrors(errors['categoryName']);
       else setInputErrors(null);
     },
@@ -43,17 +44,42 @@ export default function EditCategoryDialog(props: EditCategoryDialogProps) {
 
   const close = useCallback(() => {
     handleClose();
+    setInputErrors(null);
   }, []);
 
-  const onSave = () => {
-    //
+  const onSave = async () => {
+    const errors = await collectErrors(editingCategory);
+    if (errors['categoryName']) {
+      setInputErrors(errors['categoryName']);
+      return;
+    }
+
+    try {
+      await categoriesStore.current.updateCategory(editingCategory);
+      close();
+    } catch (e: any) {
+      setInputErrors([e.message]);
+    }
+  };
+
+  const onDelete = async () => {
+    try {
+      const wasSuccess = await categoriesStore.current.deleteCategory(editingCategory);
+      if (wasSuccess) {
+        close();
+      } else {
+        setInputErrors(['Failed to delete category']);
+      }
+    } catch (e: any) {
+      setInputErrors([e.message]);
+    }
   };
 
   return (
     <Dialog open={open} onClose={close} fullWidth maxWidth="xs">
       <DialogTitle style={{ display: 'flex' }}>
         <Typography style={{ flexGrow: 1 }}>Edit Category</Typography>
-        <Button variant="contained" color="error">
+        <Button variant="contained" color="error" onClick={onDelete}>
           <DeleteForever />
           Delete
         </Button>

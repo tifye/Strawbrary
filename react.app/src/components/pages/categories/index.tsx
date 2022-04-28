@@ -1,6 +1,6 @@
 import { Edit } from '@mui/icons-material';
 import { Badge, Chip, Grid, Paper } from '@mui/material';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useReducer, useRef, useState } from 'react';
 import { CategoriesStore } from '../../../remote_access';
 import { Category } from '../../../types';
 import CategoriesAppBar from './CategoriesAppBar.tsx';
@@ -8,9 +8,10 @@ import EditCategoryDialog from './EditCategoryDialog.tsx';
 
 export default  function CategoriesPage() {
   const categoriesStore = useRef(new CategoriesStore());
-  const [categories, setCategories] = React.useState<Category[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [isEditCategoryDialogOpen, setEditCategoryDialogOpen] = React.useState(false);
-  const [categoryInEdit, setCategoryInEdit] = React.useState<Category | null>(null);
+  const [categoryInEdit, setCategoryInEdit] = useState<Category | null>(null);
+  const [shouldReload, forceUpdate] = useReducer(x => x + 1, 0);
 
   const onEditCategory = (category: Category) => {
     setEditCategoryDialogOpen(true);
@@ -24,7 +25,7 @@ export default  function CategoriesPage() {
 
   useEffect(() => {
     categoriesStore.current.getCategories().then(setCategories);
-  }, []);
+  }, [shouldReload]);
   return (
     <>
       <Grid
@@ -33,7 +34,7 @@ export default  function CategoriesPage() {
         spacing={1}
       >
         <Grid item xs={12}>
-          <CategoriesAppBar />
+          <CategoriesAppBar update={forceUpdate}/>
         </Grid>
         <Grid item xs={12}>
           <Paper 

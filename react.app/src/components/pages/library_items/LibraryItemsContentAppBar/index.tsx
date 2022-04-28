@@ -5,13 +5,14 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
-import { Replay, Search } from '@mui/icons-material';
+import { Search } from '@mui/icons-material';
 import React, { useContext, useCallback } from 'react';
 import { SearchField, SearchIconWrapper, StyledInputBase } from '../../../sub_components/SearchField';
 import AddIcon from '@mui/icons-material/Add';
 import LibraryItemsContext from '../LibraryItemsContext';
 import OrderBySelect from './OrderBySelect';
 import { LibraryItemCreateDialog } from './LibraryItemCreateDialog';
+import { ReloadButton } from '../../../sub_components/ReloadButton';
 
 export default function LibraryItemsContentAppBar({ update }: { update: () => void }) {
   const { searchText, setSearchText, orderBy, setOrderBy } = useContext(LibraryItemsContext);
@@ -28,9 +29,7 @@ export default function LibraryItemsContentAppBar({ update }: { update: () => vo
           <Typography variant='h6' style={{ flexGrow: 1, textAlign: 'left', marginLeft: 16 }}>
             Items
           </Typography>
-          <Button variant="contained" startIcon={<Replay />} onClick={update} color="secondary">
-            Reload Table
-          </Button>
+          <ReloadButton onClick={update} label="Reload Table" />
           <OrderBySelect orderBy={orderBy} setOrderBy={setOrderBy} />
           <SearchField color="primary">
             <SearchIconWrapper>
