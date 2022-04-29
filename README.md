@@ -41,7 +41,7 @@ $ npm run test:cov
 ```
 
 ## Environment variables
-
+[NOTE] If running with docker compose. When changing ports, also reflect these changes in the `nginx/nginx.conf`. See issue #23
 ### web.app
 * **DATABASE_URL**
 
