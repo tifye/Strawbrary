@@ -12,15 +12,15 @@ The project also uses Docker to run each major part in its own container. Howeve
 * Docker & Docker Compose v3.8
 
 ### Steps
-1.  Once repository is cloned run:
+1.  There are three `example.env` files. For now you just need to rename them to `.env`. The files are located in `<root>`, `web.app/`, and `react.app/`.
+
+2.  Once repository is cloned run:
     ```bash
     $ docker compose up --build
     ```
     On a fresh build this might take some time.
 
-2.  There are three `example.env` files. For now you just need to rename them to `.env`. The files are located in `<root>`, `web.app/`, and `react.app/`.
-
-2.  Once all containers are created and running. You need to sync the `prisma.schema` with the `postgres` database. There are two ways of doing this, I will list one here, the other can be found in `web.app/README.md`.
+3.  Once all containers are created and running. You need to sync the `prisma.schema` with the `postgres` database. There are two ways of doing this, I will list one here, the other can be found in `web.app/README.md`.
 
     Enter the `web.app` container via command line.
     Ensure you are located in the `app/` directory.
@@ -29,7 +29,7 @@ The project also uses Docker to run each major part in its own container. Howeve
     $ npx primsa migrate deploy
     ```
 
-3. The application should be ready to use.
+4. The application should be ready to use.
 
 ## For issues
 The github repository should be public, there you can see the known issues I have created. You can contact be directly or create an issue if there's anything wrong.
