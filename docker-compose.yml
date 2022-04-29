@@ -15,7 +15,8 @@ services:
     #  - ./web.app:/app
     command: npm run start:prod
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
   #
   react.app:
     container_name: react.app
@@ -43,6 +44,11 @@ services:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: qwerty
     restart: always
+    healthcheck:
+      test: ["CMD", "pg_isready", "-d", "strawbrary", "-U", "postgres", "-q"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
   #
   nginx:
     container_name: nginx
