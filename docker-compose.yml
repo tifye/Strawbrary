@@ -24,8 +24,9 @@ services:
       target: development
     environment:
       - REACT_APP_BASE_URL=${REACT_APP_BASE_URL}
+      - REACT_APP_WEBPACK_DEV_PORT=${REACT_APP_WEBPACK_DEV_PORT}
     ports:
-      - 3001:3001
+      - ${REACT_APP_WEBPACK_DEV_PORT}:${REACT_APP_WEBPACK_DEV_PORT}
     command: npm run start
     depends_on:
       - web.app
