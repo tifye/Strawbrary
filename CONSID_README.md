@@ -14,7 +14,7 @@ The project also uses Docker to run each major part in its own container. Howeve
 ### Steps
 1.  There are three `example.env` files. For now you just need to rename them to `.env`. The files are located in `<root>`, `web.app/`, and `react.app/`.
 
-2.  Once repository is cloned run:
+2.  Then in root, run:
     ```bash
     $ docker compose up --build
     ```
