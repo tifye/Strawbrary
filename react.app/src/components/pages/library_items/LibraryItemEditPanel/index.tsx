@@ -46,9 +46,9 @@ export default function LibraryItemEditPanel(props: LibraryItemEditPanelProps) {
       } else {
         throw new Error('Failed to delete item');
       }
-    } catch (error) {
+    } catch (error: any) {
       // TODO: Display error message
-      console.error(error);
+      setErrors([error.message]);
     }
   }, [newItem, item]);
 
@@ -57,9 +57,9 @@ export default function LibraryItemEditPanel(props: LibraryItemEditPanelProps) {
       console.log('Updating item', newItem);
       await libraryItemsStore.current.updateLibraryItem(newItem);
       setSuccess(true);
-    } catch (error) {
+    } catch (error: any) {
       // TODO: Display error message
-      console.error(error);
+      setErrors([error.message]);
     }
   }, [newItem]);
 
@@ -68,7 +68,6 @@ export default function LibraryItemEditPanel(props: LibraryItemEditPanelProps) {
     setErrors({});
   }, [item, newItem]);
 
-  // TODO: Issue #19
   const handleFieldChange = useCallback(async (property: string, value: any) => {
     newItem[property] = value;
     console.log(newItem);
@@ -83,6 +82,11 @@ export default function LibraryItemEditPanel(props: LibraryItemEditPanelProps) {
       {success && 
         <Alert severity='success'>
           Success
+        </Alert>
+      }
+      {Object.keys(errors).length > 0 &&
+        <Alert severity='error'>
+          Something went wrong
         </Alert>
       }
       <Divider />

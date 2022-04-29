@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   FormControl,
   InputLabel,
   Select,
   MenuItem,
+  SelectChangeEvent,
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import { getLibraryItemsOrderByCookie, setLibraryItemsOrderByCoookie } from '../../../../utility_functions';
 
 // https://stackoverflow.com/a/51395643/14918676
 const useStyles = makeStyles(() => ({
@@ -36,6 +38,15 @@ interface OrderBySelectProps {
 export default function OrderBySelect(props: OrderBySelectProps) {
   const { orderBy, setOrderBy } = props;
   const classes = useStyles();
+
+  const orderByChange = (e: SelectChangeEvent) => {
+      setLibraryItemsOrderByCoookie(e.target.value);
+      setOrderBy(e.target.value);
+    };
+    
+    useEffect(() => {
+    setOrderBy(getLibraryItemsOrderByCookie());
+  }, []);
   return (
     <FormControl
       variant="filled"
@@ -50,7 +61,7 @@ export default function OrderBySelect(props: OrderBySelectProps) {
         id="order-by-select"
         value={orderBy}
         label="Order by"
-        onChange={(e) => setOrderBy(e.target.value)}
+        onChange={orderByChange}
         style={{ color: 'white' }}
         className={classes.select}
         inputProps={{

@@ -12,7 +12,7 @@ const config = {
     },
   },
   devServer: {
-    port: 3001,
+    port: Number(process.env.REACT_APP_WEBPACK_DEV_PORT) || 3001,
     static: {
       watch: {
         ignored: '*.txt',

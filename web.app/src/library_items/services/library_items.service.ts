@@ -146,6 +146,10 @@ export class LibraryItemsService {
       item.type !== LibraryItemType.ReferenceBook &&
       targetType === LibraryItemType.ReferenceBook
     ) {
+      if (!item.isBorrowable)
+        throw new Error(
+          'Attempting to changed a borrowed item to an un-borrowable type',
+        );
       updateData.isBorrowable = false;
     }
 

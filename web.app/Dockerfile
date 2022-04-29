@@ -15,6 +15,5 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install --only=production
 RUN npx prisma generate
-COPY . .
 COPY --from=development app/dist ./dist
 CMD ["node", "dist/main"]

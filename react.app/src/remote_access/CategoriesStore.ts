@@ -2,7 +2,7 @@ import axio, { AxiosStatic } from 'axios';
 import { plainToInstance } from 'class-transformer';
 import { Category, SafeError } from '../types';
 
-const url = 'http://localhost:3000';
+const url = process.env.REACT_APP_BASE_URL;
 
 export class CategoriesStore {
   constructor(private axios: AxiosStatic = axio) {}
