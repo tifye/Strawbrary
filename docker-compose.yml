@@ -6,39 +6,31 @@ services:
     build:
       context: ./web.app
       target: production
-    env_file:
-      - ./web.app/.env
     ports:
       - ${WEB_APP_PORT}:${WEB_APP_PORT}
     environment:
       - WEB_APP_PORT=${WEB_APP_PORT}
       - DATABASE_URL=${DATABASE_URL}
-    volumes:
-      - ./web.app:/app
+    #volumes:
+    #  - ./web.app:/app
     command: npm run start:prod
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
   #
   react.app:
     container_name: react.app
     build:
       context: ./react.app
       target: development
-    env_file:
-      - ./react.app/.env
     environment:
       - REACT_APP_BASE_URL=${REACT_APP_BASE_URL}
       - REACT_APP_WEBPACK_DEV_PORT=${REACT_APP_WEBPACK_DEV_PORT}
-      - CHOKIDAR_USEPOLLING=true
     ports:
       - ${REACT_APP_WEBPACK_DEV_PORT}:${REACT_APP_WEBPACK_DEV_PORT}
-    volumes:
-      - ./react.app:/app
     command: npm run start
     depends_on:
       - web.app
-    tty: true
-    stdin_open: true
   #
   postgres:
     container_name: postgres
@@ -52,6 +44,11 @@ services:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: qwerty
     restart: always
+    healthcheck:
+      test: ["CMD", "pg_isready", "-d", "strawbrary", "-U", "postgres", "-q"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
   #
   nginx:
     container_name: nginx

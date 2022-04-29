@@ -1,2 +1,5 @@
 **/*/node_modules/
 web.app/node_modules/
+react.app/node_modules/
+react.app/build
+web.app/dist/
