@@ -5,7 +5,7 @@ services:
     container_name: web.app
     build:
       context: ./web.app
-      target: development
+      target: production
     env_file:
       - ./web.app/.env
     ports:
@@ -15,12 +15,11 @@ services:
       - DATABASE_URL=${DATABASE_URL}
     volumes:
       - ./web.app:/app
-    command: npm run start:dev
+    command: npm run start:prod
     depends_on:
       - postgres
   #
   react.app:
-    profiles: ["full"]
     container_name: react.app
     build:
       context: ./react.app
