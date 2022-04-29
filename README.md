@@ -36,17 +36,31 @@ $ npm run start:prod
 # unit tests
 $ npm run test
 
-# e2e tests
-$ npm run test:e2e
-
 # test coverage
 $ npm run test:cov
 ```
 
 ## Environment variables
+
+### web.app
 * **DATABASE_URL**
 
   The Url used by Prisma to establish a connection with the postgres database.
 
   Example:
   `postgresql://<username>:<password>@<host>:<port>/strawbrary?schema=public`
+
+* **WEB_APP_PORT**
+  
+  The port on which to run the `web.app` application. Defaults to 3000.
+
+### react.app
+* **REACT_APP_BASE_URL**
+
+  The base Url of the backend server. Used when making requests.
+
+  Example: `http://host:port`
+
+* **REACT_APP_WEBPACK_DEV_PORT**
+
+  The porn on which the react app webpack development server runs on.

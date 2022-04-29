@@ -2,7 +2,7 @@ import axio, { AxiosStatic } from 'axios';
 import { plainToInstance } from 'class-transformer';
 import { LibraryItem, PaginationData, SafeError } from '../types';
 
-const url = 'http://localhost:3000';
+const url = process.env.REACT_APP_BASE_URL;
 const typePaths = {
   'Book': 'books',
   'Dvd': 'dvds',
