@@ -11,8 +11,8 @@ services:
     environment:
       - WEB_APP_PORT=${WEB_APP_PORT}
       - DATABASE_URL=${DATABASE_URL}
-    volumes:
-      - ./web.app:/app
+    #volumes:
+    #  - ./web.app:/app
     command: npm run start:prod
     depends_on:
       - postgres

@@ -17,5 +17,5 @@ COPY prisma ./prisma/
 COPY .env ./
 RUN npm install --only=production
 RUN npx prisma generate
-COPY --from=development app/dist ./dist
+COPY --from=development /app/dist ./dist
 CMD ["node", "dist/main"]
