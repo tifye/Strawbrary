@@ -6,8 +6,6 @@ services:
     build:
       context: ./web.app
       target: production
-    env_file:
-      - ./web.app/.env
     ports:
       - ${WEB_APP_PORT}:${WEB_APP_PORT}
     environment:
@@ -24,7 +22,6 @@ services:
     build:
       context: ./react.app
       target: development
-    env_file: ./react.app/.env
     environment:
       - REACT_APP_BASE_URL=${REACT_APP_BASE_URL}
     ports:
