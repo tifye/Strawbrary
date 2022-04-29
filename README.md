@@ -64,3 +64,8 @@ $ npm run test:cov
 * **REACT_APP_WEBPACK_DEV_PORT**
 
   The porn on which the react app webpack development server runs on.
+
+### nginx
+* **NGINX_EXPOSED_PORT**
+
+  THe port on which the nginx container is exposed outward.
