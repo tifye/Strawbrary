@@ -48,7 +48,7 @@ services:
       test: ["CMD", "pg_isready", "-d", "strawbrary", "-U", "postgres", "-q"]
       interval: 5s
       timeout: 5s
-      retries: 5
+      retries: 30
   #
   nginx:
     container_name: nginx
