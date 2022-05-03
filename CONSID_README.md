@@ -12,7 +12,7 @@ The project also uses Docker to run each major part in its own container. Howeve
 * Docker & Docker Compose v3.8
 
 ### Steps
-1.  There are three `example.env` files. For now you just need to rename them to `.env`. The files are located in `<root>`, `web.app/`, and `react.app/`.
+1.  ~~There are three `example.env` files. For now you just need to rename them to `.env`. The files are located in `<root>`, `web.app/`, and `react.app/`.~~ Temporarily added all `.env` files to be tracked. This step can be ignored.
 
 2.  Then in root, run:
     ```bash
