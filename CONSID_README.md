@@ -5,7 +5,7 @@ This project has three major parts:
 2. The backend, done in the [NodeJs](https://nodejs.org/en/) runtime with [Typescript](https://www.typescriptlang.org/) utilizing the [NestJs](https://nestjs.com/) framework and the [Prisma](https://www.prisma.io/) ORM.   
 3. The [Postgres](https://www.postgresql.org/) database.
 
-The project also uses Docker to run each major part in its own container. However, it is not needed see `README.md` about environment variables.
+The project also uses [Docker](https://www.docker.com/) to run each major part in its own container. However, it is not needed see `README.md` about environment variables.
 
 ## First time start
 ### Requirements
