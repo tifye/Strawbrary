@@ -5,7 +5,7 @@ This project has three major parts:
 2. The backend, done in the [NodeJs](https://nodejs.org/en/) runtime with [Typescript](https://www.typescriptlang.org/) utilizing the [NestJs](https://nestjs.com/) framework and the [Prisma](https://www.prisma.io/) ORM.   
 3. The [Postgres](https://www.postgresql.org/) database.
 
-The project also uses [Docker](https://www.docker.com/) to run each major part in its own container. However, it is not needed see `README.md` about environment variables.
+The project also uses [Docker](https://www.docker.com/) to run each major part in its own container. However, it is not needed. See `README.md` about environment variables.
 
 ## First time start
 ### Requirements
@@ -29,7 +29,7 @@ The project also uses [Docker](https://www.docker.com/) to run each major part i
     $ npx primsa migrate deploy
     ```
 
-4. The application should be ready to use.
+4. The application should be ready to use on port `3002`.
 
 ## For issues
 The github repository should be public, there you can see the known issues I have created. You can contact be directly or create an issue if there's anything wrong.
